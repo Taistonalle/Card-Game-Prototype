@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler {
+public class DragHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler {
     //Inherit this for other scripts that need drag
 
     public virtual void OnDrag(PointerEventData eventData) {
@@ -18,5 +18,9 @@ public class DragHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
 
     public virtual void OnPointerDown(PointerEventData eventData) {
         Debug.Log($"{gameObject.name} clicked");
+    }
+
+    public virtual void OnPointerEnter(PointerEventData eventData) {
+        Debug.Log($"Mouse started hovering on {gameObject.name}");
     }
 }

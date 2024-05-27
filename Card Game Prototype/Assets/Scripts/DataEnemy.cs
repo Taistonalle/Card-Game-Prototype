@@ -6,5 +6,6 @@ using UnityEngine;
 public class DataEnemy : ScriptableObject {
     public string enemyName;
     public int health;
+    public int damage;
     public Sprite enemyArt;
 }
