@@ -8,4 +8,7 @@ public class DataEnemy : ScriptableObject {
     public int health;
     public int damage;
     public Sprite enemyArt;
+    public bool canStun;
+    public bool canDebuff;
+    public bool bossEnemy;
 }

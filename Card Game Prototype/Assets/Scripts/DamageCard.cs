@@ -12,28 +12,33 @@ public class DamageCard : DragHandler {
     Player player;
     Image cardImage;
     Vector3 slotPos;
-
-    GameManager gM;
+    public Vector3 SlotPos {
+        get { return slotPos; }
+        set { slotPos = value; }
+    }
+    int slotIndex; //Used for to activate/deactivate slotInUse in PlayerHand.cs struct
+    public int SlotIndex {
+        get { return slotIndex; }
+        set { slotIndex = value; }
+    }
 
     void Start() {
         player = FindObjectOfType<Player>();
         cardImage = GetComponent<Image>();
         cardImage.sprite = dmgCardData.cardArt;
         slotPos = transform.position;
-
-        gM = FindObjectOfType<GameManager>();
     }
-
+    #region Functions
     public override void OnEndDrag(PointerEventData eventData) {
         base.OnEndDrag(eventData);
+        switch (gM.GameState) {
+            case GameState.PlayerTurn:
+            CheckCardPos();
+            break;
 
-        //Debug.Log($"Mouse pos: {eventData.position}");
-        if (/*eventData.position.x >= 550 &&*/ eventData.position.y >= 200) {
-            Debug.Log("Used card");
-            DealDamage(FindObjectOfType<Enemy>()); //Placeholder way of handling damage to target
-        }
-        else {
-            StartCoroutine(MoveCardBackToHand(5f));
+            default:
+            Debug.Log("Drag failed, not player turn");
+            break;
         }
     }
 
@@ -58,13 +63,25 @@ public class DamageCard : DragHandler {
         }
     }
 
+    void CheckCardPos() {
+        //Check if card is dropped on top of drop are or not
+        ColliderDistance2D colDist = GetComponent<BoxCollider2D>().Distance(gM.CardDropArea);
+
+        //Below zero == colliders overlap --> Card dropped on drop area
+        if (colDist.distance <= 0) DealDamage(FindObjectOfType<Enemy>()); //Placeholder way of handling damage to target
+        else StartCoroutine(MoveCardBackToHand(5f));
+    }
+    #endregion
+
+    #region IEnumerators
     IEnumerator MoveCardBackToHand(float moveSpeed) {
         float timer = 0f;
-        //Move card to back where it started. After timer reaches 1.5 seconds stop routine. 
+        //Move card to back where it started. After timer reaches max routine time stop routine. 
         while (transform.position != slotPos && timer <= gM.CardMoveRoutineMaxTime) {
             timer += Time.deltaTime;
             yield return transform.position = Vector2.Lerp(transform.position, slotPos, moveSpeed * Time.deltaTime);
         }
         Debug.Log("Move to hand ended");
     }
+    #endregion
 }

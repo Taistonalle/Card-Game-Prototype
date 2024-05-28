@@ -19,17 +19,19 @@ public class Player : MonoBehaviour {
     [SerializeField] TextMeshProUGUI healtBarNumber;
 
     [Header("Deck related")]
+    //Maybe add list later that has cards player uses or has collected etc. 
     [SerializeField] int deckSize;
     public int DeckSize {
         get { return deckSize; }
     }
 
+    /*
     [Header("Hand related")]
     [SerializeField] int handSize;
     public int HandSize {
         get { return handSize; }
     }
-
+    */
     [Header("Target related")]
     [SerializeField] GameObject selectedTarget; //Does nothing atm, maybe even remove later or handle some other way targeting
 

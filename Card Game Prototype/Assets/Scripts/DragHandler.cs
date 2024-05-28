@@ -5,10 +5,19 @@ using UnityEngine.EventSystems;
 
 public class DragHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler {
     //Inherit this for other scripts that need drag
+    protected GameManager gM;
+
+    private void Awake() {
+        gM = FindObjectOfType<GameManager>();
+    }
 
     public virtual void OnDrag(PointerEventData eventData) {
-        Cursor.visible = false;
-        transform.position = eventData.position;
+        switch (gM.GameState) {
+            case GameState.PlayerTurn:
+            Cursor.visible = false;
+            transform.position = eventData.position;
+            break;
+        }
     }
 
     public virtual void OnEndDrag(PointerEventData eventData) {

@@ -20,10 +20,8 @@ public class PlayerCardPile : MonoBehaviour {
         UpdateCounter();
     }
    
-
     public void AddCardIntoCardPile(GameObject card) {
         cards.Add(card);
-        //StartCoroutine(MoveCardToPile(card, 5f));
     }
 
     public void RemoveCard(GameObject card) {
@@ -36,6 +34,7 @@ public class PlayerCardPile : MonoBehaviour {
         counterTxt.text = cardCount.ToString();
     }
 
+    //Name could be different. Draw? Think later pls
     public IEnumerator MoveCardToPlayerHand(GameObject card, float moveSpeed) {
         //Set card to visible
         card.SetActive(true);
@@ -49,6 +48,7 @@ public class PlayerCardPile : MonoBehaviour {
         hand.AddCardIntoHand(card);
     }
 
+    /*
     IEnumerator MoveCardToPile(GameObject card, float moveSpeed) { // not used atm
         //Temporarily set card to be visible
         card.SetActive(true);
@@ -66,4 +66,5 @@ public class PlayerCardPile : MonoBehaviour {
         UpdateCounter();
         card.transform.localScale = new Vector3(1f, 1f);
     }
+    */
 }
