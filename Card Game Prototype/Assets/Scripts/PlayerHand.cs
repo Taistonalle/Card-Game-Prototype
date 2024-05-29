@@ -6,7 +6,7 @@ using UnityEngine.XR;
 
 [Serializable]
 public struct CardSlots {
-    public GameObject[] slots;
+    public GameObject[] slots; //Make sure these are same size
     public bool[] slotsInUse;
 }
 
@@ -36,7 +36,7 @@ public class PlayerHand : MonoBehaviour {
         AssignCardSlot(card);
     }
 
-   public void RemoveCardFromHand(GameObject card) {
+    public void RemoveCardFromHand(GameObject card) {
         cardSlots.slotsInUse[card.GetComponent<DamageCard>().SlotIndex] = false; //Deactivate slot, so a new card can be assigned to that slot. Works only if card is DamageCard
         cards.Remove(card);
         UpdateCounter();
@@ -61,8 +61,27 @@ public class PlayerHand : MonoBehaviour {
         }
     }
 
-    void ReArrangeHand() {
+    void RearrangeHand() {
         //
+    }
+
+    public IEnumerator DrawCards(int amount) {
+        PlayerCardPile cardPile = FindObjectOfType<PlayerCardPile>();
+
+        for (int i = 0; i < amount; i++) {
+            int slotId = 0;
+            //Look for unused slot and use that slot index for coroutine
+            for (int k = 0; k < cardSlots.slotsInUse.Length; k++) {
+                if (!cardSlots.slotsInUse[k]) {
+                    slotId = k;
+                    break;
+                }
+            }
+            cardPile.StartCoroutine(cardPile.MoveCardToPlayerHand(cardPile.Cards[0], 5f, slotId)); //Draw top card & move it to unused slot
+            cardPile.RemoveCard(cardPile.Cards[0]);
+            Debug.Log($"Loop: {i}, slotId: {slotId}, slotUsed: {cardSlots.slotsInUse[slotId]}"); // Debugging 
+            yield return new WaitForSeconds(gM.CardMoveRoutineMaxTime); //NOTE: Time cannot be too low, otherwise the slot assignment might overlap
+        }
     }
 
     IEnumerator MoveCardToCorrectSlot(GameObject card, int slotIndex, float moveSpeed) {

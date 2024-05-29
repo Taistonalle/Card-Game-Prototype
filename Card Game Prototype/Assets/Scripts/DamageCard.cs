@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DamageCard : DragHandler {
+public class DamageCard : DragAndPointerHandler {
     [Header("Card base info")]
     [SerializeField] DataDamageCard dmgCardData;
 
@@ -22,12 +21,19 @@ public class DamageCard : DragHandler {
         set { slotIndex = value; }
     }
 
+    bool clicked; //Helps to prevent weird behaviour after dragging
+    public bool Clicked { 
+        get { return clicked; }
+        set {  clicked = value; }
+    }
+
     void Start() {
         player = FindObjectOfType<Player>();
         cardImage = GetComponent<Image>();
         cardImage.sprite = dmgCardData.cardArt;
-        slotPos = transform.position;
+        transform.localScale = new Vector2(1f, 1f);
     }
+
     #region Functions
     public override void OnEndDrag(PointerEventData eventData) {
         base.OnEndDrag(eventData);
@@ -42,9 +48,40 @@ public class DamageCard : DragHandler {
         }
     }
 
+    public override void OnPointerEnter(PointerEventData eventData) {
+        switch (clicked) {
+            case false:
+            base.OnPointerEnter(eventData);
+            MouseHovered(30f);
+            break;
+        }
+    }
+
+    public override void OnPointerExit(PointerEventData eventData) {
+        switch (clicked) {
+            case false:
+            base.OnPointerExit(eventData);
+            transform.position = slotPos;
+            break;
+        }
+    }
+
+    public override void OnPointerDown(PointerEventData eventData) {
+        switch (gM.GameState) {
+            case GameState.PlayerTurn:
+            base.OnPointerDown(eventData);
+            clicked = true;
+            break;
+        }
+    }
+
+    void MouseHovered(float posAmount) {
+        transform.position = new Vector2(transform.position.x, transform.position.y + posAmount);
+    }
+
     void DealDamage(Enemy target) {
         //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.ActionPoints < dmgCardData.playCost) {
+        if (player.AP < dmgCardData.playCost) {
             Debug.Log("Not enough AP to play this card");
             StartCoroutine(MoveCardBackToHand(5f));
             return;
@@ -81,7 +118,18 @@ public class DamageCard : DragHandler {
             timer += Time.deltaTime;
             yield return transform.position = Vector2.Lerp(transform.position, slotPos, moveSpeed * Time.deltaTime);
         }
+        clicked = false; //Started dragging card, but decided to not play card instead.
         Debug.Log("Move to hand ended");
     }
+
+    /* Stops dragging, not good
+    IEnumerator MouseHovered(float moveSpeed, float moveAmount) {
+        float timer = 0f;
+        while (transform.position.y != slotPos.y + 5f) {
+            timer += Time.deltaTime;
+            yield return transform.position = Vector2.Lerp(transform.position, new Vector2(slotPos.x, slotPos.y + moveAmount), moveSpeed * Time.deltaTime);
+        }
+    }
+    */
     #endregion
 }

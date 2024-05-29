@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BasicAttack
   m_EditorClassIdentifier: 
   cardName: Attack
-  description: Hit opponent
+  description: Hit opponent for
   cardArt: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   damage: 10
   playCost: 1

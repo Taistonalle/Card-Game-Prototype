@@ -34,11 +34,10 @@ public class PlayerCardPile : MonoBehaviour {
         counterTxt.text = cardCount.ToString();
     }
 
-    //Name could be different. Draw? Think later pls
-    public IEnumerator MoveCardToPlayerHand(GameObject card, float moveSpeed) {
+    public IEnumerator MoveCardToPlayerHand(GameObject card, float moveSpeed, int slotIndex) {
         //Set card to visible
         card.SetActive(true);
-        card.transform.SetParent(hand.transform, true);
+        card.transform.SetParent(hand.CardSlots.slots[slotIndex].transform, true);
 
         float timer = 0f;
         while (card.transform.position != hand.transform.position && timer <= gM.CardMoveRoutineMaxTime) {

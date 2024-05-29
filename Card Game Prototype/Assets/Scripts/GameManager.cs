@@ -28,29 +28,36 @@ public class GameManager : MonoBehaviour {
     public BoxCollider2D CardDropArea {
         get { return cardDropArea; }
     }
+    Player player;
+    PlayerHand hand;
     PlayerCardPile pCP;
     DiscardPile dP;
 
     void Start() {
         cardDropArea = GameObject.Find("CardDropArea").GetComponent<BoxCollider2D>();
+        player = FindObjectOfType<Player>();
+        hand = FindObjectOfType<PlayerHand>();
         pCP = FindObjectOfType<PlayerCardPile>();
         dP = FindObjectOfType<DiscardPile>();
         StartCoroutine(InstantiateCardCopy(dmgCards[0]));
     }
 
     IEnumerator InstantiateCardCopy(GameObject card) { //proto start initiation
-        //Shuffle deck cards into PlayerCardPile
+        //Shuffle deck cards into PlayerCardPile. Deck part is still yet to be implemented!
         for (int i = 0; i < 10; i++) {
             yield return new WaitForSeconds(0.2f);
-            pCP.AddCardIntoCardPile(Instantiate(card, pCP.transform.position, Quaternion.identity));
+            GameObject newCard = Instantiate(card, pCP.transform, false);
+            pCP.AddCardIntoCardPile(newCard);
             pCP.UpdateCounter();
         }
 
         //Remove all cards and add them into hand
+        int revOrder = 0;
         for (int i = pCP.Cards.Count - 1; i >= 0; i--) {
             yield return new WaitForSeconds(0.2f);
-            pCP.StartCoroutine(pCP.MoveCardToPlayerHand(pCP.Cards[i], 5f));
+            pCP.StartCoroutine(pCP.MoveCardToPlayerHand(pCP.Cards[i], 5f, revOrder));
             pCP.RemoveCard(pCP.Cards[i]);
+            revOrder++;
         }
     }
 
@@ -63,12 +70,17 @@ public class GameManager : MonoBehaviour {
     public IEnumerator BeginNewTurn() {
         endTurnButtonTxt.text = "Player turn";
         gameState = GameState.PlayerTurn;
+
         //Placeholder thing to do
         //Check if PlayerCardPile is empty. Yes -> empty discard pile into PlayerCardPile. NOTE no actual check yet, implement later.
         for (int i = dP.Cards.Count - 1; i >= 0; i--) {
             yield return new WaitForSeconds(0.2f);
             dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f));
         }
+
+        yield return new WaitForSeconds(CardMoveRoutineMaxTime); //Wait for the cards to be moved before drawing
+        player.ResetAP();
+        hand.StartCoroutine(hand.DrawCards(player.DrawAmount));
     }
 
     IEnumerator EndTurn() {

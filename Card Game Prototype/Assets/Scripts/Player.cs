@@ -8,10 +8,16 @@ public enum StatusEffect { None, Stunned, Dazed }
 public class Player : MonoBehaviour {
     [Header("Player stats")]
     [SerializeField][Range(0, 100)] int health;
-    [SerializeField] int actionPoints;
-    public int ActionPoints {
-        get { return actionPoints; }
+    [SerializeField] int maxAP;
+    public int MaxAP {
+        get { return maxAP; }
     }
+    [SerializeField] int aP;
+    public int AP {
+        get { return aP; }
+        set { aP = value; }
+    }
+    [SerializeField] TextMeshProUGUI aPCounter;
     [SerializeField] StatusEffect statusEffect;
 
     [Header("Health bar related")]
@@ -24,27 +30,31 @@ public class Player : MonoBehaviour {
     public int DeckSize {
         get { return deckSize; }
     }
+    [SerializeField] int drawAmount;
+    public int DrawAmount {
+        get { return drawAmount; }
+        set { drawAmount = value; }
+    }
 
     /*
-    [Header("Hand related")]
-    [SerializeField] int handSize;
-    public int HandSize {
-        get { return handSize; }
-    }
-    */
-    [Header("Target related")]
-    [SerializeField] GameObject selectedTarget; //Does nothing atm, maybe even remove later or handle some other way targeting
+     [Header("Target related")]
+     [SerializeField] GameObject selectedTarget; //Does nothing atm, maybe even remove later or handle some other way targeting
+     */
 
     void Start() {
         //Health bar values
         healthBar.maxValue = health;
         healthBar.value = health;
         healtBarNumber.text = health.ToString();
+
+        UpdateActionPointCounter();
     }
 
+    /*
     public void UpdateTarget(GameObject newTarget) { //Also not really used atm
         selectedTarget = newTarget;
     }
+    */
 
     public void TakeDamage(int damage) {
         health -= damage;
@@ -52,11 +62,17 @@ public class Player : MonoBehaviour {
     }
 
     public void ReduceAP(int actionCost) {
-        actionPoints -= actionCost;
+        aP -= actionCost;
+        UpdateActionPointCounter();
     }
 
     public void ResetAP() {
-        actionPoints = 4; //Placeholder hardcoded number
+        aP = maxAP;
+        UpdateActionPointCounter();
+    }
+
+    void UpdateActionPointCounter() {
+        aPCounter.text = $"{aP}/{maxAP}";
     }
 
     IEnumerator AnimateHealthBar(float animSpeed) {

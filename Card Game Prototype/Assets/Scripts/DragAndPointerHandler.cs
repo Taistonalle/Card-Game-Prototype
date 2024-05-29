@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler {
+public class DragAndPointerHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler {
     //Inherit this for other scripts that need drag
     protected GameManager gM;
 
@@ -31,5 +31,9 @@ public class DragHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
 
     public virtual void OnPointerEnter(PointerEventData eventData) {
         Debug.Log($"Mouse started hovering on {gameObject.name}");
+    }
+
+    public virtual void OnPointerExit(PointerEventData eventData) {
+        Debug.Log($"Mouse exited hovering on {gameObject.name}");
     }
 }

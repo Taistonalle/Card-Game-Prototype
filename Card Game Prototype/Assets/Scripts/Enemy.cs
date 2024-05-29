@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour, IPointerDownHandler {
+public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     [SerializeField] DataEnemy enemyData;
     public DataEnemy EnemyData {
         get { return enemyData; }
@@ -44,10 +44,12 @@ public class Enemy : MonoBehaviour, IPointerDownHandler {
         nameTxt.text = enemyName;
     }
 
+    /*
     //When enemy sprite is clicked, update it to player as current target. Assigned, but not used atm at all
     public void OnPointerDown(PointerEventData eventData) {
         FindObjectOfType<Player>().UpdateTarget(gameObject);
     }
+    */
 
     public void TakeDamage(int damage) {
         health -= damage;
