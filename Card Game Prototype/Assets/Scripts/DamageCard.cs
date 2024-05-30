@@ -1,15 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DamageCard : DragAndPointerHandler {
-    [Header("Card base info")]
-    [SerializeField] DataDamageCard dmgCardData;
+    [Header("Card base info from scriptable object")]
+    [SerializeField] DataDamageCard cardData;
+
+    [Header("Card parts")]
+    [SerializeField] Image background;
+    [SerializeField] Image[] borders;
+    [SerializeField] Image cardImage;
+    [SerializeField] TextMeshProUGUI playCostTxt;
+    [SerializeField] TextMeshProUGUI nameTxt;
+    [SerializeField] TextMeshProUGUI descriptionTxt;
 
     Player player;
-    Image cardImage;
     Vector3 slotPos;
     public Vector3 SlotPos {
         get { return slotPos; }
@@ -29,12 +37,22 @@ public class DamageCard : DragAndPointerHandler {
 
     void Start() {
         player = FindObjectOfType<Player>();
-        cardImage = GetComponent<Image>();
-        cardImage.sprite = dmgCardData.cardArt;
-        transform.localScale = new Vector2(1f, 1f);
+        CardSetup();
+        //transform.localScale = new Vector2(1f, 1f);
     }
 
     #region Functions
+    void CardSetup() {
+        background.sprite = cardData.cardBackground;
+        background.color = cardData.backgroundColor;
+        borders[0].sprite = cardData.cardBorders[0];
+        borders[1].sprite = cardData.cardBorders[1];
+        cardImage.sprite = cardData.cardImage;
+        playCostTxt.text = cardData.playCost.ToString();
+        nameTxt.text = cardData.cardName;
+        descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
+    }
+
     public override void OnEndDrag(PointerEventData eventData) {
         base.OnEndDrag(eventData);
         switch (gM.GameState) {
@@ -81,7 +99,7 @@ public class DamageCard : DragAndPointerHandler {
 
     void DealDamage(Enemy target) {
         //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < dmgCardData.playCost) {
+        if (player.AP < cardData.playCost) {
             Debug.Log("Not enough AP to play this card");
             StartCoroutine(MoveCardBackToHand(5f));
             return;
@@ -91,12 +109,13 @@ public class DamageCard : DragAndPointerHandler {
             PlayerHand hand = FindObjectOfType<PlayerHand>();
 
             //Damage and action point calculations
-            target.TakeDamage(dmgCardData.damage);
-            player.ReduceAP(dmgCardData.playCost);
+            target.TakeDamage(cardData.damage);
+            player.ReduceAP(cardData.playCost);
 
             //Add card to discard pile
             dP.AddCardIntoDiscardPile(gameObject);
             hand.RemoveCardFromHand(gameObject);
+            hand.RearrangeHand();
         }
     }
 

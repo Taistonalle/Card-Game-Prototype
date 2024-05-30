@@ -6,7 +6,10 @@ using UnityEngine;
 public class DataDamageCard : ScriptableObject {
     public string cardName;
     public string description;
-    public Sprite cardArt;
+    public Sprite cardBackground;
+    public Color backgroundColor;
+    public Sprite cardImage;
+    public Sprite[] cardBorders;
     public int damage;
     [Tooltip("How much it costs to play the card")] public int playCost;
 }

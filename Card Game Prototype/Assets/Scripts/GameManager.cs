@@ -63,12 +63,16 @@ public class GameManager : MonoBehaviour {
 
     //Call this function from End turn button
     public void StartEndTurn() {
-        endTurnButtonTxt.text = "Enemy turn";
-        StartCoroutine(EndTurn());
+        switch (gameState) {
+            case GameState.PlayerTurn:
+            endTurnButtonTxt.text = "Enemy turn";
+            StartCoroutine(EndTurn());
+            break;
+        }
     }
 
     public IEnumerator BeginNewTurn() {
-        endTurnButtonTxt.text = "Player turn";
+        endTurnButtonTxt.text = "End turn";
         gameState = GameState.PlayerTurn;
 
         //Placeholder thing to do

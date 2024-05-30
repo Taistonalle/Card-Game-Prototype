@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         health -= damage;
-        StartCoroutine(AnimateHealthBar(10f));
+        StartCoroutine(AnimateHealthBar(30f));
     }
 
     public void ReduceAP(int actionCost) {

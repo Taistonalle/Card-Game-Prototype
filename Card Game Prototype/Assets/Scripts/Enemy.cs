@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
 
     public void TakeDamage(int damage) {
         health -= damage;
-        StartCoroutine(AnimateHealthBar(10f));
+        StartCoroutine(AnimateHealthBar(30f));
     }
 
     //Instant healt bar update, not used atm

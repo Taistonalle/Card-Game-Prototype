@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
 
 [Serializable]
 public struct CardSlots {
@@ -61,8 +60,40 @@ public class PlayerHand : MonoBehaviour {
         }
     }
 
-    void RearrangeHand() {
-        //
+    public void RearrangeHand() {
+        //First check if hand card count is more than zero to continue
+        if (cardCount <= 0) return;
+
+        //Look at each current card in hand and assingn slot again if needed
+        foreach (GameObject card in cards) {
+            int currentCardIndex = card.GetComponent<DamageCard>().SlotIndex;
+            //Search for unused slot and check that current card index is not the same as before
+            for (int i = 0; i < cardSlots.slotsInUse.Length; i++) {
+                if(currentCardIndex > i && !cardSlots.slotsInUse[i]) {
+                    //Mark old slot as unused, assing a new slot & parent then move it to new slot
+                    cardSlots.slotsInUse[currentCardIndex] = false;
+                    card.GetComponent<DamageCard>().SlotPos = cardSlots.slots[i].transform.position;
+                    card.GetComponent<DamageCard>().SlotIndex = i;
+                    card.transform.SetParent(cardSlots.slots[i].transform, true);
+                    cardSlots.slotsInUse[i] = true;
+                    StartCoroutine(MoveCardToCorrectSlot(card, i, 10f));
+                    break;
+                }
+
+                /* Older way, loops through all -> causes to rearrange every card in hand not just necesessary ones
+                if (!cardSlots.slotsInUse[i] && currentCardIndex != i) {
+                    //Mark old slot as unused, assing a new slot & parent then move it to new slot
+                    cardSlots.slotsInUse[currentCardIndex] = false;
+                    card.GetComponent<DamageCard>().SlotPos = cardSlots.slots[i].transform.position;
+                    card.GetComponent<DamageCard>().SlotIndex = i;
+                    card.transform.SetParent(cardSlots.slots[i].transform, true);
+                    cardSlots.slotsInUse[i] = true;
+                    StartCoroutine(MoveCardToCorrectSlot(card, i, 10f));
+                    break;
+                }
+                */
+            }
+        }
     }
 
     public IEnumerator DrawCards(int amount) {
