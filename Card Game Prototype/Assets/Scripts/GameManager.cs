@@ -75,16 +75,21 @@ public class GameManager : MonoBehaviour {
         endTurnButtonTxt.text = "End turn";
         gameState = GameState.PlayerTurn;
 
-        //Placeholder thing to do
-        //Check if PlayerCardPile is empty. Yes -> empty discard pile into PlayerCardPile. NOTE no actual check yet, implement later.
-        for (int i = dP.Cards.Count - 1; i >= 0; i--) {
-            yield return new WaitForSeconds(0.2f);
-            dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f));
+        //Check if PlayerCardPile is empty. Yes -> empty discard pile into PlayerCardPile.
+        if (pCP.CardCount == 0) {
+            for (int i = dP.Cards.Count - 1; i >= 0; i--) {
+                yield return new WaitForSeconds(0.2f);
+                dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f));
+            }
         }
 
         yield return new WaitForSeconds(CardMoveRoutineMaxTime); //Wait for the cards to be moved before drawing
         player.ResetAP();
-        hand.StartCoroutine(hand.DrawCards(player.DrawAmount));
+        //Check if player can draw a card
+        if (hand.CardCount < 10 && pCP.Cards.Count > 0) {
+            Debug.Log("Drawing card(s)");
+            hand.StartCoroutine(hand.DrawCards(player.DrawAmount));
+        }
     }
 
     IEnumerator EndTurn() {

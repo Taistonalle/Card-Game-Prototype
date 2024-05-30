@@ -9,6 +9,9 @@ public class PlayerCardPile : MonoBehaviour {
         get { return cards; }
     }
     [SerializeField] int cardCount;
+    public int CardCount {
+        get { return cardCount; }
+    }
     [SerializeField] TextMeshProUGUI counterTxt;
 
     GameManager gM;
