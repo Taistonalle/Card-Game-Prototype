@@ -79,6 +79,14 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         yield return new WaitForSeconds(1f);
         player.TakeDamage(damage);
         yield return new WaitForSeconds(3f); //Placeholder timewise. Maybe add time lenght of animation later or something similar
-        gM.StartCoroutine(gM.BeginNewTurn());
+        switch (player.Health) {
+            case 0:
+            player.Die();
+            break;
+
+            default:
+            gM.StartCoroutine(gM.BeginNewTurn());
+            break;
+        }
     }
 }

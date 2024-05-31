@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8209206132329749370
+--- !u!1 &7348110032438998629
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2027439948755117984}
-  - component: {fileID: 3039167141865207453}
+  - component: {fileID: 5028922222454041712}
+  - component: {fileID: 6374926368834223413}
   m_Layer: 0
-  m_Name: Managers
+  m_Name: PlayerDeck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2027439948755117984
+--- !u!4 &5028922222454041712
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8209206132329749370}
+  m_GameObject: {fileID: 7348110032438998629}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,21 +32,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3039167141865207453
+--- !u!114 &6374926368834223413
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8209206132329749370}
+  m_GameObject: {fileID: 7348110032438998629}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ad7de30547661c4896af2cc3e8cd05f, type: 3}
+  m_Script: {fileID: 11500000, guid: e8c8c5cedc253804fb8afbe59d2fcc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 1
-  cardMoveRoutineMaxTime: 1
-  dmgCards:
+  cards: []
+  cardCount: 0
+  maxStartCardAmount: 10
+  cardPrefabs:
   - {fileID: 1064329457145765964, guid: d9de0d34e83622a4685cb9b3929b79d2, type: 3}
-  endTurnButtonTxt: {fileID: 0}
-  gOBox: {fileID: 0}
+  - {fileID: 1064329457145765964, guid: c85dba2ab5a13ba49b8265459925f1e5, type: 3}
+  - {fileID: 1064329457145765964, guid: 0512124a8ef2c1e4789e7cd462b022fb, type: 3}

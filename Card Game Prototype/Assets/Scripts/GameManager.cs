@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public enum GameState { PlayerTurn, EnemyTurn, AfterCombat, Shop }
+public enum GameState { PathView, PlayerTurn, EnemyTurn, AfterCombat, Shop, GameOver }
 public class GameManager : MonoBehaviour {
-    [SerializeField] GameState gameState; //Use this later to check what player can do. For example: Not play cards in enemy turn etc.
+    [SerializeField] GameState gameState; //Use this to check what player can do. For example: Not play cards in enemy turn etc.
     public GameState GameState {
         get { return gameState; }
     }
@@ -13,23 +14,28 @@ public class GameManager : MonoBehaviour {
     public float CardMoveRoutineMaxTime {
         get { return cardMoveRoutineMaxTime; }
     }
+    [SerializeField] List<GameObject> deckCopy;
 
     [Header("Card prefabs")]
-    [SerializeField] GameObject[] dmgCards;
+    [SerializeField] GameObject[] dmgCards; // Remove later not used atm
 
     [Header("End turn button")]
-
     [SerializeField] TextMeshProUGUI endTurnButtonTxt;
     public TextMeshProUGUI EndTurnButtonTxt {
         get { return endTurnButtonTxt; }
     }
 
+    [Header("Game over box")]
+    [SerializeField] GameObject gOBox;
+
     BoxCollider2D cardDropArea;
     public BoxCollider2D CardDropArea {
         get { return cardDropArea; }
     }
+
     Player player;
     PlayerHand hand;
+    PlayerDeck deck;
     PlayerCardPile pCP;
     DiscardPile dP;
 
@@ -37,9 +43,13 @@ public class GameManager : MonoBehaviour {
         cardDropArea = GameObject.Find("CardDropArea").GetComponent<BoxCollider2D>();
         player = FindObjectOfType<Player>();
         hand = FindObjectOfType<PlayerHand>();
+        deck = FindObjectOfType<PlayerDeck>();
         pCP = FindObjectOfType<PlayerCardPile>();
         dP = FindObjectOfType<DiscardPile>();
-        StartCoroutine(InstantiateCardCopy(dmgCards[0]));
+
+        CopyDeckForUsage();
+        //StartCoroutine(InstantiateCardCopy(dmgCards[0]));
+        StartCoroutine(InstantiateDeckCards());
     }
 
     IEnumerator InstantiateCardCopy(GameObject card) { //proto start initiation
@@ -61,7 +71,25 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    //Call this function from End turn button
+    IEnumerator InstantiateDeckCards() {
+        //Add copied deck cards as instiated cards to PlayerCardPile
+        foreach (GameObject card in deckCopy) {
+            GameObject copiedCard = Instantiate(card, pCP.transform, false);
+            pCP.AddCardIntoCardPile(copiedCard);
+            pCP.UpdateCounter();
+        }
+
+        //Add fixed amount of cards to hand. Hardcoded amount atm: i >= 5
+        int revOrder = 0;
+        for (int i = pCP.CardCount -1; i >= 5; i--) {
+            yield return new WaitForSeconds(0.2f);
+            pCP.StartCoroutine(pCP.MoveCardToPlayerHand(pCP.Cards[i], 5f, revOrder));
+            pCP.RemoveCard(pCP.Cards[i]);
+            revOrder++;
+        }
+    }
+
+    #region Button functions
     public void StartEndTurn() {
         switch (gameState) {
             case GameState.PlayerTurn:
@@ -69,6 +97,19 @@ public class GameManager : MonoBehaviour {
             StartCoroutine(EndTurn());
             break;
         }
+    }
+
+    public void Retry() {
+        SceneManager.LoadScene(1);
+    }
+
+    public void ReturnToMenu() {
+        SceneManager.LoadScene(0);
+    }
+    #endregion
+
+    void CopyDeckForUsage() {
+        deckCopy = deck.Cards;
     }
 
     public IEnumerator BeginNewTurn() {
@@ -97,5 +138,12 @@ public class GameManager : MonoBehaviour {
         //Call enemy function stuff
         Enemy enemy = FindObjectOfType<Enemy>(); //Note to future self. This way works only for one enemy at a time.
         yield return enemy.StartCoroutine(enemy.DealDamage(enemy.EnemyData.damage));
+    }
+
+    public IEnumerator GameOver() {
+        yield return gameState = GameState.GameOver;
+
+        //Activate/make game over message box visible. Add fancier fade in effect later?
+        gOBox.SetActive(true);
     }
 }

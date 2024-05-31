@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum StatusEffect { None, Stunned, Dazed }
 public class Player : MonoBehaviour {
     [Header("Player stats")]
     [SerializeField][Range(0, 100)] int health;
+    public int Health {
+        get { return health; }
+    }
     [SerializeField] int maxAP;
     public int MaxAP {
         get { return maxAP; }
@@ -36,10 +40,7 @@ public class Player : MonoBehaviour {
         set { drawAmount = value; }
     }
 
-    /*
-     [Header("Target related")]
-     [SerializeField] GameObject selectedTarget; //Does nothing atm, maybe even remove later or handle some other way targeting
-     */
+    GameManager gM;
 
     void Start() {
         //Health bar values
@@ -48,13 +49,8 @@ public class Player : MonoBehaviour {
         healtBarNumber.text = health.ToString();
 
         UpdateActionPointCounter();
+        gM = FindObjectOfType<GameManager>();
     }
-
-    /*
-    public void UpdateTarget(GameObject newTarget) { //Also not really used atm
-        selectedTarget = newTarget;
-    }
-    */
 
     public void TakeDamage(int damage) {
         health -= damage;
@@ -73,6 +69,10 @@ public class Player : MonoBehaviour {
 
     void UpdateActionPointCounter() {
         aPCounter.text = $"{aP}/{maxAP}";
+    }
+
+    public void Die() { //Later for juicying add death animation or like different sprite
+        gM.StartCoroutine(gM.GameOver());
     }
 
     IEnumerator AnimateHealthBar(float animSpeed) {

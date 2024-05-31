@@ -38,7 +38,6 @@ public class DamageCard : DragAndPointerHandler {
     void Start() {
         player = FindObjectOfType<Player>();
         CardSetup();
-        //transform.localScale = new Vector2(1f, 1f);
     }
 
     #region Functions

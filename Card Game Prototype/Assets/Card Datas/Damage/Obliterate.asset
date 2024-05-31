@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a38a9c4a8c88a994da85dc30a4931fa3, type: 3}
+  m_Name: Obliterate
+  m_EditorClassIdentifier: 
+  cardName: Obliterate
+  description: Devastating attack for
+  cardBackground: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  backgroundColor: {r: 0.764151, g: 0.378471, b: 0.45818916, a: 1}
+  cardImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  cardBorders:
+  - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
+  - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
+  damage: 50
+  playCost: 5
