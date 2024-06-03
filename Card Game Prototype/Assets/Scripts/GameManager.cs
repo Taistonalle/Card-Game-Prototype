@@ -28,28 +28,34 @@ public class GameManager : MonoBehaviour {
     [Header("Game over box")]
     [SerializeField] GameObject gOBox;
 
-    BoxCollider2D cardDropArea;
+    [Header("Card drop area")]
+    [SerializeField] BoxCollider2D cardDropArea;
     public BoxCollider2D CardDropArea {
         get { return cardDropArea; }
     }
 
-    Player player;
-    PlayerHand hand;
+    [Header("Enemy related")]
+    [SerializeField] Enemy enemy;
+    public Enemy Enemy {
+        get { return enemy; }
+    }
+    [SerializeField] DataEnemy[] enemyDatas;
+    public DataEnemy[] EnemyDatas {
+        get { return enemyDatas; }
+    }
+
+    [Header("Player related")]
+    [SerializeField] Player player;
+    [SerializeField] PlayerHand hand;
+    [SerializeField] PlayerCardPile pCP;
+    [SerializeField] DiscardPile dP;
     PlayerDeck deck;
-    PlayerCardPile pCP;
-    DiscardPile dP;
+
 
     void Start() {
-        cardDropArea = GameObject.Find("CardDropArea").GetComponent<BoxCollider2D>();
-        player = FindObjectOfType<Player>();
-        hand = FindObjectOfType<PlayerHand>();
         deck = FindObjectOfType<PlayerDeck>();
-        pCP = FindObjectOfType<PlayerCardPile>();
-        dP = FindObjectOfType<DiscardPile>();
-
-        CopyDeckForUsage();
         //StartCoroutine(InstantiateCardCopy(dmgCards[0]));
-        StartCoroutine(InstantiateDeckCards());
+        //StartCoroutine(InstantiateDeckCards());
     }
 
     IEnumerator InstantiateCardCopy(GameObject card) { //proto start initiation
@@ -104,9 +110,31 @@ public class GameManager : MonoBehaviour {
     }
 
     public void ReturnToMenu() {
+        deck.ResetDeck();
         SceneManager.LoadScene(0);
     }
+
+    public void StartCombat() {
+        gameState = GameState.PlayerTurn;
+        //FindEverything();
+
+        hand.ClearHand();
+        pCP.ClearPlayerCardPile();
+        dP.ClearDiscardPile();
+        //enemy.AssignDataValues();
+        player.ResetAP();
+        CopyDeckForUsage();
+        StartCoroutine(InstantiateDeckCards());
+    }
     #endregion
+
+    //void FindEverything() {
+    //    player = FindObjectOfType<Player>();
+    //    hand = FindObjectOfType<PlayerHand>();
+    //    deck = FindObjectOfType<PlayerDeck>();
+    //    pCP = FindObjectOfType<PlayerCardPile>();
+    //    dP = FindObjectOfType<DiscardPile>();
+    //}
 
     void CopyDeckForUsage() {
         deckCopy = deck.Cards;
@@ -136,7 +164,7 @@ public class GameManager : MonoBehaviour {
     IEnumerator EndTurn() {
         gameState = GameState.EnemyTurn;
         //Call enemy function stuff
-        Enemy enemy = FindObjectOfType<Enemy>(); //Note to future self. This way works only for one enemy at a time.
+        //Enemy enemy = FindObjectOfType<Enemy>(); //Note to future self. This way works only for one enemy at a time.
         yield return enemy.StartCoroutine(enemy.DealDamage(enemy.EnemyData.damage));
     }
 

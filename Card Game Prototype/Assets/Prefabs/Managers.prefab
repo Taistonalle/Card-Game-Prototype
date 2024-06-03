@@ -44,9 +44,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad7de30547661c4896af2cc3e8cd05f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 1
+  gameState: 0
   cardMoveRoutineMaxTime: 1
+  deckCopy: []
   dmgCards:
   - {fileID: 1064329457145765964, guid: d9de0d34e83622a4685cb9b3929b79d2, type: 3}
   endTurnButtonTxt: {fileID: 0}
   gOBox: {fileID: 0}
+  cardDropArea: {fileID: 0}
+  enemy: {fileID: 0}
+  enemyDatas:
+  - {fileID: 11400000, guid: 537bf93db4a02e5488bedc66bc7347bd, type: 2}
+  - {fileID: 11400000, guid: e461121b3f0a3fe4ca6d44ec3c699ad7, type: 2}
+  - {fileID: 11400000, guid: 53a2b788af26558499d11a1e9d36a95f, type: 2}
+  - {fileID: 11400000, guid: 1e87381563a575e4785df6f3fe10d712, type: 2}
+  player: {fileID: 0}
+  hand: {fileID: 0}
+  pCP: {fileID: 0}
+  dP: {fileID: 0}

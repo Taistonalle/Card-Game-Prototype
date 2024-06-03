@@ -48,6 +48,7 @@ public class PlayerDeck : MonoBehaviour {
 
     public void ResetDeck() {
         cards.Clear();
+        UpdateCounter();
     }
 
     void UpdateCounter() {

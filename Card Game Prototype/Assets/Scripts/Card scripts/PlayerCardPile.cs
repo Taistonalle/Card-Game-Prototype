@@ -37,6 +37,12 @@ public class PlayerCardPile : MonoBehaviour {
         counterTxt.text = cardCount.ToString();
     }
 
+    public void ClearPlayerCardPile() {
+        foreach (GameObject card in cards) Destroy(card);
+        cards.Clear();
+        UpdateCounter();
+    }
+
     public IEnumerator MoveCardToPlayerHand(GameObject card, float moveSpeed, int slotIndex) {
         //Set card to visible
         card.SetActive(true);

@@ -168,10 +168,13 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 537bf93db4a02e5488bedc66bc7347bd, type: 2}
   enemyName: 
   health: 0
+  cardImage: {fileID: 2512040418998292978}
   nameTxt: {fileID: 3591799064208540234}
   statusEffect: 0
   healthBar: {fileID: 1377877130644561309}
   healtBarNumber: {fileID: 6910592302575249084}
+  combatCanvas: {fileID: 0}
+  pathCanvas: {fileID: 0}
 --- !u!1 &6470799695860475427
 GameObject:
   m_ObjectHideFlags: 0

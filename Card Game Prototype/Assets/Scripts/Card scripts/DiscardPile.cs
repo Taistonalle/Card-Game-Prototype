@@ -34,6 +34,12 @@ public class DiscardPile : MonoBehaviour {
         counterTxt.text = cardCount.ToString();
     }
 
+    public void ClearDiscardPile() {
+        foreach (GameObject card in cards) Destroy(card);
+        cards.Clear();
+        UpdateCounter();
+    }
+
     IEnumerator MoveCardToDiscardPile(GameObject card, float moveSpeed) {
         float timer = 0f;
         while (card.transform.position != transform.position && timer <= gM.CardMoveRoutineMaxTime) {

@@ -131,6 +131,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 785306182ea0c5f459eb65de5da7162a, type: 2}
   - {fileID: 11400000, guid: 63565e3ccecf9824cbb61c3020f6d4c8, type: 2}
   - {fileID: 11400000, guid: 2ee1e941fc414fc4baa95215eb17db2d, type: 2}
+  cardPreview: {fileID: 7149571630061005679}
 --- !u!1001 &603836211460068395
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -252,13 +253,13 @@ PrefabInstance:
     - target: {fileID: 5539502200267780712, guid: 86dacd4c29dc29649b01c528a93d9f2e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5539502200267780712, guid: 86dacd4c29dc29649b01c528a93d9f2e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4052530044658137836}
+      objectReference: {fileID: 1974148574832667297}
     - target: {fileID: 5539502200267780712, guid: 86dacd4c29dc29649b01c528a93d9f2e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -267,12 +268,17 @@ PrefabInstance:
     - target: {fileID: 5539502200267780712, guid: 86dacd4c29dc29649b01c528a93d9f2e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: NewGame
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 5539502200267780712, guid: 86dacd4c29dc29649b01c528a93d9f2e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MainMenu, Assembly-CSharp
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539502200267780712, guid: 86dacd4c29dc29649b01c528a93d9f2e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5539502200267780712, guid: 86dacd4c29dc29649b01c528a93d9f2e,
         type: 3}
@@ -479,6 +485,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardAddingView
       objectReference: {fileID: 0}
+    - target: {fileID: 4230356831894690670, guid: f6a4d007837232e48b5aae8dff85adcd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5298816625959819530, guid: f6a4d007837232e48b5aae8dff85adcd,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -535,12 +546,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1974148574832667297 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4230356831894690670, guid: f6a4d007837232e48b5aae8dff85adcd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2436634913836134863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3026481777196970750 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 851342711138075441, guid: f6a4d007837232e48b5aae8dff85adcd,
     type: 3}
   m_PrefabInstance: {fileID: 2436634913836134863}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7149571630061005679 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4821326667181677216, guid: f6a4d007837232e48b5aae8dff85adcd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2436634913836134863}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7758332c79d603e40b6f44f5a162f50b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7775472334624723568 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5348214151127458751, guid: f6a4d007837232e48b5aae8dff85adcd,

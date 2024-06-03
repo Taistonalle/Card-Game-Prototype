@@ -76,10 +76,13 @@ public class Player : MonoBehaviour {
     }
 
     IEnumerator AnimateHealthBar(float animSpeed) {
-        while (healthBar.value >= health) {
-            yield return new WaitForSeconds(Time.deltaTime);
+        if (health <= 0) health = 0;
+
+        while (healthBar.value > health) {
+            //yield return new WaitForSeconds(Time.deltaTime);
             healthBar.value -= animSpeed * Time.deltaTime;
             healtBarNumber.text = Mathf.Round(healthBar.value).ToString();
+            yield return null;
         }
         //Make sure value is same as the health
         healthBar.value = health;

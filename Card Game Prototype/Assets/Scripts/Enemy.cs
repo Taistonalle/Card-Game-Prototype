@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     [Header("Enemy base info. Updates from DataEnemy")]
     [SerializeField] string enemyName;
     [SerializeField] int health;
+    [SerializeField] Image cardImage;
 
     [Space(10f)]
     [Header("Other infos")]
@@ -23,17 +24,27 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healtBarNumber;
 
-    Image cardImage;
+    [Header("Canvas related")]
+    [SerializeField] GameObject combatCanvas;
+    [SerializeField] GameObject pathCanvas;
+
     GameManager gM;
 
     void Start() {
         gM = FindObjectOfType<GameManager>();
-        cardImage = GetComponent<Image>();
+    }
+
+    public void SetNewData(DataEnemy data) {
+        enemyData = data;
+    }
+
+    public void AssignDataValues(DataEnemy data) {
+        enemyData = data;
 
         //Assing DataEnemy variables to this object. So Scriptable object's values don't change
-        enemyName = enemyData.enemyName;
-        health = enemyData.health;
-        cardImage.sprite = enemyData.enemyArt;
+        enemyName = data.enemyName;
+        health = data.health;
+        cardImage.sprite = data.enemyArt;
 
         //Health bar values
         healthBar.maxValue = health;
@@ -44,36 +55,36 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         nameTxt.text = enemyName;
     }
 
-    /*
-    //When enemy sprite is clicked, update it to player as current target. Assigned, but not used atm at all
-    public void OnPointerDown(PointerEventData eventData) {
-        FindObjectOfType<Player>().UpdateTarget(gameObject);
-    }
-    */
-
     public void TakeDamage(int damage) {
         health -= damage;
         StartCoroutine(AnimateHealthBar(30f));
     }
 
-    //Instant healt bar update, not used atm
-    void UpdateHealthBar(float value) {
-        healthBar.value = value;
-        healtBarNumber.text = health.ToString();
-    }
-
     IEnumerator AnimateHealthBar(float animSpeed) {
-        while (healthBar.value >= health) {
-            yield return new WaitForSeconds(Time.deltaTime);
+        if (health <= 0) health = 0;
+
+        while (healthBar.value > health) {
+            //yield return new WaitForSeconds(Time.deltaTime);
             healthBar.value -= animSpeed * Time.deltaTime;
             healtBarNumber.text = Mathf.Round(healthBar.value).ToString();
+            yield return null; //Wait for next frame
         }
         //Make sure value is same as the health
         healthBar.value = health;
         Debug.Log($"{gameObject.name} health bar anim ended");
+
+        //Enemy dies -> change view. ----IMPLEMENT REWARD LATER----
+        if (health <= 0) {
+            combatCanvas.SetActive(false);
+            pathCanvas.SetActive(true);
+        }
+        else {
+            Debug.Log($"{enemyName} is still alive with {health} health");
+        }
     }
 
     public IEnumerator DealDamage(int damage) {
+        Debug.Log($"{enemyName} dealt: {damage} damage");
         Player player = FindObjectOfType<Player>();
         //TO DO: Add little animation for dealing damage to player
         yield return new WaitForSeconds(1f);

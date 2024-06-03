@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -43,6 +44,13 @@ public class PlayerHand : MonoBehaviour {
 
     void UpdateCounter() {
         cardCount = cards.Count;
+    }
+
+    public void ClearHand() {
+        foreach (GameObject card in cards) Destroy(card);
+        for (int i = 0; i < cardSlots.slotsInUse.Length; i++) cardSlots.slotsInUse[i] = false;
+        cards.Clear();
+        UpdateCounter();
     }
 
     void AssignCardSlot(GameObject card) {

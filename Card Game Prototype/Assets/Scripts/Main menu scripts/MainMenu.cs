@@ -17,17 +17,19 @@ public class MainMenu : MonoBehaviour {
         get { return cardDatas; }
     }
 
+    [Header("Preview card")]
+    [SerializeField] CardPreview cardPreview;
     PlayerDeck pDeck;
-    CardPreview cardPreview;
+
 
     void Start() {
         pDeck = FindObjectOfType<PlayerDeck>();
-        cardPreview = GetComponentInChildren<CardPreview>();
+        //cardPreview = GetComponentInChildren<CardPreview>();
         //ButtonSetup();
     }
 
     #region Button functions
-    public void NewGame() {
+    public void NewGame() { // Not used atm
         SceneManager.LoadScene(1);
     }
 
