@@ -30,7 +30,12 @@ public class PlayerDeck : MonoBehaviour {
         else DontDestroyOnLoad(gameObject);
     }
 
-    public void AddCard(GameObject card) {
+    public void RewardAddCard(GameObject card) {
+        cards.Add(card);
+        UpdateCounter();
+    }
+
+    public void MenuAddCard(GameObject card) {
         if (cardCount >= maxStartCardAmount) {
             Debug.Log("Deck full");
             return;

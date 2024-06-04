@@ -5,9 +5,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DamageCard : DragAndPointerHandler {
+public class Card : DragAndPointerHandler {
     [Header("Card base info from scriptable object")]
-    [SerializeField] DataDamageCard cardData;
+    [SerializeField] CardData cardData;
+    public CardData CardData { 
+        get { return cardData; }
+    }
 
     [Header("Card parts")]
     [SerializeField] Image background;
@@ -125,6 +128,11 @@ public class DamageCard : DragAndPointerHandler {
         //Below zero == colliders overlap --> Card dropped on drop area
         if (colDist.distance <= 0) DealDamage(FindObjectOfType<Enemy>()); //Placeholder way of handling damage to target
         else StartCoroutine(MoveCardBackToHand(5f));
+    }
+
+    //Function to check what the card can do
+    void CheckCardDetails() { 
+        //do at somepoint. Using CardData bools etc.
     }
     #endregion
 

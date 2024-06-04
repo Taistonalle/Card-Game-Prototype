@@ -12,8 +12,8 @@ public class MainMenu : MonoBehaviour {
     [Header("Card adding view")]
     [SerializeField] TextMeshProUGUI cardCounterTxt;
     [SerializeField] int viewedCardIndex;
-    [SerializeField] List<DataDamageCard> cardDatas = new();
-    public List<DataDamageCard> CardDatas {
+    [SerializeField] List<CardData> cardDatas = new();
+    public List<CardData> CardDatas {
         get { return cardDatas; }
     }
 
@@ -54,7 +54,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void AddToDeck() {
-        pDeck.AddCard(pDeck.CardPrefabs[viewedCardIndex]);
+        pDeck.MenuAddCard(pDeck.CardPrefabs[viewedCardIndex]);
         UpdateCounter();
         if (pDeck.CardCount >= pDeck.MaxStartCardAmount) {
             buttons[4].SetActive(true);
@@ -67,7 +67,7 @@ public class MainMenu : MonoBehaviour {
     #endregion
 
     void ButtonSetup() {
-        buttons[3].GetComponent<Button>().onClick.AddListener(delegate { pDeck.AddCard(pDeck.CardPrefabs[viewedCardIndex]); });
+        buttons[3].GetComponent<Button>().onClick.AddListener(delegate { pDeck.MenuAddCard(pDeck.CardPrefabs[viewedCardIndex]); });
         buttons[3].GetComponent<Button>().onClick.AddListener(delegate { UpdateCounter(); });
     }
 

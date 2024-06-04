@@ -37,7 +37,7 @@ public class PlayerHand : MonoBehaviour {
     }
 
     public void RemoveCardFromHand(GameObject card) {
-        cardSlots.slotsInUse[card.GetComponent<DamageCard>().SlotIndex] = false; //Deactivate slot, so a new card can be assigned to that slot. Works only if card is DamageCard
+        cardSlots.slotsInUse[card.GetComponent<Card>().SlotIndex] = false; //Deactivate slot, so a new card can be assigned to that slot. Works only if card is DamageCard
         cards.Remove(card);
         UpdateCounter();
     }
@@ -59,8 +59,8 @@ public class PlayerHand : MonoBehaviour {
             //Found slot, assing card pos and exit loop
             if (!cardSlots.slotsInUse[i]) {
                 //Think how to make next to lines better, instead of using specifically just DamageCard
-                card.GetComponent<DamageCard>().SlotPos = cardSlots.slots[i].transform.position;
-                card.GetComponent<DamageCard>().SlotIndex = i;
+                card.GetComponent<Card>().SlotPos = cardSlots.slots[i].transform.position;
+                card.GetComponent<Card>().SlotIndex = i;
                 StartCoroutine(MoveCardToCorrectSlot(card, i, 5f));
                 cardSlots.slotsInUse[i] = true;
                 break;
@@ -74,14 +74,14 @@ public class PlayerHand : MonoBehaviour {
 
         //Look at each current card in hand and assingn slot again if needed
         foreach (GameObject card in cards) {
-            int currentCardIndex = card.GetComponent<DamageCard>().SlotIndex;
+            int currentCardIndex = card.GetComponent<Card>().SlotIndex;
             //Search for unused slot and check that current card index is not the same as before
             for (int i = 0; i < cardSlots.slotsInUse.Length; i++) {
                 if(currentCardIndex > i && !cardSlots.slotsInUse[i]) {
                     //Mark old slot as unused, assing a new slot & parent then move it to new slot
                     cardSlots.slotsInUse[currentCardIndex] = false;
-                    card.GetComponent<DamageCard>().SlotPos = cardSlots.slots[i].transform.position;
-                    card.GetComponent<DamageCard>().SlotIndex = i;
+                    card.GetComponent<Card>().SlotPos = cardSlots.slots[i].transform.position;
+                    card.GetComponent<Card>().SlotIndex = i;
                     card.transform.SetParent(cardSlots.slots[i].transform, true);
                     cardSlots.slotsInUse[i] = true;
                     StartCoroutine(MoveCardToCorrectSlot(card, i, 10f));

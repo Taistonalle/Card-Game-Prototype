@@ -24,7 +24,7 @@ public class PathProgression : MonoBehaviour {
     void Start() {
         AssignButtonIcons();
         gM = FindObjectOfType<GameManager>();
-        PlaceEnemiesOnPath();
+        //PlaceEnemiesOnPath(); did not work as first expected
     }
 
     void AssignButtonIcons() {
@@ -43,12 +43,20 @@ public class PathProgression : MonoBehaviour {
     }
 
     public void PlaceEnemiesOnPath() {
-        int randomIndex = Random.Range(0, gM.EnemyDatas.Length);
+        int randomIndex = 0;
 
         //Add button listener for every button in the paths, that assign a random enemy data to enemy
         foreach (Button button in pathButtons) {
+            randomIndex = Random.Range(0, gM.EnemyDatas.Length);
+            Debug.Log($"Random index roll: {randomIndex} for {button.name}. {gM.EnemyDatas[randomIndex].enemyName}");
             button.onClick.AddListener(delegate { gM.Enemy.AssignDataValues(gM.EnemyDatas[randomIndex]); });
         }
     }
 
+    public void SelectRandomEnemyData(Button button) { //Button press function
+        int rand = Random.Range(0, gM.EnemyDatas.Length);
+
+        Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.EnemyDatas[rand].enemyName}");
+        gM.Enemy.AssignDataValues(gM.EnemyDatas[rand]);
+    }
 }

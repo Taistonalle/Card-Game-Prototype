@@ -26,7 +26,17 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
 
     [Header("Canvas related")]
     [SerializeField] GameObject combatCanvas;
+    public GameObject CombatCanvas {
+        get { return combatCanvas; }
+    }
     [SerializeField] GameObject pathCanvas;
+    public GameObject PathCanvas {
+        get { return pathCanvas; }
+    }
+    [SerializeField] GameObject rewardCanvas;
+    public GameObject RewardCanvas {
+        get { return rewardCanvas; }
+    }
 
     GameManager gM;
 
@@ -60,6 +70,24 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         StartCoroutine(AnimateHealthBar(30f));
     }
 
+
+
+    void Die() {
+        Debug.Log($"{enemyName} died! Activating reward view");
+        StartCoroutine(ActivateRewardView());
+    }
+
+    IEnumerator ActivateRewardView() {
+        rewardCanvas.SetActive(true);
+        yield return null; //Wait for next frame
+
+        //Find all preview cards
+        CardPreview[] cards = FindObjectsOfType<CardPreview>();
+
+        //Set random new data for the cards
+        foreach (CardPreview card in cards) card.AssingNewData();
+    }
+
     IEnumerator AnimateHealthBar(float animSpeed) {
         if (health <= 0) health = 0;
 
@@ -75,8 +103,9 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
 
         //Enemy dies -> change view. ----IMPLEMENT REWARD LATER----
         if (health <= 0) {
-            combatCanvas.SetActive(false);
-            pathCanvas.SetActive(true);
+            Die();
+            //combatCanvas.SetActive(false);
+            //pathCanvas.SetActive(true);
         }
         else {
             Debug.Log($"{enemyName} is still alive with {health} health");

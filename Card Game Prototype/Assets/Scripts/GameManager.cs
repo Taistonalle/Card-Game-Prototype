@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum GameState { PathView, PlayerTurn, EnemyTurn, AfterCombat, Shop, GameOver }
 public class GameManager : MonoBehaviour {
@@ -42,6 +43,10 @@ public class GameManager : MonoBehaviour {
     [SerializeField] DataEnemy[] enemyDatas;
     public DataEnemy[] EnemyDatas {
         get { return enemyDatas; }
+    }
+    [SerializeField] DataEnemy[] bossEnemyDatas;
+    public DataEnemy[] BossEnemyDatas {
+        get { return bossEnemyDatas; }
     }
 
     [Header("Player related")]
@@ -125,6 +130,33 @@ public class GameManager : MonoBehaviour {
         player.ResetAP();
         CopyDeckForUsage();
         StartCoroutine(InstantiateDeckCards());
+
+    }
+
+    public void PickRewardButton(Button button) {
+        //Get data from the picked card
+        var cardData = button.gameObject.GetComponentInParent<CardPreview>().CardData;
+
+        //Loop through card prefabs to compare data. If same -> Add prefab to deck
+        for (int i = 0; i < deck.CardPrefabs.Length; i++) {
+            if (deck.CardPrefabs[i].GetComponent<Card>().CardData == cardData) {
+                Debug.Log($"{deck.CardPrefabs[i].name} matched with {cardData}. Adding {deck.CardPrefabs[i].name} to deck");
+                deck.RewardAddCard(deck.CardPrefabs[i]);
+                break;
+            }
+            else {
+                Debug.Log($"No match found for {cardData}!");
+            }
+        }
+        enemy.CombatCanvas.SetActive(false);
+        enemy.RewardCanvas.SetActive(false);
+        enemy.PathCanvas.SetActive(true);
+    }
+
+    public void SkipRewardButton() {
+        enemy.CombatCanvas.SetActive(false);
+        enemy.RewardCanvas.SetActive(false);
+        enemy.PathCanvas.SetActive(true);
     }
     #endregion
 

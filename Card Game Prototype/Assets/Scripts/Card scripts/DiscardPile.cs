@@ -53,7 +53,7 @@ public class DiscardPile : MonoBehaviour {
         card.transform.SetParent(transform, true);
         UpdateCounter();
         card.transform.localScale = new Vector3(1f, 1f);
-        card.GetComponent<DamageCard>().Clicked = false; //Set Card clicked bool back to false. -> Hovering "animations" work again
+        card.GetComponent<Card>().Clicked = false; //Set Card clicked bool back to false. -> Hovering "animations" work again
     }
 
     public IEnumerator MoveCardToPlayerCardPile(GameObject card, float moveSpeed) {

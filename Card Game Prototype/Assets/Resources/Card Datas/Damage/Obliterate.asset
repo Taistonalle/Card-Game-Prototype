@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a38a9c4a8c88a994da85dc30a4931fa3, type: 3}
+  m_Script: {fileID: 11500000, guid: af5ac885bd5baa447876ce6ce23e4155, type: 3}
   m_Name: Obliterate
   m_EditorClassIdentifier: 
   cardName: Obliterate
@@ -21,4 +21,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
   - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
   damage: 50
+  healAmount: 0
+  blockAmount: 0
   playCost: 5
+  dealDamage: 0
+  heal: 0
+  block: 0
+  buff: 0
+  buffType: 0
+  debuff: 0
+  debuffType: 0
