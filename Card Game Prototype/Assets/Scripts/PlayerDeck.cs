@@ -56,6 +56,15 @@ public class PlayerDeck : MonoBehaviour {
         UpdateCounter();
     }
 
+    public void RetryResetDeck() {
+        for (int i = cardCount - 1; i >= maxStartCardAmount; i--) {
+            Debug.Log($"Removing card from deck: {cards[i].name}");
+            cards.RemoveAt(i);
+            UpdateCounter();
+            Debug.Log($"Cards left in deck after removal: {cardCount}");
+        }
+    }
+
     void UpdateCounter() {
         cardCount = cards.Count;
     }

@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour {
         int revOrder = 0;
         for (int i = pCP.Cards.Count - 1; i >= 0; i--) {
             yield return new WaitForSeconds(0.2f);
-            pCP.StartCoroutine(pCP.MoveCardToPlayerHand(pCP.Cards[i], 5f, revOrder));
+            pCP.StartCoroutine(pCP.MoveCardToPlayerHand(pCP.Cards[i], revOrder));
             pCP.RemoveCard(pCP.Cards[i]);
             revOrder++;
         }
@@ -90,14 +90,19 @@ public class GameManager : MonoBehaviour {
             pCP.UpdateCounter();
         }
 
-        //Add fixed amount of cards to hand. Hardcoded amount atm: i >= 5
+        yield return new WaitUntil(() => hand.isActiveAndEnabled);
+        yield return hand.StartCoroutine(hand.DrawCards(player.DrawAmount));
+
+        /*
+        //Add fixed amount of cards to hand
         int revOrder = 0;
-        for (int i = pCP.CardCount -1; i >= 5; i--) {
+        for (int i = pCP.CardCount -1; i >= player.DrawAmount; i--) {
             yield return new WaitForSeconds(0.2f);
             pCP.StartCoroutine(pCP.MoveCardToPlayerHand(pCP.Cards[i], 5f, revOrder));
             pCP.RemoveCard(pCP.Cards[i]);
             revOrder++;
         }
+        */
     }
 
     #region Button functions
@@ -111,6 +116,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void Retry() {
+        deck.RetryResetDeck();
         SceneManager.LoadScene(1);
     }
 
@@ -195,8 +201,15 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator EndTurn() {
         gameState = GameState.EnemyTurn;
-        //Call enemy function stuff
-        //Enemy enemy = FindObjectOfType<Enemy>(); //Note to future self. This way works only for one enemy at a time.
+
+        //Empty player hand to discard pile
+        for (int i = hand.CardCount; i > 0; i--) {
+            yield return new WaitForSeconds(0.2f); //Tiny delay between each card
+            dP.AddCardIntoDiscardPile(hand.Cards[0]); //NOTE: This can be index zero always because, list updates on card removal therefore removing first card always works
+            hand.RemoveCardFromHand(hand.Cards[0]);
+        }
+
+        //Call enemy function stuff. NOTE: Use enemy planned action to determine what function enemy does. This in Enemy script ofc.
         yield return enemy.StartCoroutine(enemy.DealDamage(enemy.EnemyData.damage));
     }
 

@@ -37,7 +37,7 @@ public class PlayerHand : MonoBehaviour {
     }
 
     public void RemoveCardFromHand(GameObject card) {
-        cardSlots.slotsInUse[card.GetComponent<Card>().SlotIndex] = false; //Deactivate slot, so a new card can be assigned to that slot. Works only if card is DamageCard
+        cardSlots.slotsInUse[card.GetComponent<Card>().SlotIndex] = false; //Deactivate slot, so a new card can be assigned to that slot. 
         cards.Remove(card);
         UpdateCounter();
     }
@@ -106,8 +106,19 @@ public class PlayerHand : MonoBehaviour {
 
     public IEnumerator DrawCards(int amount) {
         PlayerCardPile cardPile = FindObjectOfType<PlayerCardPile>();
+        DiscardPile dP = FindObjectOfType<DiscardPile>();
 
         for (int i = 0; i < amount; i++) {
+            //First check if card pile still has cards left. Yes - empty discard pile to player card pile & continue. No - Continue
+            if (cardPile.CardCount == 0) {
+                for (int dPC = dP.CardCount - 1; dPC >= 0; dPC--) {
+                    yield return new WaitForSeconds(0.2f);
+                    dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[dPC], 5f));
+                }
+                yield return new WaitUntil(() => dP.MoveToPCPDone); //Dont continue until coroutine(s) are done
+            }
+
+
             int slotId = 0;
             //Look for unused slot and use that slot index for coroutine
             for (int k = 0; k < cardSlots.slotsInUse.Length; k++) {
@@ -116,10 +127,11 @@ public class PlayerHand : MonoBehaviour {
                     break;
                 }
             }
-            cardPile.StartCoroutine(cardPile.MoveCardToPlayerHand(cardPile.Cards[0], 5f, slotId)); //Draw top card & move it to unused slot
+            cardPile.StartCoroutine(cardPile.MoveCardToPlayerHand(cardPile.Cards[0], slotId)); //Draw top card & move it to unused slot
             cardPile.RemoveCard(cardPile.Cards[0]);
             Debug.Log($"Loop: {i}, slotId: {slotId}, slotUsed: {cardSlots.slotsInUse[slotId]}"); // Debugging 
-            yield return new WaitForSeconds(gM.CardMoveRoutineMaxTime); //NOTE: Time cannot be too low, otherwise the slot assignment might overlap
+            yield return new WaitForSeconds(0.2f);
+            //yield return new WaitUntil(() => !cardPile.MovingRoutineRunning);
         }
     }
 

@@ -13,7 +13,7 @@ public class PathProgression : MonoBehaviour {
     [Header("Path line renderers")]
     [SerializeField] LineRenderer[] paths;
 
-    int pathPoint = 0;
+    int pathPoint = 0; //Used to determine what point does path linerender draw for TravelledLine
     public int PathPoint {
         get { return pathPoint; }
         set { pathPoint = value; }
@@ -24,25 +24,23 @@ public class PathProgression : MonoBehaviour {
     void Start() {
         AssignButtonIcons();
         gM = FindObjectOfType<GameManager>();
-        //PlaceEnemiesOnPath(); did not work as first expected
     }
 
     void AssignButtonIcons() {
         foreach (Button button in pathButtons) {
             button.image.sprite = icons[0];
-            //Debug.Log($"Icon assing loop: {button}, icon sprite: {button.image.sprite}");
         }
     }
 
     public void DrawPath(int pIndex) {
+        //Add new empty point for TravelledLine linerender
         paths[3].positionCount += 1;
 
-        //Lastly added path position
-        //paths[3].SetPosition(paths[pIndex].positionCount - 1, new Vector2(0f, 0f));
+        //Select the lastly added point & draw line based on paths index & pathpoint
         paths[3].SetPosition(paths[3].positionCount - 1, paths[pIndex].GetPosition(pathPoint));
     }
 
-    public void PlaceEnemiesOnPath() {
+    public void PlaceEnemiesOnPath() { //Not used, did not work as intended. All buttons had the same enemy in the end
         int randomIndex = 0;
 
         //Add button listener for every button in the paths, that assign a random enemy data to enemy
@@ -53,7 +51,7 @@ public class PathProgression : MonoBehaviour {
         }
     }
 
-    public void SelectRandomEnemyData(Button button) { //Button press function
+    public void SelectRandomEnemyData(Button button) { //Button press function. Used in PathButtons
         int rand = Random.Range(0, gM.EnemyDatas.Length);
 
         Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.EnemyDatas[rand].enemyName}");

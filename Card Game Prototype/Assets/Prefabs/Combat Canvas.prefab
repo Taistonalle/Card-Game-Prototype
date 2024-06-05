@@ -2426,7 +2426,7 @@ PrefabInstance:
     - target: {fileID: 562019466857435470, guid: 28a4bd744ffab5e4295256957eeb4945,
         type: 3}
       propertyPath: drawAmount
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2175031335583939311, guid: 28a4bd744ffab5e4295256957eeb4945,
         type: 3}

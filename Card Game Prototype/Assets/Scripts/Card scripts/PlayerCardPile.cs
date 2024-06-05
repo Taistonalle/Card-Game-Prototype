@@ -13,6 +13,10 @@ public class PlayerCardPile : MonoBehaviour {
         get { return cardCount; }
     }
     [SerializeField] TextMeshProUGUI counterTxt;
+    [SerializeField] bool movingRoutineRunning;
+    public bool MovingRoutineRunning {
+        get { return movingRoutineRunning; }
+    }
 
     GameManager gM;
     PlayerHand hand;
@@ -43,17 +47,21 @@ public class PlayerCardPile : MonoBehaviour {
         UpdateCounter();
     }
 
-    public IEnumerator MoveCardToPlayerHand(GameObject card, float moveSpeed, int slotIndex) {
+    public IEnumerator MoveCardToPlayerHand(GameObject card, int slotIndex) {
         //Set card to visible
         card.SetActive(true);
         card.transform.SetParent(hand.CardSlots.slots[slotIndex].transform, true);
 
+        hand.AddCardIntoHand(card); //This also does the moving for the card
+        yield return null;
+
+        /*
         float timer = 0f;
         while (card.transform.position != hand.transform.position && timer <= gM.CardMoveRoutineMaxTime) {
             timer += Time.deltaTime;
             yield return card.transform.position = Vector2.Lerp(card.transform.position, hand.transform.position, moveSpeed * Time.deltaTime);
         }
-        hand.AddCardIntoHand(card);
+        */
     }
 
     /*

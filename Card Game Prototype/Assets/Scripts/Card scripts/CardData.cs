@@ -16,6 +16,7 @@ public class CardData : ScriptableObject {
     public int playCost;
 
     [Header("What can the card do?")]
+    public bool draw;
     public bool dealDamage;
     public bool heal;
     public bool block;

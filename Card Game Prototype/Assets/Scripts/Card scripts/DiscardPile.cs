@@ -9,7 +9,14 @@ public class DiscardPile : MonoBehaviour {
         get { return cards; }
     }
     [SerializeField] int cardCount;
+    public int CardCount {
+        get { return cardCount; }
+    }
     [SerializeField] TextMeshProUGUI counterTxt;
+    bool moveToPCPDone; //Used to check if routine is done, before continuing
+    public bool MoveToPCPDone {
+        get { return moveToPCPDone; }
+    }
 
     GameManager gM;
     PlayerCardPile pCP;
@@ -21,6 +28,7 @@ public class DiscardPile : MonoBehaviour {
 
     public void AddCardIntoDiscardPile(GameObject card) {
         cards.Add(card);
+        UpdateCounter();
         StartCoroutine(MoveCardToDiscardPile(card, 5f));
     }
 
@@ -51,12 +59,14 @@ public class DiscardPile : MonoBehaviour {
         //Hide card and set discard pile tranform as it's parent
         card.SetActive(false);
         card.transform.SetParent(transform, true);
-        UpdateCounter();
+        //UpdateCounter();
         card.transform.localScale = new Vector3(1f, 1f);
         card.GetComponent<Card>().Clicked = false; //Set Card clicked bool back to false. -> Hovering "animations" work again
     }
 
     public IEnumerator MoveCardToPlayerCardPile(GameObject card, float moveSpeed) {
+        moveToPCPDone = false;
+
         //Temporarily set card to be visible
         card.SetActive(true);
 
@@ -76,5 +86,7 @@ public class DiscardPile : MonoBehaviour {
         pCP.AddCardIntoCardPile(card);
         pCP.UpdateCounter();
         card.transform.localScale = new Vector3(1f, 1f);
+
+        moveToPCPDone = true;
     }
 }
