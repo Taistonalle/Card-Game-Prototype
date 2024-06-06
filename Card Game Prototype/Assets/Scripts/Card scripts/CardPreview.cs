@@ -27,8 +27,8 @@ public class CardPreview : MonoBehaviour {
     void Start() {
         CardSetup();
 
-        //Load all assets in Card datas/Damage folder to get card datas for damage cards
-        cardDatas = new List<CardData>(Resources.LoadAll<CardData>("Card datas/Damage"));
+        //Load all assets in Card datas folder to get card datas
+        cardDatas = new List<CardData>(Resources.LoadAll<CardData>("Card datas"));
     }
 
     public void CardSetup() {
@@ -39,7 +39,22 @@ public class CardPreview : MonoBehaviour {
         cardImage.sprite = cardData.cardImage;
         playCostTxt.text = cardData.playCost.ToString();
         nameTxt.text = cardData.cardName;
-        descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
+        //descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
+
+        //Checks for bools in data, to know what to write in description
+
+        //Single bools
+        bool draw = cardData.draw;
+        bool dmg = cardData.dealDamage;
+        bool heal = cardData.heal;
+
+        //Double checks
+        if (draw && dmg) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} and deal {cardData.damage} damage";
+
+        //Single checks
+        else if (draw) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount}";
+        else if (dmg) descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
+        else if (heal) descriptionTxt.text = $"{cardData.description} {cardData.healAmount} health";
     }
 
     public void AssingNewData() { //random for now

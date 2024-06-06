@@ -17,6 +17,10 @@ public class DiscardPile : MonoBehaviour {
     public bool MoveToPCPDone {
         get { return moveToPCPDone; }
     }
+    bool moveToDpDone;
+    public bool MoveToDpDone {
+        get { return moveToDpDone; }
+    }
 
     GameManager gM;
     PlayerCardPile pCP;
@@ -49,6 +53,8 @@ public class DiscardPile : MonoBehaviour {
     }
 
     IEnumerator MoveCardToDiscardPile(GameObject card, float moveSpeed) {
+        moveToDpDone = false;
+
         float timer = 0f;
         while (card.transform.position != transform.position && timer <= gM.CardMoveRoutineMaxTime) {
             timer += Time.deltaTime;
@@ -62,6 +68,8 @@ public class DiscardPile : MonoBehaviour {
         //UpdateCounter();
         card.transform.localScale = new Vector3(1f, 1f);
         card.GetComponent<Card>().Clicked = false; //Set Card clicked bool back to false. -> Hovering "animations" work again
+
+        moveToDpDone = true;
     }
 
     public IEnumerator MoveCardToPlayerCardPile(GameObject card, float moveSpeed) {
@@ -74,12 +82,22 @@ public class DiscardPile : MonoBehaviour {
         RemoveCard(card);
 
         float timer = 0f;
+        while (Vector2.Distance(card.transform.position, pCP.transform.position) > 0.01f && timer <= gM.CardMoveRoutineMaxTime) { //Gpt while loop muutos
+            timer += Time.deltaTime;
+            // Scale card to be smaller as it moves to pile
+            card.transform.localScale -= Vector3.one * Time.deltaTime;
+            card.transform.position = Vector2.Lerp(card.transform.position, pCP.transform.position, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+        /* While loop ennen gpt muutosta
         while (card.transform.position != pCP.transform.position && timer <= gM.CardMoveRoutineMaxTime) {
             timer += Time.deltaTime;
             //Scale card to be smaller as it moves to pile
             card.transform.localScale = new Vector3(card.transform.localScale.x - Time.deltaTime, card.transform.localScale.y - Time.deltaTime);
             yield return card.transform.position = Vector2.Lerp(card.transform.position, pCP.transform.position, moveSpeed * Time.deltaTime);
         }
+        */
+
         //Hide card and set pile tranform as it's parent
         card.SetActive(false);
         card.transform.SetParent(pCP.transform, true);

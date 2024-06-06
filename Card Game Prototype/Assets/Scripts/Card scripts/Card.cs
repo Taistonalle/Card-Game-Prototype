@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class Card : DragAndPointerHandler {
     [Header("Card base info from scriptable object")]
@@ -52,7 +53,27 @@ public class Card : DragAndPointerHandler {
         cardImage.sprite = cardData.cardImage;
         playCostTxt.text = cardData.playCost.ToString();
         nameTxt.text = cardData.cardName;
-        descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
+        //descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
+
+        //Checks for bools in data, to know what to write in description
+
+        //Single bools
+        bool draw = cardData.draw;
+        bool dmg = cardData.dealDamage;
+        bool heal = cardData.heal;
+        bool block = cardData.block;
+        bool recAp = cardData.recoverAp;
+        bool buff = cardData.buff;
+        bool debuff = cardData.debuff;
+
+        //Double checks
+        if (draw && dmg) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} and deal {cardData.damage} damage";
+
+        //Single checks
+        else if (draw) descriptionTxt.text = $"{cardData.description} {cardData.drawAmount}";
+        else if (dmg) descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
+        else if (heal) descriptionTxt.text = $"{cardData.description} {cardData.healAmount} health";
+
     }
 
     public override void OnEndDrag(PointerEventData eventData) {
@@ -99,6 +120,29 @@ public class Card : DragAndPointerHandler {
         transform.position = new Vector2(transform.position.x, transform.position.y + posAmount);
     }
 
+    #region Card actions
+    IEnumerator Draw() {
+        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
+        if (player.AP < cardData.playCost) {
+            Debug.Log("Not enough AP to play this card");
+            StartCoroutine(MoveCardBackToHand(5f));
+            StopCoroutine(nameof(Draw));
+        }
+        else {
+            DiscardPile dP = FindObjectOfType<DiscardPile>();
+            PlayerHand hand = FindObjectOfType<PlayerHand>();
+
+            //Action point calculations
+            player.ReduceAP(cardData.playCost);
+
+            //Add card to discard pile and draw
+            dP.AddCardIntoDiscardPile(gameObject);
+            hand.RemoveCardFromHand(gameObject);
+            hand.RearrangeHand();
+            yield return StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        }
+    }
+
     void DealDamage(Enemy target) {
         //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
         if (player.AP < cardData.playCost) {
@@ -121,18 +165,97 @@ public class Card : DragAndPointerHandler {
         }
     }
 
+    void Heal() {
+        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
+        if (player.AP < cardData.playCost) {
+            Debug.Log("Not enough AP to play this card");
+            StartCoroutine(MoveCardBackToHand(5f));
+            return;
+        }
+
+        //DiscardPile dP = FindObjectOfType<DiscardPile>();
+        PlayerHand hand = FindObjectOfType<PlayerHand>();
+        PlayerDeck deck = FindObjectOfType<PlayerDeck>();
+
+        //Health and action point calculations
+        player.TakeHeal(cardData.healAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Remove card from hand list and "burn/destroy/delete" card
+        hand.RemoveCardFromHand(gameObject);
+        deck.RemoveCard(gameObject);
+        Destroy(gameObject); //Maybe add fancier way to remove card later
+        hand.RearrangeHand();
+
+        /* Before burning heal card idea came to mind
+        //Add card do discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+        */
+    }
+
+    IEnumerator DrawAndDealDamage(Enemy target) {
+        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
+        if (player.AP < cardData.playCost) {
+            Debug.Log("Not enough AP to play this card");
+            StartCoroutine(MoveCardBackToHand(5f));
+            StopCoroutine(nameof(DrawAndDealDamage));
+        }
+        else {
+            DiscardPile dP = FindObjectOfType<DiscardPile>();
+            PlayerHand hand = FindObjectOfType<PlayerHand>();
+
+            //Damage and action point calculations
+            target.TakeDamage(cardData.damage);
+            player.ReduceAP(cardData.playCost);
+
+            //Add card to discard pile and draw
+            dP.AddCardIntoDiscardPile(gameObject);
+            hand.RemoveCardFromHand(gameObject);
+            StartCoroutine(hand.DrawCards(cardData.drawAmount));
+            yield return new WaitUntil(() => !hand.Drawing);
+            hand.RearrangeHand();
+        }
+    }
+    #endregion
+
     void CheckCardPos() {
         //Check if card is dropped on top of drop are or not
         ColliderDistance2D colDist = GetComponent<BoxCollider2D>().Distance(gM.CardDropArea);
 
         //Below zero == colliders overlap --> Card dropped on drop area
-        if (colDist.distance <= 0) DealDamage(FindObjectOfType<Enemy>()); //Placeholder way of handling damage to target
+        //if (colDist.distance <= 0) DealDamage(FindObjectOfType<Enemy>()); //Placeholder way of handling damage to target
+        if (colDist.distance <= 0) CheckCardDetails();
         else StartCoroutine(MoveCardBackToHand(5f));
     }
 
     //Function to check what the card can do
-    void CheckCardDetails() { 
-        //do at somepoint. Using CardData bools etc.
+    void CheckCardDetails() {
+        Enemy target = FindObjectOfType<Enemy>();
+        //Checks for bools in data, to know what to do
+
+        //Single bools
+        bool draw = cardData.draw;
+        bool dmg = cardData.dealDamage;
+        bool heal = cardData.heal;
+        bool block = cardData.block;
+        bool recAp = cardData.recoverAp;
+        bool buff = cardData.buff;
+        bool debuff = cardData.debuff;
+
+        //Double checks
+        if (draw && dmg) StartCoroutine(DrawAndDealDamage(target));
+
+        //Single checks
+        else if (draw) StartCoroutine(Draw());
+        else if (dmg) DealDamage(target);
+        else if (heal) Heal();
+        else if (block) Debug.Log("Implement block card");
+        else if (recAp) Debug.Log("Implement AP recovery card");
+        else if (buff) Debug.Log("Implement buff card");
+        else if (debuff) Debug.Log("Implement debuff card");
+
     }
     #endregion
 

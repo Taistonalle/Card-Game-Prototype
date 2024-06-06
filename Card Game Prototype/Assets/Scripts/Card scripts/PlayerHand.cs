@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -24,6 +23,10 @@ public class PlayerHand : MonoBehaviour {
         get { return cardSlots; }
     }
 
+    bool drawing;
+    public bool Drawing {
+        get { return drawing; }
+    }
     GameManager gM;
 
     private void Start() {
@@ -77,7 +80,7 @@ public class PlayerHand : MonoBehaviour {
             int currentCardIndex = card.GetComponent<Card>().SlotIndex;
             //Search for unused slot and check that current card index is not the same as before
             for (int i = 0; i < cardSlots.slotsInUse.Length; i++) {
-                if(currentCardIndex > i && !cardSlots.slotsInUse[i]) {
+                if (currentCardIndex > i && !cardSlots.slotsInUse[i]) {
                     //Mark old slot as unused, assing a new slot & parent then move it to new slot
                     cardSlots.slotsInUse[currentCardIndex] = false;
                     card.GetComponent<Card>().SlotPos = cardSlots.slots[i].transform.position;
@@ -105,34 +108,43 @@ public class PlayerHand : MonoBehaviour {
     }
 
     public IEnumerator DrawCards(int amount) {
+        drawing = true;
         PlayerCardPile cardPile = FindObjectOfType<PlayerCardPile>();
         DiscardPile dP = FindObjectOfType<DiscardPile>();
 
         for (int i = 0; i < amount; i++) {
             //First check if card pile still has cards left. Yes - empty discard pile to player card pile & continue. No - Continue
             if (cardPile.CardCount == 0) {
-                for (int dPC = dP.CardCount - 1; dPC >= 0; dPC--) {
-                    yield return new WaitForSeconds(0.2f);
-                    dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[dPC], 5f));
+                for (int j = dP.CardCount - 1; j >= 0; j--) {
+                    Debug.Log($"Inside the dPC loop, dPC : {j}");
+                    //yield return new WaitForSeconds(0.2f); //gpt muutos poisti tämän
+                    yield return dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[j], 5f));
                 }
-                yield return new WaitUntil(() => dP.MoveToPCPDone); //Dont continue until coroutine(s) are done
+                //Debug.Log("Before the wait until");
+                //yield return new WaitUntil(() => dP.CardCount == 0); //Dont continue until coroutine(s) are done
+                //Debug.Log("After the wait until");
             }
 
-
-            int slotId = 0;
-            //Look for unused slot and use that slot index for coroutine
-            for (int k = 0; k < cardSlots.slotsInUse.Length; k++) {
-                if (!cardSlots.slotsInUse[k]) {
-                    slotId = k;
-                    break;
+            if (cardPile.CardCount > 0) {
+                int slotId = 0;
+                //Look for unused slot and use that slot index for coroutine
+                for (int k = 0; k < cardSlots.slotsInUse.Length; k++) {
+                    if (!cardSlots.slotsInUse[k]) {
+                        slotId = k;
+                        break;
+                    }
                 }
+                yield return cardPile.StartCoroutine(cardPile.MoveCardToPlayerHand(cardPile.Cards[0], slotId)); //Draw top card & move it to unused slot
+                cardPile.RemoveCard(cardPile.Cards[0]);
+                //Debug.Log($"Loop: {i}, slotId: {slotId}, slotUsed: {cardSlots.slotsInUse[slotId]}"); // Debugging tool
+                yield return new WaitForSeconds(0.2f);
             }
-            cardPile.StartCoroutine(cardPile.MoveCardToPlayerHand(cardPile.Cards[0], slotId)); //Draw top card & move it to unused slot
-            cardPile.RemoveCard(cardPile.Cards[0]);
-            Debug.Log($"Loop: {i}, slotId: {slotId}, slotUsed: {cardSlots.slotsInUse[slotId]}"); // Debugging 
-            yield return new WaitForSeconds(0.2f);
-            //yield return new WaitUntil(() => !cardPile.MovingRoutineRunning);
+            else {
+                //No more cards
+                break;
+            }
         }
+        drawing = false;
     }
 
     IEnumerator MoveCardToCorrectSlot(GameObject card, int slotIndex, float moveSpeed) {

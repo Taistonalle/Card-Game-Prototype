@@ -47,7 +47,12 @@ MonoBehaviour:
   cards: []
   cardCount: 0
   maxStartCardAmount: 10
+  originalDeck: []
   cardPrefabs:
   - {fileID: 1064329457145765964, guid: d9de0d34e83622a4685cb9b3929b79d2, type: 3}
   - {fileID: 1064329457145765964, guid: c85dba2ab5a13ba49b8265459925f1e5, type: 3}
   - {fileID: 1064329457145765964, guid: 0512124a8ef2c1e4789e7cd462b022fb, type: 3}
+  - {fileID: 1064329457145765964, guid: a7d17be5dcc7e9c42ac0835f5eb020f4, type: 3}
+  - {fileID: 1064329457145765964, guid: 9705f0f5045da844d9111616e9e35737, type: 3}
+  - {fileID: 1064329457145765964, guid: f59b0978aa94dca4c9277d4acb55dab8, type: 3}
+  - {fileID: 1064329457145765964, guid: e9e325b454132284aa2cfe65da634569, type: 3}

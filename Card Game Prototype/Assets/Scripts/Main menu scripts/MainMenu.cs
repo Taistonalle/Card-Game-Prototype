@@ -63,6 +63,7 @@ public class MainMenu : MonoBehaviour {
 
     public void Continue() {
         SceneManager.LoadScene(1);
+        pDeck.OriginalDeck = new List<GameObject>(pDeck.Cards); //Copy the created card selection list
     }
     #endregion
 

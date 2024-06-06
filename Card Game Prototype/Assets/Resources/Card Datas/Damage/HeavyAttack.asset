@@ -15,18 +15,22 @@ MonoBehaviour:
   cardName: Heavy attack
   description: Hit opponent for
   cardBackground: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  backgroundColor: {r: 0.41460484, g: 0.6243792, b: 0.7264151, a: 1}
+  backgroundColor: {r: 0.7647059, g: 0.38039216, b: 0.45882353, a: 1}
   cardImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   cardBorders:
   - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
-  - {fileID: 21300000, guid: 1e2d34e6c47f7364dad438b47cfee455, type: 3}
+  - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
+  drawAmount: 0
   damage: 20
   healAmount: 0
   blockAmount: 0
+  aPRecoverAmount: 0
   playCost: 3
-  dealDamage: 0
+  draw: 0
+  dealDamage: 1
   heal: 0
   block: 0
+  recoverAp: 0
   buff: 0
   buffType: 0
   debuff: 0

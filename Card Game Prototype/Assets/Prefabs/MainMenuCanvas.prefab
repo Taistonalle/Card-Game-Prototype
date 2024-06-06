@@ -131,6 +131,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 785306182ea0c5f459eb65de5da7162a, type: 2}
   - {fileID: 11400000, guid: 63565e3ccecf9824cbb61c3020f6d4c8, type: 2}
   - {fileID: 11400000, guid: 2ee1e941fc414fc4baa95215eb17db2d, type: 2}
+  - {fileID: 11400000, guid: 953ec474f8c88994499ccaab34de33df, type: 2}
+  - {fileID: 11400000, guid: 59b8e7873af5cd24b8fb223f1ebdb041, type: 2}
+  - {fileID: 11400000, guid: 800ab0554d0a3f946913984091730f9d, type: 2}
+  - {fileID: 11400000, guid: 7b5e8401776fd114499aedab92c7e482, type: 2}
   cardPreview: {fileID: 7149571630061005679}
 --- !u!1001 &603836211460068395
 PrefabInstance:

@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour {
         }
 
         yield return new WaitUntil(() => hand.isActiveAndEnabled);
-        yield return hand.StartCoroutine(hand.DrawCards(player.DrawAmount));
+        hand.StartCoroutine(hand.DrawCards(player.DrawAmount));
 
         /*
         //Add fixed amount of cards to hand
@@ -179,15 +179,14 @@ public class GameManager : MonoBehaviour {
     }
 
     public IEnumerator BeginNewTurn() {
-        endTurnButtonTxt.text = "End turn";
-        gameState = GameState.PlayerTurn;
-
         //Check if PlayerCardPile is empty. Yes -> empty discard pile into PlayerCardPile.
         if (pCP.CardCount == 0) {
-            for (int i = dP.Cards.Count - 1; i >= 0; i--) {
+            for (int i = dP.CardCount - 1; i >= 0; i--) {
                 yield return new WaitForSeconds(0.2f);
-                dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f));
+                dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //Keep like this, not yield return. Affects speed as well
+                //yield return dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //gpt muutos
             }
+            //yield return new WaitUntil(() => dP.CardCount == 0); Seems to mess with intervals as well
         }
 
         yield return new WaitForSeconds(CardMoveRoutineMaxTime); //Wait for the cards to be moved before drawing
@@ -196,7 +195,12 @@ public class GameManager : MonoBehaviour {
         if (hand.CardCount < 10 && pCP.Cards.Count > 0) {
             Debug.Log("Drawing card(s)");
             hand.StartCoroutine(hand.DrawCards(player.DrawAmount));
+            //yield return hand.StartCoroutine(hand.DrawCards(player.DrawAmount)); //chat gpt muutos ehdotus
         }
+
+        yield return new WaitUntil(() => !hand.Drawing);
+        endTurnButtonTxt.text = "End turn";
+        gameState = GameState.PlayerTurn;
     }
 
     IEnumerator EndTurn() {

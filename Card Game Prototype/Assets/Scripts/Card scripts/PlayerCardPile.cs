@@ -18,11 +18,11 @@ public class PlayerCardPile : MonoBehaviour {
         get { return movingRoutineRunning; }
     }
 
-    GameManager gM;
+    //GameManager gM;
     PlayerHand hand;
 
     void Start() {
-        gM = FindObjectOfType<GameManager>();
+        //gM = FindObjectOfType<GameManager>();
         hand = FindObjectOfType<PlayerHand>();
         UpdateCounter();
     }

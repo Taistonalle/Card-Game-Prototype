@@ -54,7 +54,12 @@ public class Player : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         health -= damage;
-        StartCoroutine(AnimateHealthBar(30f));
+        StartCoroutine(AnimateHealthBarDmg(30f));
+    }
+
+    public void TakeHeal(int amount) {
+        health += amount;
+        StartCoroutine(AnimateHealthBarHealth(30f));
     }
 
     public void ReduceAP(int actionCost) {
@@ -75,12 +80,25 @@ public class Player : MonoBehaviour {
         gM.StartCoroutine(gM.GameOver());
     }
 
-    IEnumerator AnimateHealthBar(float animSpeed) {
+    IEnumerator AnimateHealthBarDmg(float animSpeed) {
         if (health <= 0) health = 0;
 
         while (healthBar.value > health) {
             //yield return new WaitForSeconds(Time.deltaTime);
             healthBar.value -= animSpeed * Time.deltaTime;
+            healtBarNumber.text = Mathf.Round(healthBar.value).ToString();
+            yield return null;
+        }
+        //Make sure value is same as the health
+        healthBar.value = health;
+        Debug.Log($"{gameObject.name} health bar anim ended");
+    }
+
+    IEnumerator AnimateHealthBarHealth(float animSpeed) {
+        if (health >= 100) health = 100;
+
+        while (healthBar.value < health) {
+            healthBar.value += animSpeed * Time.deltaTime;
             healtBarNumber.text = Mathf.Round(healthBar.value).ToString();
             yield return null;
         }

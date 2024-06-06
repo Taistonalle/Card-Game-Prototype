@@ -15,6 +15,11 @@ public class PlayerDeck : MonoBehaviour {
     public int MaxStartCardAmount {
         get { return maxStartCardAmount; }
     }
+    [SerializeField] List<GameObject> originalDeck = new();
+    public List<GameObject> OriginalDeck {
+        get { return originalDeck; }
+        set { originalDeck = value; }
+    }
 
     [Header("All of the card prefabs")] //Used to pass prefab copies for cards list
     [SerializeField] GameObject[] cardPrefabs; 
@@ -47,7 +52,14 @@ public class PlayerDeck : MonoBehaviour {
     }
 
     public void RemoveCard(GameObject card) {
-        cards.Remove(card);
+        //Loop through the Card list and compare data. Remove the prefab on first match
+        for (int i = 0; i < cards.Count; i++) {
+            if (cards[i].GetComponent<Card>().CardData == card.GetComponent<Card>().CardData) {
+                Debug.Log($"Removing: {cards[i].name}");
+                cards.Remove(cards[i]);
+                break;
+            }
+        }
         UpdateCounter();
     }
 
@@ -57,12 +69,16 @@ public class PlayerDeck : MonoBehaviour {
     }
 
     public void RetryResetDeck() {
+        cards = new List<GameObject>(originalDeck); //clone the original back to cards
+        UpdateCounter();
+        /*
         for (int i = cardCount - 1; i >= maxStartCardAmount; i--) {
             Debug.Log($"Removing card from deck: {cards[i].name}");
             cards.RemoveAt(i);
             UpdateCounter();
             Debug.Log($"Cards left in deck after removal: {cardCount}");
         }
+        */
     }
 
     void UpdateCounter() {

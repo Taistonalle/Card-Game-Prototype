@@ -15,18 +15,22 @@ MonoBehaviour:
   cardName: Attack
   description: Hit opponent for
   cardBackground: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  backgroundColor: {r: 0.53306335, g: 0.9104331, b: 0.9339623, a: 1}
+  backgroundColor: {r: 0.7647059, g: 0.38039216, b: 0.45882353, a: 1}
   cardImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   cardBorders:
-  - {fileID: 21300000, guid: 6c195303dad48054da49626bbd0b215d, type: 3}
-  - {fileID: 21300000, guid: f08f8905e5dd439418ecc08e86b4423d, type: 3}
+  - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
+  - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
+  drawAmount: 0
   damage: 6
   healAmount: 0
   blockAmount: 0
+  aPRecoverAmount: 0
   playCost: 1
-  dealDamage: 0
+  draw: 0
+  dealDamage: 1
   heal: 0
   block: 0
+  recoverAp: 0
   buff: 0
   buffType: 0
   debuff: 0
