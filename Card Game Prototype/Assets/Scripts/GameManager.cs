@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour {
         if (pCP.CardCount == 0) {
             for (int i = dP.CardCount - 1; i >= 0; i--) {
                 yield return new WaitForSeconds(0.2f);
-                dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //Keep like this, not yield return. Affects speed as well
+                dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //Keep like this, not yield return. Affects speed as well. Further note: Try to remove this check entirely
                 //yield return dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //gpt muutos
             }
             //yield return new WaitUntil(() => dP.CardCount == 0); Seems to mess with intervals as well

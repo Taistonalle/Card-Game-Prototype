@@ -54,10 +54,10 @@ MonoBehaviour:
   cardDropArea: {fileID: 0}
   enemy: {fileID: 0}
   enemyDatas:
-  - {fileID: 11400000, guid: 537bf93db4a02e5488bedc66bc7347bd, type: 2}
-  - {fileID: 11400000, guid: e461121b3f0a3fe4ca6d44ec3c699ad7, type: 2}
-  - {fileID: 11400000, guid: 53a2b788af26558499d11a1e9d36a95f, type: 2}
   - {fileID: 11400000, guid: 1e87381563a575e4785df6f3fe10d712, type: 2}
+  - {fileID: 11400000, guid: 537bf93db4a02e5488bedc66bc7347bd, type: 2}
+  - {fileID: 11400000, guid: 53a2b788af26558499d11a1e9d36a95f, type: 2}
+  - {fileID: 11400000, guid: e461121b3f0a3fe4ca6d44ec3c699ad7, type: 2}
   bossEnemyDatas:
   - {fileID: 11400000, guid: 7a6012c73dc9d78409c9da46aba0ffde, type: 2}
   player: {fileID: 0}

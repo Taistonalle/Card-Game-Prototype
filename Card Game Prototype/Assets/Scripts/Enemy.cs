@@ -37,6 +37,10 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     public GameObject RewardCanvas {
         get { return rewardCanvas; }
     }
+    [SerializeField] GameObject winRewardCanvas;
+    public GameObject WinRewardCanvas {
+        get { return rewardCanvas; }
+    }
 
     GameManager gM;
 
@@ -74,7 +78,17 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
 
     void Die() {
         Debug.Log($"{enemyName} died! Activating reward view");
-        StartCoroutine(ActivateRewardView());
+
+        switch (enemyData.bossEnemy) {
+            case true:
+            //Placeholder thing to do
+            winRewardCanvas.SetActive(true);
+            break;
+
+            default:
+            StartCoroutine(ActivateRewardView());
+            break;
+        }
     }
 
     IEnumerator ActivateRewardView() {

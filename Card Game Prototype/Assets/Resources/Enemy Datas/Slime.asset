@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6eb7e61914cbf4caa072094720e76f, type: 3}
   m_Name: Slime
   m_EditorClassIdentifier: 
+  action: 0
   enemyName: Slime
-  health: 70
-  damage: 10
+  health: 60
+  damage: 7
   enemyArt: {fileID: 21300000, guid: b07de92d5b73dcb4c831789498dcfd45, type: 3}
   canStun: 0
   canDebuff: 0

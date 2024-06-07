@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6eb7e61914cbf4caa072094720e76f, type: 3}
   m_Name: Demon
   m_EditorClassIdentifier: 
+  action: 0
   enemyName: Demon
-  health: 200
-  damage: 20
+  health: 130
+  damage: 10
   enemyArt: {fileID: 21300000, guid: dea7f711f64ace743bed0d7824e5cbfa, type: 3}
   canStun: 0
   canDebuff: 0

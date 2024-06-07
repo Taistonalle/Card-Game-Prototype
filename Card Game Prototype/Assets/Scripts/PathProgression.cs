@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,8 +23,18 @@ public class PathProgression : MonoBehaviour {
     GameManager gM;
 
     void Start() {
-        AssignButtonIcons();
+        FindPathButtons();
         gM = FindObjectOfType<GameManager>();
+        StartCoroutine(MoveContentView());
+    }
+
+    void FindPathButtons() {
+        GameObject[] buttons = GameObject.FindGameObjectsWithTag("PathButton");
+
+        foreach (GameObject button in buttons) {
+            pathButtons.Add(button.GetComponent<Button>());
+        }
+        AssignButtonIcons();
     }
 
     void AssignButtonIcons() {
@@ -52,9 +63,61 @@ public class PathProgression : MonoBehaviour {
     }
 
     public void SelectRandomEnemyData(Button button) { //Button press function. Used in PathButtons
-        int rand = Random.Range(0, gM.EnemyDatas.Length);
+        //int rand = Random.Range(0, gM.EnemyDatas.Length);
+        int rand = 0;
 
-        Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.EnemyDatas[rand].enemyName}");
-        gM.Enemy.AssignDataValues(gM.EnemyDatas[rand]);
+        //After a button is pressed it also modifies the path point int. Therefore it can be used here to check what range of enemies can spawn on pressed button
+        switch (pathPoint) {
+            case < 5:
+            Debug.Log($"PathPoint: {pathPoint} below below 5. Using GM enemy range between 0 to 2");
+            rand = Random.Range(0, 3);
+            break;
+
+            case 5:
+            Debug.Log($"PathPoint: {pathPoint}. MiniBoss time! Using GM enemy range between 3 to 3");
+            rand = Random.Range(3, 4);
+            break;
+
+            case < 10:
+            Debug.Log($"PathPoint: {pathPoint} below below 10. Using GM enemy range between 1 to 3");
+            rand = Random.Range(1, 4);
+            break;
+
+            case 20:
+            Debug.Log($"PathPoint: {pathPoint}. BOSS time! Selectin boss enemy from boss data");
+            rand = 0; //Index 0 for now, because there is only one boss enemy atm.
+            break;
+        }
+
+        //Second "same" switch to check data sheet to use at different points
+        switch (pathPoint) {
+            case 20:
+            Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.BossEnemyDatas[rand].enemyName}");
+            gM.Enemy.AssignDataValues(gM.BossEnemyDatas[rand]);
+            break;
+
+            default:
+            Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.EnemyDatas[rand].enemyName}");
+            gM.Enemy.AssignDataValues(gM.EnemyDatas[rand]);
+            break;
+        }
+    }
+
+    //Automatic scrolling for the start, seeing the whole path and realize you can scroll it (hopefully).
+    IEnumerator MoveContentView() {
+        ScrollRect scrollRect = FindObjectOfType<ScrollRect>();
+
+        float scrollDuration = 10f;
+        float timer = 0f;
+        float startValue = scrollRect.verticalNormalizedPosition;
+        float endValue = 0f;
+
+        while (timer < scrollDuration) {
+            timer += Time.deltaTime;
+            float t = Mathf.Clamp01(timer / scrollDuration);
+            yield return scrollRect.verticalNormalizedPosition = Mathf.Lerp(startValue, endValue, t);
+        }
+
+        scrollRect.verticalNormalizedPosition = endValue;
     }
 }
