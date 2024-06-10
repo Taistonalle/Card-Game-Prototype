@@ -20,13 +20,16 @@ public class DiscardPile : MonoBehaviour {
     bool moveToDpDone;
     public bool MoveToDpDone {
         get { return moveToDpDone; }
+        set { moveToDpDone = value; }
     }
 
     GameManager gM;
+    DiscardPile dP;
     PlayerCardPile pCP;
 
     void Start() {
         gM = FindObjectOfType<GameManager>();
+        dP = FindObjectOfType<DiscardPile>();
         pCP = FindObjectOfType<PlayerCardPile>();
     }
 

@@ -27,10 +27,26 @@ public class PlayerHand : MonoBehaviour {
     public bool Drawing {
         get { return drawing; }
     }
+
+    //bool cardPlayed;
+    //public bool CardPlayed {
+    //    get { return cardPlayed; }
+    //    set { cardPlayed = value; }
+    //}
+
     GameManager gM;
+    DiscardPile dP;
 
     private void Start() {
         gM = FindObjectOfType<GameManager>();
+        dP = FindObjectOfType<DiscardPile>();
+    }
+
+    private void Update() { //Debug testing purposes only
+        if (Input.GetKeyDown(KeyCode.Space)) { // Trigger for testing
+            dP.MoveToDpDone = true;
+            Debug.Log("Manually setting MoveToDpDone to true for testing");
+        }
     }
 
     public void AddCardIntoHand(GameObject card) {
@@ -110,18 +126,19 @@ public class PlayerHand : MonoBehaviour {
     public IEnumerator DrawCards(int amount) {
         drawing = true;
         PlayerCardPile cardPile = FindObjectOfType<PlayerCardPile>();
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-
+        
         for (int i = 0; i < amount; i++) {
-            //First check if card pile still has cards left. Yes - empty discard pile to player card pile & continue. No - Continue
+            //First check if card pile still has cards left. No - empty discard pile to player card pile & continue. Yes - Continue
             if (cardPile.CardCount == 0) {
                 for (int j = dP.CardCount - 1; j >= 0; j--) {
                     Debug.Log($"Inside the dPC loop, dPC : {j}");
                     //yield return new WaitForSeconds(0.2f); //gpt muutos poisti tämän
-                    yield return dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[j], 5f));
+                    //yield return dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[j], 5f));
+                    yield return new WaitForSeconds(0.2f);
+                    dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[j], 5f));
                 }
                 //Debug.Log("Before the wait until");
-                //yield return new WaitUntil(() => dP.CardCount == 0); //Dont continue until coroutine(s) are done
+                yield return new WaitUntil(() => dP.CardCount == 0); //Dont continue until coroutine(s) are done
                 //Debug.Log("After the wait until");
             }
 
@@ -145,6 +162,7 @@ public class PlayerHand : MonoBehaviour {
             }
         }
         drawing = false;
+        //cardPlayed = false;
     }
 
     IEnumerator MoveCardToCorrectSlot(GameObject card, int slotIndex, float moveSpeed) {

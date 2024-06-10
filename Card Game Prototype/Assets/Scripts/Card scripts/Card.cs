@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class Card : DragAndPointerHandler {
     [Header("Card base info from scriptable object")]
@@ -121,7 +120,7 @@ public class Card : DragAndPointerHandler {
     }
 
     #region Card actions
-    IEnumerator Draw() {
+    void Draw() {
         //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
         if (player.AP < cardData.playCost) {
             Debug.Log("Not enough AP to play this card");
@@ -139,7 +138,7 @@ public class Card : DragAndPointerHandler {
             dP.AddCardIntoDiscardPile(gameObject);
             hand.RemoveCardFromHand(gameObject);
             hand.RearrangeHand();
-            yield return StartCoroutine(hand.DrawCards(cardData.drawAmount));
+            hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
         }
     }
 
@@ -195,7 +194,7 @@ public class Card : DragAndPointerHandler {
         */
     }
 
-    IEnumerator DrawAndDealDamage(Enemy target) {
+    void DrawAndDealDamage(Enemy target) {
         //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
         if (player.AP < cardData.playCost) {
             Debug.Log("Not enough AP to play this card");
@@ -213,8 +212,8 @@ public class Card : DragAndPointerHandler {
             //Add card to discard pile and draw
             dP.AddCardIntoDiscardPile(gameObject);
             hand.RemoveCardFromHand(gameObject);
-            StartCoroutine(hand.DrawCards(cardData.drawAmount));
-            yield return new WaitUntil(() => !hand.Drawing);
+            hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+            //yield return new WaitUntil(() => !hand.Drawing);
             hand.RearrangeHand();
         }
     }
@@ -245,10 +244,10 @@ public class Card : DragAndPointerHandler {
         bool debuff = cardData.debuff;
 
         //Double checks
-        if (draw && dmg) StartCoroutine(DrawAndDealDamage(target));
+        if (draw && dmg) DrawAndDealDamage(target);
 
         //Single checks
-        else if (draw) StartCoroutine(Draw());
+        else if (draw) Draw();
         else if (dmg) DealDamage(target);
         else if (heal) Heal();
         else if (block) Debug.Log("Implement block card");

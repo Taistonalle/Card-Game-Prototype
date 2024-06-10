@@ -480,7 +480,7 @@ PrefabInstance:
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.size
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
@@ -498,13 +498,13 @@ PrefabInstance:
         type: 3}
       propertyPath: cards.Array.data[2]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: 0512124a8ef2c1e4789e7cd462b022fb,
+      objectReference: {fileID: 1064329457145765964, guid: d9de0d34e83622a4685cb9b3929b79d2,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.data[3]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: d9de0d34e83622a4685cb9b3929b79d2,
+      objectReference: {fileID: 1064329457145765964, guid: a7d17be5dcc7e9c42ac0835f5eb020f4,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
@@ -516,7 +516,37 @@ PrefabInstance:
         type: 3}
       propertyPath: cards.Array.data[5]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: a7d17be5dcc7e9c42ac0835f5eb020f4,
+      objectReference: {fileID: 1064329457145765964, guid: e9e325b454132284aa2cfe65da634569,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[6]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: f59b0978aa94dca4c9277d4acb55dab8,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[7]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: 9705f0f5045da844d9111616e9e35737,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[8]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: d9de0d34e83622a4685cb9b3929b79d2,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[9]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: c85dba2ab5a13ba49b8265459925f1e5,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[10]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: c85dba2ab5a13ba49b8265459925f1e5,
         type: 3}
     - target: {fileID: 7348110032438998629, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
@@ -526,7 +556,7 @@ PrefabInstance:
     - target: {fileID: 7348110032438998629, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
