@@ -42,12 +42,12 @@ public class PlayerHand : MonoBehaviour {
         dP = FindObjectOfType<DiscardPile>();
     }
 
-    private void Update() { //Debug testing purposes only
-        if (Input.GetKeyDown(KeyCode.Space)) { // Trigger for testing
-            dP.MoveToDpDone = true;
-            Debug.Log("Manually setting MoveToDpDone to true for testing");
-        }
-    }
+    //private void Update() { //Debug testing purposes only
+    //    if (Input.GetKeyDown(KeyCode.Space)) { // Trigger for testing
+    //        dP.MoveToDpDone = true;
+    //        Debug.Log("Manually setting MoveToDpDone to true for testing");
+    //    }
+    //}
 
     public void AddCardIntoHand(GameObject card) {
         cards.Add(card);
@@ -137,9 +137,8 @@ public class PlayerHand : MonoBehaviour {
                     yield return new WaitForSeconds(0.2f);
                     dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[j], 5f));
                 }
-                //Debug.Log("Before the wait until");
                 yield return new WaitUntil(() => dP.CardCount == 0); //Dont continue until coroutine(s) are done
-                //Debug.Log("After the wait until");
+                cardPile.ShufflePile();
             }
 
             if (cardPile.CardCount > 0) {

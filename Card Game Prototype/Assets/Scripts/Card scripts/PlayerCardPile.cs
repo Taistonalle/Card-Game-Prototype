@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -45,6 +46,26 @@ public class PlayerCardPile : MonoBehaviour {
         foreach (GameObject card in cards) Destroy(card);
         cards.Clear();
         UpdateCounter();
+    }
+
+    //Below method is from here: https://thomassteffen.medium.com/super-simple-array-shuffle-with-linq-167b317ba035
+    static T[] ShuffleArray<T>(T[] array) {
+        System.Random random = new System.Random();
+        return array.OrderBy(x => random.Next()).ToArray();
+    }
+
+    //My variation as a list version :)
+    static List<T> ShuffleList<T>(List<T> list) {
+        System.Random random = new System.Random();
+        return list.OrderBy(x => random.Next()).ToList();
+    }
+
+    public void ShufflePile() {
+        //Debug.Log($"Pile order before");
+        //foreach (GameObject card in cards) Debug.Log($"{card.name} index: {cards.IndexOf(card)}");
+        cards = ShuffleList(cards);
+        //Debug.Log($"Pile order after");
+        //foreach (GameObject card in cards) Debug.Log($"{card.name} index: {cards.IndexOf(card)}");
     }
 
     public IEnumerator MoveCardToPlayerHand(GameObject card, int slotIndex) {

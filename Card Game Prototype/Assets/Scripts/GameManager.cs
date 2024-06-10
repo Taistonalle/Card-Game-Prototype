@@ -186,10 +186,12 @@ public class GameManager : MonoBehaviour {
                 dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //Keep like this, not yield return. Affects speed as well. Further note: Try to remove this check entirely
                 //yield return dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //gpt muutos
             }
+            yield return new WaitForSeconds(CardMoveRoutineMaxTime); //Wait for the cards to be moved before drawing
+            pCP.ShufflePile();
             //yield return new WaitUntil(() => dP.CardCount == 0); Seems to mess with intervals as well
         }
 
-        yield return new WaitForSeconds(CardMoveRoutineMaxTime); //Wait for the cards to be moved before drawing
+        //yield return new WaitForSeconds(CardMoveRoutineMaxTime); //Wait for the cards to be moved before drawing
         player.ResetAP();
         //Check if player can draw a card
         if (hand.CardCount < 10 && pCP.Cards.Count > 0) {
