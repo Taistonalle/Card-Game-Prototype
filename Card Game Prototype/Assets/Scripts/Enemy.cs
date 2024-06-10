@@ -24,6 +24,12 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healtBarNumber;
 
+    [Header("Indicator related")]
+    [SerializeField] TextMeshProUGUI dmgTxt;
+    [SerializeField] Sprite[] iconSprites;
+    [SerializeField] Image iconImg;
+    [SerializeField] int damage;
+
     [Header("Canvas related")]
     [SerializeField] GameObject combatCanvas;
     public GameObject CombatCanvas {
@@ -91,6 +97,28 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         }
     }
 
+    void UpdateIndicator() {
+        switch (enemyData.action) {
+            case PlannedAction.Attack:
+            dmgTxt.text = damage.ToString();
+            break;
+        }
+    }
+
+    public void PlanNextAction() {
+        int actionRange = Random.Range(0, System.Enum.GetNames(typeof(PlannedAction)).Length + 1); // used later
+        Debug.Log($"Enum num: {actionRange}");
+
+        //Switch using action range to set PlannedAction enum...
+
+        //Placeholder
+        if (enemyData.action == PlannedAction.Attack) {
+            //Randomise enemy damage from min damage to max damage range
+            damage = Random.Range(enemyData.minDamage, enemyData.maxDamage + 1); // +1 because, max last digit is exclusive
+            UpdateIndicator();
+        }
+    }
+
     IEnumerator ActivateRewardView() {
         rewardCanvas.SetActive(true);
         yield return null; //Wait for next frame
@@ -126,12 +154,13 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         }
     }
 
-    public IEnumerator DealDamage(int damage) {
-        Debug.Log($"{enemyName} dealt: {damage} damage");
+    public IEnumerator DealDamage() {
         Player player = FindObjectOfType<Player>();
+
         //TO DO: Add little animation for dealing damage to player
         yield return new WaitForSeconds(1f);
         player.TakeDamage(damage);
+        Debug.Log($"{enemyName} dealt: {damage} damage");
         yield return new WaitForSeconds(3f); //Placeholder timewise. Maybe add time lenght of animation later or something similar
         switch (player.Health) {
             case 0:

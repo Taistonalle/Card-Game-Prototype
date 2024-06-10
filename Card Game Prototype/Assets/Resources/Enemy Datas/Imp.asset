@@ -15,7 +15,8 @@ MonoBehaviour:
   action: 0
   enemyName: Imp
   health: 32
-  damage: 5
+  minDamage: 2
+  maxDamage: 5
   enemyArt: {fileID: 21300000, guid: b07de92d5b73dcb4c831789498dcfd45, type: 3}
   canStun: 0
   canDebuff: 0

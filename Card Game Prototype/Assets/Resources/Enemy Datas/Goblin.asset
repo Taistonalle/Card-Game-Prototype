@@ -15,7 +15,8 @@ MonoBehaviour:
   action: 0
   enemyName: Goblin
   health: 80
-  damage: 8
+  minDamage: 3
+  maxDamage: 8
   enemyArt: {fileID: 21300000, guid: b07de92d5b73dcb4c831789498dcfd45, type: 3}
   canStun: 0
   canDebuff: 0

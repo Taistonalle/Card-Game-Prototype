@@ -15,7 +15,8 @@ MonoBehaviour:
   action: 0
   enemyName: Slime
   health: 60
-  damage: 7
+  minDamage: 3
+  maxDamage: 7
   enemyArt: {fileID: 21300000, guid: b07de92d5b73dcb4c831789498dcfd45, type: 3}
   canStun: 0
   canDebuff: 0

@@ -9,7 +9,9 @@ public class DataEnemy : ScriptableObject {
     public PlannedAction action;
     public string enemyName;
     public int health;
-    public int damage;
+    //public int damage;
+    public int minDamage;
+    public int maxDamage;
     public Sprite enemyArt;
     public bool canStun;
     public bool canDebuff;

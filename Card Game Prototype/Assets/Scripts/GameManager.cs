@@ -89,10 +89,10 @@ public class GameManager : MonoBehaviour {
             pCP.AddCardIntoCardPile(copiedCard);
             pCP.UpdateCounter();
         }
+        pCP.ShufflePile(); // loop hapens first, no waiting needed :)
 
         yield return new WaitUntil(() => hand.isActiveAndEnabled);
         hand.StartCoroutine(hand.DrawCards(player.DrawAmount));
-
         /*
         //Add fixed amount of cards to hand
         int revOrder = 0;
@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour {
         dP.ClearDiscardPile();
         //enemy.AssignDataValues();
         player.ResetAP();
+        enemy.PlanNextAction();
         CopyDeckForUsage();
         StartCoroutine(InstantiateDeckCards());
 
@@ -203,6 +204,9 @@ public class GameManager : MonoBehaviour {
         yield return new WaitUntil(() => !hand.Drawing);
         endTurnButtonTxt.text = "End turn";
         gameState = GameState.PlayerTurn;
+
+        //Show next enemy action
+        enemy.PlanNextAction();
     }
 
     IEnumerator EndTurn() {
@@ -216,7 +220,7 @@ public class GameManager : MonoBehaviour {
         }
 
         //Call enemy function stuff. NOTE: Use enemy planned action to determine what function enemy does. This in Enemy script ofc.
-        yield return enemy.StartCoroutine(enemy.DealDamage(enemy.EnemyData.damage));
+        yield return enemy.StartCoroutine(enemy.DealDamage());
     }
 
     public IEnumerator GameOver() {
