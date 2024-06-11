@@ -47,14 +47,22 @@ public class CardPreview : MonoBehaviour {
         bool draw = cardData.draw;
         bool dmg = cardData.dealDamage;
         bool heal = cardData.heal;
+        bool block = cardData.block;
+        bool recAp = cardData.recoverAp;
+        bool buff = cardData.buff;
+        bool debuff = cardData.debuff;
 
         //Double checks
         if (draw && dmg) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} and deal {cardData.damage} damage";
+        else if (draw && block) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount} and draw {cardData.drawAmount}";
 
         //Single checks
-        else if (draw) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount}";
+        else if (draw) descriptionTxt.text = $"{cardData.description} {cardData.drawAmount}";
         else if (dmg) descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
         else if (heal) descriptionTxt.text = $"{cardData.description} {cardData.healAmount} health";
+        else if (block) descriptionTxt.text = $"{cardData.description} {cardData.blockAmount} block";
+        else if (recAp) descriptionTxt.text = $"{cardData.description} {cardData.aPRecoverAmount} action points";
+        else if (buff) descriptionTxt.text = $"{cardData.description} Gain {cardData.buffType} for {cardData.buffDuration} turns";
     }
 
     public void AssingNewData() { //random for now

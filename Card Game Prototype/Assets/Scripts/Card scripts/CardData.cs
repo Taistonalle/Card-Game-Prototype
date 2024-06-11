@@ -22,6 +22,8 @@ public class CardData : ScriptableObject {
     public int blockAmount;
     public int aPRecoverAmount;
     public int playCost;
+    public int buffDuration;
+    public int debuffDuration;
 
     [Header("What can the card do?")]
     public bool draw;

@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum StatusEffect { None, Stunned, Dazed }
+public enum BuffEffect { None, Strenght, Dodge }
 public class Player : MonoBehaviour {
     [Header("Player stats")]
     [SerializeField][Range(0, 100)] int health;
     public int Health {
         get { return health; }
+    }
+    [SerializeField] int block;
+    public int Block {
+        get { return block; }
     }
     [SerializeField] int maxAP;
     public int MaxAP {
@@ -23,14 +27,29 @@ public class Player : MonoBehaviour {
     }
     [SerializeField] TextMeshProUGUI aPCounter;
     [SerializeField] StatusEffect statusEffect;
+    [SerializeField] BuffEffect[] buffs;
+    public BuffEffect[] Buffs {
+        get { return buffs; }
+    }
 
-    [Header("Health bar related")]
+    [Header("Health & block related")]
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healtBarNumber;
+    [SerializeField] Image blockImg;
+    [SerializeField] TextMeshProUGUI blockTxt;
+    [SerializeField] CanvasGroup blockIconGrp;
+
+    [Header("Buff & debuff related")]
+    [SerializeField] CanvasGroup strIconGgp;
+    [SerializeField] TextMeshProUGUI strDurTxt;
+    [SerializeField] int strDuration;
+    [SerializeField] float strDmgMultiplier;
+    public float StrDmgMultiplier {
+        get { return strDmgMultiplier; }
+    }
 
     [Header("Deck related")]
-    //Maybe add list later that has cards player uses or has collected etc. 
-    [SerializeField] int deckSize;
+    [SerializeField] int deckSize; //Not used anywhere atm. Maybe even remove at some point
     public int DeckSize {
         get { return deckSize; }
     }
@@ -53,7 +72,28 @@ public class Player : MonoBehaviour {
     }
 
     public void TakeDamage(int damage) {
-        health -= damage;
+        int remainingDmg = 0;
+
+        //First check if player has block, reduce that  first before health
+        switch (block) {
+            case > 0:
+            //Further check if damage is more than current block, calculate remaining damage.
+            if (damage > block) {
+                remainingDmg = damage - block;
+                ResetBlock();
+                //Then use remaining damage for health removal
+                health -= remainingDmg;
+            }
+            else if (damage == block) {
+                ResetBlock();
+            }
+            else ReduceBlock(damage);
+            break;
+
+            default:
+            health -= damage;
+            break;
+        }
         StartCoroutine(AnimateHealthBarDmg(30f));
     }
 
@@ -62,8 +102,45 @@ public class Player : MonoBehaviour {
         StartCoroutine(AnimateHealthBarHealth(30f));
     }
 
+    public void GainBlock(int amount) {
+        switch (block) {
+            case <= 0:
+            StartCoroutine(FadeIcon(blockIconGrp, 0.3f, 0f, 1f));
+            break;
+        }
+        block += amount;
+        UpdateBlockCounter();
+    }
+
+    void ReduceBlock(int amount) {
+        block -= amount;
+        UpdateBlockCounter();
+    }
+
+    IEnumerator FadeIcon(CanvasGroup group, float duration, float startValue, float endValue) {
+        float timer = 0f;
+
+        while (timer < duration) {
+            timer += Time.deltaTime;
+            float t = Mathf.Clamp01(timer / duration);
+            yield return group.alpha = Mathf.Lerp(startValue, endValue, t);
+        }
+        group.alpha = endValue;
+    }
+
+    public void ResetBlock() {
+        StartCoroutine(FadeIcon(blockIconGrp, 0.3f, 1f, 0f));
+        block = 0;
+        UpdateBlockCounter();
+    }
+
     public void ReduceAP(int actionCost) {
         aP -= actionCost;
+        UpdateActionPointCounter();
+    }
+
+    public void RecoverAP(int amount) {
+        aP += amount;
         UpdateActionPointCounter();
     }
 
@@ -72,8 +149,47 @@ public class Player : MonoBehaviour {
         UpdateActionPointCounter();
     }
 
+    public void ResetBuffs() {
+        for (int i = 0; i < buffs.Length; i++) {
+            buffs[i] = BuffEffect.None;
+        }
+        strDuration = 0;
+        strDurTxt.text = strDuration.ToString();
+        StartCoroutine(FadeIcon(strIconGgp, 0.3f, 1f, 0f));
+
+        //Add rest of the buff resets later...
+    }
+
+    public void GainBuff(BuffType buffType, int duration) {
+        switch (buffType) {
+            case BuffType.Strenght:
+            if (strDuration == 0) StartCoroutine(FadeIcon(strIconGgp, 0.3f, 0f, 1f));
+            buffs[0] = BuffEffect.Strenght;
+            strDuration += duration;
+            strDurTxt.text = strDuration.ToString();
+            break;
+        }
+    }
+
+    public void UpdateBuffDuration(BuffEffect buffEffect) {
+        switch (buffEffect) {
+            case BuffEffect.Strenght:
+            strDuration -= 1;
+            strDurTxt.text = strDuration.ToString();
+            if (strDuration == 0) {
+                StartCoroutine(FadeIcon(strIconGgp, 0.3f, 1f, 0f));
+                buffs[0] = BuffEffect.None;
+            }
+            break;
+        }
+    }
+
     void UpdateActionPointCounter() {
         aPCounter.text = $"{aP}/{maxAP}";
+    }
+
+    void UpdateBlockCounter() {
+        blockTxt.text = block.ToString();
     }
 
     public void Die() { //Later for juicying add death animation or like different sprite

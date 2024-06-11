@@ -14,6 +14,9 @@ public class PathProgression : MonoBehaviour {
     [Header("Path line renderers")]
     [SerializeField] LineRenderer[] paths;
 
+    [Header("Other values")]
+    [SerializeField] [Tooltip("Time it takes at start for view to scroll from top to bottom")] float viewScrollTime;
+
     int pathPoint = 0; //Used to determine what point does path linerender draw for TravelledLine
     public int PathPoint {
         get { return pathPoint; }
@@ -107,14 +110,14 @@ public class PathProgression : MonoBehaviour {
     IEnumerator MoveContentView() {
         ScrollRect scrollRect = FindObjectOfType<ScrollRect>();
 
-        float scrollDuration = 10f;
+        //float scrollDuration = 10f;
         float timer = 0f;
         float startValue = scrollRect.verticalNormalizedPosition;
         float endValue = 0f;
 
-        while (timer < scrollDuration) {
+        while (timer < viewScrollTime) {
             timer += Time.deltaTime;
-            float t = Mathf.Clamp01(timer / scrollDuration);
+            float t = Mathf.Clamp01(timer / viewScrollTime);
             yield return scrollRect.verticalNormalizedPosition = Mathf.Lerp(startValue, endValue, t);
         }
 

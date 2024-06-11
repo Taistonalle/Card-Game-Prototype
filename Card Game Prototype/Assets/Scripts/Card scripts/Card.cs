@@ -67,11 +67,15 @@ public class Card : DragAndPointerHandler {
 
         //Double checks
         if (draw && dmg) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} and deal {cardData.damage} damage";
+        else if (draw && block) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount} and draw {cardData.drawAmount}";
 
         //Single checks
         else if (draw) descriptionTxt.text = $"{cardData.description} {cardData.drawAmount}";
         else if (dmg) descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
         else if (heal) descriptionTxt.text = $"{cardData.description} {cardData.healAmount} health";
+        else if (block) descriptionTxt.text = $"{cardData.description} {cardData.blockAmount} block";
+        else if (recAp) descriptionTxt.text = $"{cardData.description} {cardData.aPRecoverAmount} action points";
+        else if (buff) descriptionTxt.text = $"{cardData.description} Gain {cardData.buffType} for {cardData.buffDuration} turns";
 
     }
 
@@ -154,7 +158,18 @@ public class Card : DragAndPointerHandler {
             PlayerHand hand = FindObjectOfType<PlayerHand>();
 
             //Damage and action point calculations
-            target.TakeDamage(cardData.damage);
+            //Does player have strenght buff?
+            switch (player.Buffs[0]) {
+                case BuffEffect.Strenght:
+                int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+                Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+                target.TakeDamage(totalDmg);
+                break;
+
+                default:
+                target.TakeDamage(cardData.damage);
+                break;
+            }
             player.ReduceAP(cardData.playCost);
 
             //Add card to discard pile
@@ -194,19 +209,94 @@ public class Card : DragAndPointerHandler {
         */
     }
 
+    void Block() {
+        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
+        if (player.AP < cardData.playCost) {
+            Debug.Log("Not enough AP to play this card");
+            StartCoroutine(MoveCardBackToHand(5f));
+            return;
+        }
+
+        DiscardPile dP = FindObjectOfType<DiscardPile>();
+        PlayerHand hand = FindObjectOfType<PlayerHand>();
+
+        //Block and cost calculations
+        player.GainBlock(cardData.blockAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void RecoverAp() {
+        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
+        if (player.AP < cardData.playCost) {
+            Debug.Log("Not enough AP to play this card");
+            StartCoroutine(MoveCardBackToHand(5f));
+            return;
+        }
+
+        DiscardPile dP = FindObjectOfType<DiscardPile>();
+        PlayerHand hand = FindObjectOfType<PlayerHand>();
+        
+        //Ap recovery and cost calculations
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void Buff() {
+        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
+        if (player.AP < cardData.playCost) {
+            Debug.Log("Not enough AP to play this card");
+            StartCoroutine(MoveCardBackToHand(5f));
+            return;
+        }
+
+        DiscardPile dP = FindObjectOfType<DiscardPile>();
+        PlayerHand hand = FindObjectOfType<PlayerHand>();
+
+        //Buff check & cost calculations
+        player.GainBuff(cardData.buffType, cardData.buffDuration);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
     void DrawAndDealDamage(Enemy target) {
         //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
         if (player.AP < cardData.playCost) {
             Debug.Log("Not enough AP to play this card");
             StartCoroutine(MoveCardBackToHand(5f));
-            StopCoroutine(nameof(DrawAndDealDamage));
+            return;
+            //StopCoroutine(nameof(DrawAndDealDamage));
         }
         else {
             DiscardPile dP = FindObjectOfType<DiscardPile>();
             PlayerHand hand = FindObjectOfType<PlayerHand>();
 
             //Damage and action point calculations
-            target.TakeDamage(cardData.damage);
+            //Does player have strenght buff?
+            switch (player.Buffs[0]) {
+                case BuffEffect.Strenght:
+                int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+                Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+                target.TakeDamage(totalDmg);
+                break;
+
+                default:
+                target.TakeDamage(cardData.damage);
+                break;
+            }
             player.ReduceAP(cardData.playCost);
 
             //Add card to discard pile and draw
@@ -217,6 +307,28 @@ public class Card : DragAndPointerHandler {
             hand.RearrangeHand();
         }
     }
+
+    void BlockAndDraw() {
+        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
+        if (player.AP < cardData.playCost) {
+            Debug.Log("Not enough AP to play this card");
+            StartCoroutine(MoveCardBackToHand(5f));
+            return;
+        }
+
+        DiscardPile dP = FindObjectOfType<DiscardPile>();
+        PlayerHand hand = FindObjectOfType<PlayerHand>();
+
+        //Block and cost calculations
+        player.GainBlock(cardData.blockAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
     #endregion
 
     void CheckCardPos() {
@@ -224,7 +336,6 @@ public class Card : DragAndPointerHandler {
         ColliderDistance2D colDist = GetComponent<BoxCollider2D>().Distance(gM.CardDropArea);
 
         //Below zero == colliders overlap --> Card dropped on drop area
-        //if (colDist.distance <= 0) DealDamage(FindObjectOfType<Enemy>()); //Placeholder way of handling damage to target
         if (colDist.distance <= 0) CheckCardDetails();
         else StartCoroutine(MoveCardBackToHand(5f));
     }
@@ -245,14 +356,15 @@ public class Card : DragAndPointerHandler {
 
         //Double checks
         if (draw && dmg) DrawAndDealDamage(target);
+        else if (draw && block) BlockAndDraw();
 
         //Single checks
         else if (draw) Draw();
         else if (dmg) DealDamage(target);
         else if (heal) Heal();
-        else if (block) Debug.Log("Implement block card");
-        else if (recAp) Debug.Log("Implement AP recovery card");
-        else if (buff) Debug.Log("Implement buff card");
+        else if (block) Block();
+        else if (recAp) RecoverAp();
+        else if (buff) Buff();
         else if (debuff) Debug.Log("Implement debuff card");
 
     }

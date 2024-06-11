@@ -127,13 +127,13 @@ public class GameManager : MonoBehaviour {
 
     public void StartCombat() {
         gameState = GameState.PlayerTurn;
-        //FindEverything();
 
         hand.ClearHand();
         pCP.ClearPlayerCardPile();
         dP.ClearDiscardPile();
-        //enemy.AssignDataValues();
         player.ResetAP();
+        if (player.Block > 0) player.ResetBlock();
+        if (player.Buffs[0] != BuffEffect.None || player.Buffs[1] != BuffEffect.None) player.ResetBuffs(); // Do check better later...
         enemy.PlanNextAction();
         CopyDeckForUsage();
         StartCoroutine(InstantiateDeckCards());
@@ -184,21 +184,23 @@ public class GameManager : MonoBehaviour {
         if (pCP.CardCount == 0) {
             for (int i = dP.CardCount - 1; i >= 0; i--) {
                 yield return new WaitForSeconds(0.2f);
-                dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //Keep like this, not yield return. Affects speed as well. Further note: Try to remove this check entirely
-                //yield return dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //gpt muutos
+                dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //Keep like this, not yield return. Affects speed as well.
             }
             yield return new WaitForSeconds(CardMoveRoutineMaxTime); //Wait for the cards to be moved before drawing
             pCP.ShufflePile();
             //yield return new WaitUntil(() => dP.CardCount == 0); Seems to mess with intervals as well
         }
 
-        //yield return new WaitForSeconds(CardMoveRoutineMaxTime); //Wait for the cards to be moved before drawing
+        //Player checks and functions
+        //Buff checks
+        if (player.Buffs[0] == BuffEffect.Strenght) player.UpdateBuffDuration(BuffEffect.Strenght);
+        //More buff checks later as more get added...
+        if (player.Block > 0) player.ResetBlock();
         player.ResetAP();
         //Check if player can draw a card
         if (hand.CardCount < 10 && pCP.Cards.Count > 0) {
             Debug.Log("Drawing card(s)");
             hand.StartCoroutine(hand.DrawCards(player.DrawAmount));
-            //yield return hand.StartCoroutine(hand.DrawCards(player.DrawAmount)); //chat gpt muutos ehdotus
         }
 
         yield return new WaitUntil(() => !hand.Drawing);

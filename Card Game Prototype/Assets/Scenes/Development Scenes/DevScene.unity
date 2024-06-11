@@ -486,19 +486,19 @@ PrefabInstance:
         type: 3}
       propertyPath: cards.Array.data[0]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: 0512124a8ef2c1e4789e7cd462b022fb,
+      objectReference: {fileID: 1064329457145765964, guid: 9cf366ce10822f34098803f1cea48b94,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.data[1]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: 0512124a8ef2c1e4789e7cd462b022fb,
+      objectReference: {fileID: 1064329457145765964, guid: 9cf366ce10822f34098803f1cea48b94,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.data[2]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: d9de0d34e83622a4685cb9b3929b79d2,
+      objectReference: {fileID: 1064329457145765964, guid: e24303ad0316b6c4bb4bafaca6a79892,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
@@ -547,6 +547,41 @@ PrefabInstance:
       propertyPath: cards.Array.data[10]
       value: 
       objectReference: {fileID: 1064329457145765964, guid: c85dba2ab5a13ba49b8265459925f1e5,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cardPrefabs.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cardPrefabs.Array.data[7]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cardPrefabs.Array.data[8]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: dbeeed68a7d716040b9707a004ca9535,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cardPrefabs.Array.data[9]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: e24303ad0316b6c4bb4bafaca6a79892,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cardPrefabs.Array.data[10]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: cee6ac7610170da4c9c9a5d0649cd401,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cardPrefabs.Array.data[11]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: 9cf366ce10822f34098803f1cea48b94,
         type: 3}
     - target: {fileID: 7348110032438998629, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
@@ -814,6 +849,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
       objectReference: {fileID: 469911744}
+    - target: {fileID: 2662369441307769189, guid: a21f58008ecfc774abb877368f114361,
+        type: 3}
+      propertyPath: viewScrollTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3282121487302747599, guid: a21f58008ecfc774abb877368f114361,
         type: 3}
       propertyPath: m_Camera
