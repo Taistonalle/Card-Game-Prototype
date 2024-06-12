@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,13 +8,18 @@ public class PathProgression : MonoBehaviour {
     [SerializeField] Sprite[] icons;
 
     [Header("Path buttons")]
-    [SerializeField] List<Button> pathButtons = new();
+    [SerializeField] List<Button> enemyPathButtons = new();
+    [SerializeField] List<Button> eventPathButtons = new();
+    [SerializeField] List<Button> restPathButtons = new();
 
     [Header("Path line renderers")]
     [SerializeField] LineRenderer[] paths;
 
+    [Header("Rest canvas")]
+    [SerializeField] GameObject restCanvas;
+
     [Header("Other values")]
-    [SerializeField] [Tooltip("Time it takes at start for view to scroll from top to bottom")] float viewScrollTime;
+    [SerializeField][Tooltip("Time it takes at start for view to scroll from top to bottom")] float viewScrollTime;
 
     int pathPoint = 0; //Used to determine what point does path linerender draw for TravelledLine
     public int PathPoint {
@@ -23,6 +27,8 @@ public class PathProgression : MonoBehaviour {
         set { pathPoint = value; }
     }
 
+    [Header("FindObjectOfType workaround")]
+    [SerializeField] Player player;
     GameManager gM;
 
     void Start() {
@@ -32,18 +38,27 @@ public class PathProgression : MonoBehaviour {
     }
 
     void FindPathButtons() {
-        GameObject[] buttons = GameObject.FindGameObjectsWithTag("PathButton");
+        GameObject[] enemyButtons = GameObject.FindGameObjectsWithTag("PathButton_Enemy"); //Side note: Tags are assigned manually in inspector
+        GameObject[] eventButtons = GameObject.FindGameObjectsWithTag("PathButton_Event");
+        GameObject[] restButtons = GameObject.FindGameObjectsWithTag("PathButton_Rest");
 
-        foreach (GameObject button in buttons) {
-            pathButtons.Add(button.GetComponent<Button>());
-        }
+        foreach (GameObject button in enemyButtons) enemyPathButtons.Add(button.GetComponent<Button>());
+        foreach (GameObject button in eventButtons) eventPathButtons.Add(button.GetComponent<Button>());
+        foreach (GameObject button in restButtons) restPathButtons.Add(button.GetComponent<Button>());
+        
         AssignButtonIcons();
+        AssignRestButtons();
     }
 
     void AssignButtonIcons() {
-        foreach (Button button in pathButtons) {
-            button.image.sprite = icons[0];
-        }
+        foreach (Button button in enemyPathButtons) button.image.sprite = icons[0];
+        foreach (Button button in eventPathButtons) button.image.sprite = icons[1];
+        foreach (Button button in restPathButtons) button.image.sprite = icons[2];
+    }
+
+    void AssignRestButtons() {
+        //foreach (Button button in restPathButtons) button.onClick.AddListener(delegate { Rest(); });
+        foreach (Button button in restPathButtons) button.onClick.AddListener(delegate { ActivateRestView(); });
     }
 
     public void DrawPath(int pIndex) {
@@ -58,13 +73,14 @@ public class PathProgression : MonoBehaviour {
         int randomIndex = 0;
 
         //Add button listener for every button in the paths, that assign a random enemy data to enemy
-        foreach (Button button in pathButtons) {
+        foreach (Button button in enemyPathButtons) {
             randomIndex = Random.Range(0, gM.EnemyDatas.Length);
             Debug.Log($"Random index roll: {randomIndex} for {button.name}. {gM.EnemyDatas[randomIndex].enemyName}");
             button.onClick.AddListener(delegate { gM.Enemy.AssignDataValues(gM.EnemyDatas[randomIndex]); });
         }
     }
 
+    #region Button functions
     public void SelectRandomEnemyData(Button button) { //Button press function. Used in PathButtons
         //int rand = Random.Range(0, gM.EnemyDatas.Length);
         int rand = 0;
@@ -104,6 +120,29 @@ public class PathProgression : MonoBehaviour {
             gM.Enemy.AssignDataValues(gM.EnemyDatas[rand]);
             break;
         }
+    }
+
+    //----Used in Rest canvas buttons----
+    public void Rest() {
+        float restHeal = player.MaxHp * 0.3f;
+        float healResult = player.Health + restHeal;
+
+        if (healResult > player.MaxHp) {
+            player.Health = player.MaxHp;
+        }
+        else {
+            player.TakeHeal((int)restHeal);
+        }
+    }
+
+    public void Pray() {
+        player.MaxHp += 2;
+    }
+    #endregion
+
+    void ActivateRestView() {
+        gameObject.SetActive(false);
+        restCanvas.SetActive(true);
     }
 
     //Automatic scrolling for the start, seeing the whole path and realize you can scroll it (hopefully).

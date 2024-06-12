@@ -8,9 +8,15 @@ public enum StatusEffect { None, Stunned, Dazed }
 public enum BuffEffect { None, Strenght, Dodge }
 public class Player : MonoBehaviour {
     [Header("Player stats")]
-    [SerializeField][Range(0, 100)] int health;
+    [SerializeField] int health;
     public int Health {
         get { return health; }
+        set { health = value; }
+    }
+    [SerializeField] int maxHp;
+    public int MaxHp {
+        get { return maxHp; }
+        set { maxHp = value; }
     }
     [SerializeField] int block;
     public int Block {
@@ -62,11 +68,7 @@ public class Player : MonoBehaviour {
     GameManager gM;
 
     void Start() {
-        //Health bar values
-        healthBar.maxValue = health;
-        healthBar.value = health;
-        healtBarNumber.text = health.ToString();
-
+        UpdateHealthInfo();
         UpdateActionPointCounter();
         gM = FindObjectOfType<GameManager>();
     }
@@ -99,7 +101,15 @@ public class Player : MonoBehaviour {
 
     public void TakeHeal(int amount) {
         health += amount;
-        StartCoroutine(AnimateHealthBarHealth(30f));
+        switch (gameObject.activeInHierarchy) {
+            case true:
+            StartCoroutine(AnimateHealthBarHealth(30f));
+            break;
+
+            default:
+            Debug.Log("Player object not active. Skipping health bar animation");
+            break;
+        }
     }
 
     public void GainBlock(int amount) {
@@ -192,6 +202,13 @@ public class Player : MonoBehaviour {
         blockTxt.text = block.ToString();
     }
 
+    void UpdateHealthInfo() {
+        //Health bar values
+        healthBar.maxValue = maxHp;
+        healthBar.value = health;
+        healtBarNumber.text = health.ToString();
+    }
+
     public void Die() { //Later for juicying add death animation or like different sprite
         gM.StartCoroutine(gM.GameOver());
     }
@@ -211,7 +228,7 @@ public class Player : MonoBehaviour {
     }
 
     IEnumerator AnimateHealthBarHealth(float animSpeed) {
-        if (health >= 100) health = 100;
+        if (health >= maxHp) health = maxHp;
 
         while (healthBar.value < health) {
             healthBar.value += animSpeed * Time.deltaTime;

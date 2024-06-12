@@ -217,6 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHp: 100
   block: 0
   maxAP: 5
   aP: 5

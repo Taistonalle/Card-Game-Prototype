@@ -4,7 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PathButton
+  - PathButton_Enemy
+  - PathButton_Event
+  - PathButton_Rest
   layers:
   - Default
   - TransparentFX
