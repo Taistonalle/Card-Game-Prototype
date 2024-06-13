@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour {
         player.ResetAP();
         if (player.Block > 0) player.ResetBlock();
         if (player.Buffs[0] != BuffEffect.None || player.Buffs[1] != BuffEffect.None) player.ResetBuffs(); // Do check better later...
+        player.UpdateHealthInfo();
         enemy.PlanNextAction();
         CopyDeckForUsage();
         StartCoroutine(InstantiateDeckCards());

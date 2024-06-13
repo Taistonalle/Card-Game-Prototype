@@ -52,9 +52,16 @@ public class CardPreview : MonoBehaviour {
         bool buff = cardData.buff;
         bool debuff = cardData.debuff;
 
+        //Triple checks
+        if (heal && block && buff) {
+            descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount}, block {cardData.blockAmount} and gain {cardData.buffType} for {cardData.buffDuration} turns";
+        }
+
         //Double checks
         if (draw && dmg) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} and deal {cardData.damage} damage";
         else if (draw && block) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount} and draw {cardData.drawAmount}";
+        else if (dmg && heal) descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} and heal {cardData.healAmount}";
+        else if (block && recAp) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount} and gain {cardData.aPRecoverAmount} action points";
 
         //Single checks
         else if (draw) descriptionTxt.text = $"{cardData.description} {cardData.drawAmount}";

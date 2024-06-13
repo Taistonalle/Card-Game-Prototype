@@ -25,6 +25,7 @@ public class Player : MonoBehaviour {
     [SerializeField] int maxAP;
     public int MaxAP {
         get { return maxAP; }
+        set { maxAP = value; }
     }
     [SerializeField] int aP;
     public int AP {
@@ -202,7 +203,9 @@ public class Player : MonoBehaviour {
         blockTxt.text = block.ToString();
     }
 
-    void UpdateHealthInfo() {
+    public void UpdateHealthInfo() {
+        if (health > maxHp) health = maxHp;
+
         //Health bar values
         healthBar.maxValue = maxHp;
         healthBar.value = health;

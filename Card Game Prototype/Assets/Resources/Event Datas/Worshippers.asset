@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57f437b8aa24154c89b54c118ea0a9e, type: 3}
+  m_Name: Worshippers
+  m_EditorClassIdentifier: 
+  eventName: Worshippers
+  eventDescription: Entering the room you notice you are not alone. You see a lot
+    of fragile looking men worshipping a shrine and hear a strange prayer among the
+    men
+  eventImgSprite: {fileID: 21300000, guid: b07de92d5b73dcb4c831789498dcfd45, type: 3}
+  choiceHeader: What to do..
+  choiceOneHeaderTxt: 'Join:'
+  choiceOneDescriptionTxt: Join the worshippers and try to learn the prayer
+  choiceTwoHeaderTxt: 'Kill:'
+  choiceTwoDescriptionTxt: Kill the worshippers. This cannot be any good
+  choiceThreeHeaderTxt: 'Leave:'
+  choiceThreeDescriptionTxt: Leave them to it, they seem harmless
+  choiceOneGood: '"Haven''t seen you before..", one of the worshippers takes interest
+    in you. You explain you wish to learn the prayer they are chanting. He smiles
+    and puts his hand inside his robe. He hands you a old looking scroll. "Glad to
+    have one more believer".'
+  choiceOneBad: You approach the men, the closer you get the louder their chanting
+    becomes until you get close enough for them to notice you. They stop their chanting
+    and slowly turn their heads towards you. Very uneasy feeling begins to creep
+    on you as the room is now dead silent and worshippers are staring at you. The
+    next time you blink, everything is gone and you stand alone in the room.
+  choiceTwoGood: One by one, you slay the worshippers. None of the worshippers pay
+    attention to you, as if you were not there at all. On the last kill, chanting
+    finally stops. You look at the shrine they were woshipping. "Yes... you seem
+    worthy...", you hear the words coming out of the shrine and feel a bit.. different?
+  choiceTwoBad: 'As your attack is about to land in one of the worshippers, he instantly
+    turns around and grabs your hand. You look up and take a look at the other worshippers.
+    Something sinister is happening. Worshippers begin to transform and grow tiny
+    horns and their muscles grow at alarming speed. The one who grabbed your hand
+    looks at you and says in demonic voice: "Well.. looks like our blood sacrifice
+    came righ to us".
+
+    He pierces your skin with his nails and you feel the blood
+    flowing towards him. Then he tosses you out of the room, you are unable to re-enter.'

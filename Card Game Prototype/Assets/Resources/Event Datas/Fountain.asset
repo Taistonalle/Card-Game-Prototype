@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57f437b8aa24154c89b54c118ea0a9e, type: 3}
+  m_Name: Fountain
+  m_EditorClassIdentifier: 
+  eventName: Fountain
+  eventDescription: As you enter the room, you notice that the room almost in pristine
+    condition and has very lush vegetation. At the centre of the room there is a
+    fountain with clear water
+  eventImgSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  choiceHeader: I will..
+  choiceOneHeaderTxt: 'Drink:'
+  choiceOneDescriptionTxt: Drink from the fountain, seems refreshing!
+  choiceTwoHeaderTxt: 'Taste:'
+  choiceTwoDescriptionTxt: Vegetation doesn't look poisonous, taste one of the leaves
+  choiceThreeHeaderTxt: 'Leave:'
+  choiceThreeDescriptionTxt: It's a nice room, nothing for me here though
+  choiceOneGood: Refreshing indeed!
+  choiceOneBad: After a sip, first you feel fine, but after a few moments you feel
+    sick and notice that the lush vegetation begins to wither away and the water
+    in the fountain turns slowly into black muck. The room was not really in pristine
+    condition at all, it was an illusion. What on earth did you consume..
+  choiceTwoGood: As you are about to take a bite, the leaf gives you a small paper
+    cut in your finger. It's unusually sharp.. you pocket the leaf.
+  choiceTwoBad: You consume the leaf. Your stomach begins to hurt so badly you cannot
+    move for a while. Eventually the pain stops, but you feel weakened.
