@@ -17,9 +17,6 @@ public class GameManager : MonoBehaviour {
     }
     [SerializeField] List<GameObject> deckCopy;
 
-    [Header("Card prefabs")]
-    [SerializeField] GameObject[] dmgCards; // Remove later not used atm
-
     [Header("End turn button")]
     [SerializeField] TextMeshProUGUI endTurnButtonTxt;
     public TextMeshProUGUI EndTurnButtonTxt {
@@ -40,9 +37,25 @@ public class GameManager : MonoBehaviour {
     public Enemy Enemy {
         get { return enemy; }
     }
-    [SerializeField] DataEnemy[] enemyDatas;
-    public DataEnemy[] EnemyDatas {
-        get { return enemyDatas; }
+    [SerializeField] DataEnemy[] tierOneEnemyDatas;
+    public DataEnemy[] TierOneEnemyDatas {
+        get { return tierOneEnemyDatas; }
+    }
+    [SerializeField] DataEnemy[] tierTwoEnemyDatas;
+    public DataEnemy[] TierTwoEnemyDatas {
+        get { return tierTwoEnemyDatas; }
+    }
+    [SerializeField] DataEnemy[] tierThreeEnemyDatas;
+    public DataEnemy[] TierThreeEnemyDatas {
+        get { return tierThreeEnemyDatas; }
+    }
+    [SerializeField] DataEnemy[] tierFourEnemyDatas;
+    public DataEnemy[] TierFourEnemyDatas {
+        get { return tierFourEnemyDatas; }
+    }
+    [SerializeField] DataEnemy[] miniBossEnemyDatas;
+    public DataEnemy[] MiniBossEnemyDatas {
+        get { return miniBossEnemyDatas; }
     }
     [SerializeField] DataEnemy[] bossEnemyDatas;
     public DataEnemy[] BossEnemyDatas {

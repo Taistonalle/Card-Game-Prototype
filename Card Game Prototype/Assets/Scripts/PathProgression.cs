@@ -15,7 +15,8 @@ public class PathProgression : MonoBehaviour {
     [Header("Path line renderers")]
     [SerializeField] LineRenderer[] paths;
 
-    [Header("Rest canvas")]
+    [Header("Canvas references")]
+    [SerializeField] GameObject combatCanvas;
     [SerializeField] GameObject restCanvas;
 
     [Header("Other values")]
@@ -27,13 +28,17 @@ public class PathProgression : MonoBehaviour {
         set { pathPoint = value; }
     }
 
-    [Header("FindObjectOfType workaround")]
+    [Header("FindObjectOfType workaround")] //For objects that are not active at start
     [SerializeField] Player player;
+    [SerializeField] PathEvent pEvent;
+
+    //FadeCanvas fadeCanvas;
     GameManager gM;
 
     void Start() {
         FindPathButtons();
         gM = FindObjectOfType<GameManager>();
+        //fadeCanvas = FindObjectOfType<FadeCanvas>();
         StartCoroutine(MoveContentView());
     }
 
@@ -45,9 +50,11 @@ public class PathProgression : MonoBehaviour {
         foreach (GameObject button in enemyButtons) enemyPathButtons.Add(button.GetComponent<Button>());
         foreach (GameObject button in eventButtons) eventPathButtons.Add(button.GetComponent<Button>());
         foreach (GameObject button in restButtons) restPathButtons.Add(button.GetComponent<Button>());
-        
+
         AssignButtonIcons();
+        AssignEnemyButtons();
         AssignRestButtons();
+        AssignEventButtons();
     }
 
     void AssignButtonIcons() {
@@ -56,9 +63,27 @@ public class PathProgression : MonoBehaviour {
         foreach (Button button in restPathButtons) button.image.sprite = icons[2];
     }
 
+    void AssignEnemyButtons() {
+        foreach (Button button in enemyPathButtons) button.onClick.AddListener(delegate {
+            combatCanvas.SetActive(true);
+            gameObject.SetActive(false);
+            gM.StartCombat();
+            //fadeCanvas.StartCoroutine(fadeCanvas.Fade());
+        });
+    }
+
     void AssignRestButtons() {
-        //foreach (Button button in restPathButtons) button.onClick.AddListener(delegate { Rest(); });
-        foreach (Button button in restPathButtons) button.onClick.AddListener(delegate { ActivateRestView(); });
+        foreach (Button button in restPathButtons) button.onClick.AddListener(delegate {
+            ActivateRestView();
+            //fadeCanvas.StartCoroutine(fadeCanvas.Fade());
+        });
+    }
+
+    void AssignEventButtons() {
+        foreach (Button button in eventPathButtons) button.onClick.AddListener(delegate {
+            pEvent.ActivatePathView();
+            //fadeCanvas.StartCoroutine(fadeCanvas.Fade());
+        });
     }
 
     public void DrawPath(int pIndex) {
@@ -74,9 +99,9 @@ public class PathProgression : MonoBehaviour {
 
         //Add button listener for every button in the paths, that assign a random enemy data to enemy
         foreach (Button button in enemyPathButtons) {
-            randomIndex = Random.Range(0, gM.EnemyDatas.Length);
-            Debug.Log($"Random index roll: {randomIndex} for {button.name}. {gM.EnemyDatas[randomIndex].enemyName}");
-            button.onClick.AddListener(delegate { gM.Enemy.AssignDataValues(gM.EnemyDatas[randomIndex]); });
+            randomIndex = Random.Range(0, gM.TierOneEnemyDatas.Length);
+            Debug.Log($"Random index roll: {randomIndex} for {button.name}. {gM.TierOneEnemyDatas[randomIndex].enemyName}");
+            button.onClick.AddListener(delegate { gM.Enemy.AssignDataValues(gM.TierOneEnemyDatas[randomIndex]); });
         }
     }
 
@@ -88,38 +113,74 @@ public class PathProgression : MonoBehaviour {
         //After a button is pressed it also modifies the path point int. Therefore it can be used here to check what range of enemies can spawn on pressed button
         switch (pathPoint) {
             case < 5:
-            Debug.Log($"PathPoint: {pathPoint} below below 5. Using GM enemy range between 0 to 2");
-            rand = Random.Range(0, 3);
+            Debug.Log($"PathPoint: {pathPoint} below below 5. Tier 1 enemy");
+            rand = Random.Range(0, gM.TierOneEnemyDatas.Length);
+            Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.TierOneEnemyDatas[rand].enemyName}");
+            gM.Enemy.AssignDataValues(gM.TierOneEnemyDatas[rand]);
             break;
 
             case 5:
-            Debug.Log($"PathPoint: {pathPoint}. MiniBoss time! Using GM enemy range between 3 to 3");
-            rand = Random.Range(3, 4);
+            Debug.Log($"PathPoint: {pathPoint}. MiniBoss time!");
+            rand = Random.Range(0, gM.MiniBossEnemyDatas.Length);
+            Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.MiniBossEnemyDatas[rand].enemyName}");
+            gM.Enemy.AssignDataValues(gM.MiniBossEnemyDatas[rand]);
             break;
 
             case < 10:
-            Debug.Log($"PathPoint: {pathPoint} below below 10. Using GM enemy range between 1 to 3");
-            rand = Random.Range(1, 4);
+            Debug.Log($"PathPoint: {pathPoint} below below 10. Tier 2 enemy");
+            rand = Random.Range(0, gM.TierTwoEnemyDatas.Length);
+            Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.TierTwoEnemyDatas[rand].enemyName}");
+            gM.Enemy.AssignDataValues(gM.TierTwoEnemyDatas[rand]);
+            break;
+
+            case 10:
+            Debug.Log($"PathPoint: {pathPoint}. MiniBoss time!");
+            rand = Random.Range(0, gM.MiniBossEnemyDatas.Length);
+            Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.MiniBossEnemyDatas[rand].enemyName}");
+            gM.Enemy.AssignDataValues(gM.MiniBossEnemyDatas[rand]);
+            break;
+
+            case < 15:
+            Debug.Log($"PathPoint: {pathPoint} below below 15. Tier 3 enemy");
+            rand = Random.Range(0, gM.TierThreeEnemyDatas.Length);
+            Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.TierThreeEnemyDatas[rand].enemyName}");
+            gM.Enemy.AssignDataValues(gM.TierThreeEnemyDatas[rand]);
+            break;
+
+            case 15:
+            Debug.Log($"PathPoint: {pathPoint}. MiniBoss time!");
+            rand = Random.Range(0, gM.MiniBossEnemyDatas.Length);
+            Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.MiniBossEnemyDatas[rand].enemyName}");
+            gM.Enemy.AssignDataValues(gM.MiniBossEnemyDatas[rand]);
+            break;
+
+            case < 20:
+            Debug.Log($"PathPoint: {pathPoint} below below 20. Tier 4 enemy");
+            rand = Random.Range(0, gM.TierFourEnemyDatas.Length);
+            Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.TierFourEnemyDatas[rand].enemyName}");
+            gM.Enemy.AssignDataValues(gM.TierFourEnemyDatas[rand]);
             break;
 
             case 20:
             Debug.Log($"PathPoint: {pathPoint}. BOSS time! Selectin boss enemy from boss data");
-            rand = 0; //Index 0 for now, because there is only one boss enemy atm.
-            break;
-        }
-
-        //Second "same" switch to check data sheet to use at different points
-        switch (pathPoint) {
-            case 20:
+            rand = Random.Range(0, gM.BossEnemyDatas.Length);
             Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.BossEnemyDatas[rand].enemyName}");
             gM.Enemy.AssignDataValues(gM.BossEnemyDatas[rand]);
             break;
-
-            default:
-            Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.EnemyDatas[rand].enemyName}");
-            gM.Enemy.AssignDataValues(gM.EnemyDatas[rand]);
-            break;
         }
+
+        ////Second "same" switch to check data sheet to use at different points
+        //switch (pathPoint) {
+        //    case 20:
+        //    Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.BossEnemyDatas[rand].enemyName}");
+        //    gM.Enemy.AssignDataValues(gM.BossEnemyDatas[rand]);
+        //    break;
+
+        //    default:
+        //    Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.TierOneEnemyDatas[rand].enemyName}");
+        //    gM.Enemy.AssignDataValues(gM.TierOneEnemyDatas[rand]);
+        //    break;
+        //}
     }
 
     //----Used in Rest canvas buttons----
@@ -136,7 +197,16 @@ public class PathProgression : MonoBehaviour {
     }
 
     public void Pray() {
-        player.MaxHp += 2;
+        player.MaxHp += 10;
+        float restHeal = player.MaxHp * 0.1f;
+        float healResult = player.Health + restHeal;
+
+        if (healResult > player.MaxHp) {
+            player.Health = player.MaxHp;
+        }
+        else {
+            player.TakeHeal((int)restHeal);
+        }
     }
     #endregion
 

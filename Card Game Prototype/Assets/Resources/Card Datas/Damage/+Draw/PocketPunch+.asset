@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5ac885bd5baa447876ce6ce23e4155, type: 3}
+  m_Name: PocketPunch+
+  m_EditorClassIdentifier: 
+  cardName: Pocket Punch+
+  description: Punch and draw in one!
+  cardBackground: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  backgroundColor: {r: 1, g: 0.7893324, b: 0.5990566, a: 1}
+  cardImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  cardBorders:
+  - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
+  - {fileID: 21300000, guid: 6a0b66e17e1ea43479fe27bd8f72a175, type: 3}
+  drawAmount: 1
+  damage: 8
+  healAmount: 0
+  blockAmount: 0
+  aPRecoverAmount: 0
+  playCost: 1
+  buffDuration: 0
+  debuffDuration: 0
+  draw: 1
+  dealDamage: 1
+  heal: 0
+  block: 0
+  recoverAp: 0
+  buff: 0
+  buffType: 0
+  debuff: 0
+  debuffType: 0

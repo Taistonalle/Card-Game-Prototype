@@ -2356,6 +2356,7 @@ MonoBehaviour:
   - {fileID: 1064329457145765964, guid: c6394d6cb3345844d9ef169a3a233bed, type: 3}
   - {fileID: 1064329457145765964, guid: 626e5321cc032c44fbb9a0020907e654, type: 3}
   - {fileID: 1064329457145765964, guid: b2f05185cef55d145b34910c41d1959f, type: 3}
+  - {fileID: 1064329457145765964, guid: 9d117be1258dab64d8ed9b0f9a1a273a, type: 3}
   pathCanvas: {fileID: 0}
   player: {fileID: 0}
   deck: {fileID: 0}

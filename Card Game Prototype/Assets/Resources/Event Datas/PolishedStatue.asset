@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57f437b8aa24154c89b54c118ea0a9e, type: 3}
+  m_Name: PolishedStatue
+  m_EditorClassIdentifier: 
+  eventName: Polished statue
+  eventDescription: As you move forward, you notice a statue that differs a lot from
+    other statues you've seen on the way. It's very shiny, clearly someone has been
+    polishing it
+  eventImgSprite: {fileID: 21300000, guid: dea7f711f64ace743bed0d7824e5cbfa, type: 3}
+  choiceHeader: What to do...
+  choiceOneHeaderTxt: 'Study:'
+  choiceOneDescriptionTxt: Take a closer look
+  choiceTwoHeaderTxt: 'Hide:'
+  choiceTwoDescriptionTxt: Hide and wait to see who or what it polishing the statue
+  choiceThreeHeaderTxt: 'Leave:'
+  choiceThreeDescriptionTxt: Just a statue, nothing to see here
+  choiceOneGood: You notice a hidden compartment behind the statue. You found a potion!
+  choiceOneBad: You find nothing..
+  choiceTwoGood: 'Your curiosity got the best of you. You hide behind fallen rubble
+    and wait...
+
+    Someone actually came to polish the statue. Peeking behind the
+    rubble you notice that the polishing man is hiding something behind the statue.
+    After he leaves, you investigate what he hid..
+
+    A potion! It looks delicious,
+    you decide to drink it on the spot.'
+  choiceTwoBad: 'Your curiosity got the best of you. You hide behind fallen rubble
+    and wait...
+
+    Yet no one came. You wasted your time.'

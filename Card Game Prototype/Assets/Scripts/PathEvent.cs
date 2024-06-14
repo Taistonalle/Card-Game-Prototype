@@ -81,6 +81,10 @@ public class PathEvent : MonoBehaviour {
             WorshipperButtons();
             break;
 
+            case "Polished statue":
+            PolishedStatueButtons();
+            break;
+
             default:
             Debug.Log($"Event name: {usedEvent.eventName} not in PathEvents -> CheckEventName -> switch");
             break;
@@ -158,7 +162,6 @@ public class PathEvent : MonoBehaviour {
             case <= 49:
             bChoiceOne.onClick.AddListener(delegate {
                 eDesc.text = $"{usedEvent.choiceOneBad}\n\nYou lost 5 max health and lost 10 health";
-                deck.RewardAddCard(rCard[0]);
                 player.MaxHp -= 5;
                 player.Health -= 10;
                 ToggleButtonsVisibility();
@@ -195,7 +198,7 @@ public class PathEvent : MonoBehaviour {
         switch (goodOrBad) { //In this case, choice one = join, choice two = kill
             case <= 49:
             bChoiceOne.onClick.AddListener(delegate {
-                int randId = Random.Range(0, deck.CardCount); 
+                int randId = Random.Range(0, deck.CardCount);
                 eDesc.text = $"{usedEvent.choiceOneBad}\n\nYou feel like you also lost something. Removed: {deck.Cards[randId].GetComponent<Card>().CardData.cardName}";
                 deck.RemoveCard(deck.Cards[randId]);
                 ToggleButtonsVisibility();
@@ -223,9 +226,41 @@ public class PathEvent : MonoBehaviour {
             break;
         }
     }
+
+    void PolishedStatueButtons() {
+        int goodOrBad = Random.Range(0, 101);
+
+        //Bad results
+        switch (goodOrBad) { //In this case, choice one = study, choice two = hide/wait
+            case <= 49:
+            bChoiceOne.onClick.AddListener(delegate {
+                eDesc.text = $"{usedEvent.choiceOneBad}";
+                ToggleButtonsVisibility();
+            });
+            bChoiceTwo.onClick.AddListener(delegate {
+                eDesc.text = $"{usedEvent.choiceTwoBad}";
+                ToggleButtonsVisibility();
+            });
+            break;
+
+            //Good results
+            case >= 50:
+            bChoiceOne.onClick.AddListener(delegate {
+                eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained a {rCard[4].GetComponent<Card>().CardData.cardName} card!";
+                deck.RewardAddCard(rCard[4]);
+                ToggleButtonsVisibility();
+            });
+            bChoiceTwo.onClick.AddListener(delegate {
+                eDesc.text = $"{usedEvent.choiceTwoGood}\n\nYou gained 5 max health and 2 max action points!";
+                player.MaxHp += 5;
+                player.MaxAP += 2;
+                ToggleButtonsVisibility();
+            });
+            break;
+        }
+    }
     #endregion
 
-    #region Button functions for path
     public void ActivatePathView() {
         gameObject.SetActive(true);
         pathCanvas.SetActive(false);
@@ -235,6 +270,4 @@ public class PathEvent : MonoBehaviour {
         EventSetup();
         CheckEventName();
     }
-
-    #endregion
 }

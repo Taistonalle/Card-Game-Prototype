@@ -25,7 +25,9 @@ MonoBehaviour:
   healAmount: 0
   blockAmount: 0
   aPRecoverAmount: 0
-  playCost: 1
+  playCost: 2
+  buffDuration: 0
+  debuffDuration: 0
   draw: 1
   dealDamage: 0
   heal: 0

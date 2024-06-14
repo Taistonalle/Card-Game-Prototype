@@ -47,19 +47,35 @@ MonoBehaviour:
   gameState: 0
   cardMoveRoutineMaxTime: 1
   deckCopy: []
-  dmgCards:
-  - {fileID: 1064329457145765964, guid: d9de0d34e83622a4685cb9b3929b79d2, type: 3}
   endTurnButtonTxt: {fileID: 0}
   gOBox: {fileID: 0}
   cardDropArea: {fileID: 0}
   enemy: {fileID: 0}
-  enemyDatas:
+  tierOneEnemyDatas:
+  - {fileID: 11400000, guid: 5a15e6cc20fa8d141aea09e42bf92857, type: 2}
+  - {fileID: 11400000, guid: 83adce40c0abdce469b55bba1580db3a, type: 2}
   - {fileID: 11400000, guid: 1e87381563a575e4785df6f3fe10d712, type: 2}
   - {fileID: 11400000, guid: 537bf93db4a02e5488bedc66bc7347bd, type: 2}
+  tierTwoEnemyDatas:
   - {fileID: 11400000, guid: 53a2b788af26558499d11a1e9d36a95f, type: 2}
+  - {fileID: 11400000, guid: d28f9ebc434f62d4582281d728ae0ad0, type: 2}
   - {fileID: 11400000, guid: e461121b3f0a3fe4ca6d44ec3c699ad7, type: 2}
+  tierThreeEnemyDatas:
+  - {fileID: 11400000, guid: bffdfbb8c85ff6a4b83f62e1af9afceb, type: 2}
+  - {fileID: 11400000, guid: 17061efd9c411cb499a59c37139020c6, type: 2}
+  - {fileID: 11400000, guid: 0d511b83cd81abd418e4916402df6659, type: 2}
+  tierFourEnemyDatas:
+  - {fileID: 11400000, guid: 8f2b66d6024f53941b75f46f9abc4967, type: 2}
+  - {fileID: 11400000, guid: be61d81cf8a09f5428642292337757e0, type: 2}
+  - {fileID: 11400000, guid: 69f43c3aa012339489182ec6a53a437e, type: 2}
+  miniBossEnemyDatas:
+  - {fileID: 11400000, guid: 5e34d88c86718ee4389ec4ce02172b2a, type: 2}
+  - {fileID: 11400000, guid: 082f3a29e4f64af46a848d820996de70, type: 2}
+  - {fileID: 11400000, guid: 71e66f6f7befb734fa704633814151ea, type: 2}
   bossEnemyDatas:
   - {fileID: 11400000, guid: 7a6012c73dc9d78409c9da46aba0ffde, type: 2}
+  - {fileID: 11400000, guid: fe66964f38ca01d40a8549637dd4cc4e, type: 2}
+  - {fileID: 11400000, guid: e70bb9172b7a93f418241c8622ca1b7a, type: 2}
   player: {fileID: 0}
   hand: {fileID: 0}
   pCP: {fileID: 0}

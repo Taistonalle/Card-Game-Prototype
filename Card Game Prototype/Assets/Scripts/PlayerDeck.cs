@@ -22,7 +22,11 @@ public class PlayerDeck : MonoBehaviour {
     }
 
     [Header("All of the card prefabs")] //Used to pass prefab copies for cards list
-    [SerializeField] GameObject[] cardPrefabs; 
+    [SerializeField] GameObject[] mainMenuCardPrefabs;
+    public GameObject[] MainMenuCardPrefabs {
+        get { return mainMenuCardPrefabs; }
+    }
+    [SerializeField] GameObject[] cardPrefabs; //Cards that can be found randomly after combat
     public GameObject[] CardPrefabs {
         get { return cardPrefabs; }
     }

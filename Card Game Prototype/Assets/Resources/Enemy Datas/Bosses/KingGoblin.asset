@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a6eb7e61914cbf4caa072094720e76f, type: 3}
-  m_Name: Imp
+  m_Name: KingGoblin
   m_EditorClassIdentifier: 
   action: 0
-  enemyName: Imp
-  health: 32
-  minDamage: 2
-  maxDamage: 5
+  enemyName: King goblin
+  health: 342
+  minDamage: 12
+  maxDamage: 25
   enemyArt: {fileID: 21300000, guid: b07de92d5b73dcb4c831789498dcfd45, type: 3}
   canStun: 0
   canDebuff: 0
-  bossEnemy: 0
+  bossEnemy: 1

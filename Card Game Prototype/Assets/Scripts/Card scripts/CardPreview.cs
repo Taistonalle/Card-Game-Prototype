@@ -24,7 +24,7 @@ public class CardPreview : MonoBehaviour {
     [SerializeField] List<CardData> cardDatas;
 
 
-    void Start() {
+    void Awake() {
         CardSetup();
 
         //Load all assets in Card datas folder to get card datas
