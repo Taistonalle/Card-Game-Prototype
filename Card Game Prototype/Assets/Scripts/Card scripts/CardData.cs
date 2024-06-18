@@ -28,6 +28,7 @@ public class CardData : ScriptableObject {
     [Header("What can the card do?")]
     public bool draw;
     public bool dealDamage;
+    public bool burnHeal;
     public bool heal;
     public bool block;
     public bool recoverAp;

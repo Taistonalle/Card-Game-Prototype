@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Obliterate
   m_EditorClassIdentifier: 
   cardName: Obliterate
-  description: Devastating attack for
+  description: Devastating attack.
   cardBackground: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   backgroundColor: {r: 0.764151, g: 0.378471, b: 0.45818916, a: 1}
   cardImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
@@ -26,8 +26,11 @@ MonoBehaviour:
   blockAmount: 0
   aPRecoverAmount: 0
   playCost: 5
+  buffDuration: 0
+  debuffDuration: 0
   draw: 0
   dealDamage: 1
+  burnHeal: 0
   heal: 0
   block: 0
   recoverAp: 0

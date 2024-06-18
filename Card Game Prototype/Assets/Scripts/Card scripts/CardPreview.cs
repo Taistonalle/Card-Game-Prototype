@@ -46,6 +46,7 @@ public class CardPreview : MonoBehaviour {
         //Single bools
         bool draw = cardData.draw;
         bool dmg = cardData.dealDamage;
+        bool burnHeal = cardData.burnHeal;
         bool heal = cardData.heal;
         bool block = cardData.block;
         bool recAp = cardData.recoverAp;
@@ -53,23 +54,54 @@ public class CardPreview : MonoBehaviour {
         bool debuff = cardData.debuff;
 
         //Triple checks
-        if (heal && block && buff) {
-            descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount}, block {cardData.blockAmount} and gain {cardData.buffType} for {cardData.buffDuration} turns";
+        if (draw && dmg && heal) {
+            descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount}, Deal {cardData.damage} damage & Heal {cardData.healAmount}";
+        }
+        else if (dmg && heal && block) {
+            descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} damage, Heal {cardData.healAmount} & Block {cardData.blockAmount}";
+        }
+        else if (heal && block && buff) {
+            descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount}, Block {cardData.blockAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
+        }
+        else if (draw && heal && block) {
+            descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount},Heal {cardData.healAmount} & Block {cardData.blockAmount}";
+        }
+        else if (dmg && block && buff) {
+            descriptionTxt.text = $"{cardData.description} Deal {cardData.damage}, Block {cardData.blockAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
+        }
+        else if (draw && block && buff) {
+            descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount}, Block {cardData.blockAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
+        }
+        else if (dmg && heal && buff) {
+            descriptionTxt.text = $"{cardData.description} Deal {cardData.damage}, Heal {cardData.healAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
+        }
+        else if (draw && dmg && buff) {
+            descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount}, Deal {cardData.damage} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
         }
 
         //Double checks
-        if (draw && dmg) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} and deal {cardData.damage} damage";
-        else if (draw && block) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount} and draw {cardData.drawAmount}";
-        else if (dmg && heal) descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} and heal {cardData.healAmount}";
-        else if (block && recAp) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount} and gain {cardData.aPRecoverAmount} action points";
+        else if (draw && dmg) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} & Deal {cardData.damage} damage";
+        else if (dmg && heal) descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} damage & Heal {cardData.healAmount}";
+        else if (heal && block) descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount} & Block {cardData.blockAmount}";
+        else if (block && recAp) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount} & Gain {cardData.aPRecoverAmount} action points";
+        else if (block && buff) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
+        else if (draw && heal) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} & Heal {cardData.healAmount}";
+        else if (dmg && block) descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} damage & Block {cardData.blockAmount}";
+        else if (heal && buff) descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
+        else if (draw && block) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} & Block {cardData.blockAmount}";
+        else if (dmg && buff) descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} damage & Gain {cardData.buffType} for {cardData.buffDuration} turns";
+        else if (draw && buff) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
 
         //Single checks
-        else if (draw) descriptionTxt.text = $"{cardData.description} {cardData.drawAmount}";
-        else if (dmg) descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
-        else if (heal) descriptionTxt.text = $"{cardData.description} {cardData.healAmount} health";
-        else if (block) descriptionTxt.text = $"{cardData.description} {cardData.blockAmount} block";
-        else if (recAp) descriptionTxt.text = $"{cardData.description} {cardData.aPRecoverAmount} action points";
+        else if (draw) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount}";
+        else if (dmg) descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} damage";
+        else if (burnHeal) descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount}";
+        else if (heal) descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount}";
+        else if (block) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount}";
+        else if (recAp) descriptionTxt.text = $"{cardData.description} Gain {cardData.aPRecoverAmount} action points";
         else if (buff) descriptionTxt.text = $"{cardData.description} Gain {cardData.buffType} for {cardData.buffDuration} turns";
+
+        else descriptionTxt.text = "";
     }
 
     public void AssingNewData() { //random for now

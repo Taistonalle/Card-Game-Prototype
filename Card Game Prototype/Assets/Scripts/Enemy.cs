@@ -55,6 +55,10 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     public GameObject WinRewardCanvas {
         get { return rewardCanvas; }
     }
+    [SerializeField] GameObject cardCraftCanvas;
+    public GameObject CardCraftCanvas {
+        get { return cardCraftCanvas; }
+    }
 
     GameManager gM;
 
@@ -138,9 +142,15 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     void Die() {
         Debug.Log($"{enemyName} died! Activating reward view");
 
+        if (enemyData.bossEnemy) winRewardCanvas.SetActive(true);
+        else if (enemyData.miniBoss) {
+            cardCraftCanvas.SetActive(true);
+            combatCanvas.SetActive(false);
+        }
+        else StartCoroutine(ActivateRewardView());
+        /*
         switch (enemyData.bossEnemy) {
             case true:
-            //Placeholder thing to do
             winRewardCanvas.SetActive(true);
             break;
 
@@ -148,6 +158,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             StartCoroutine(ActivateRewardView());
             break;
         }
+        */
     }
 
     void UpdateIndicator() {
@@ -175,7 +186,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     }
 
     public void PlanNextAction(int aRange) {
-        int actionRange = Random.Range(0, aRange);
+        int actionRange = Random.Range(0, aRange + 1);
         //int actionRange = 2;
 
         switch (actionRange) {

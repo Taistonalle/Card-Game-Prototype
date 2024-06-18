@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: QuickDraw+
   m_EditorClassIdentifier: 
   cardName: Quick Draw+
-  description: Quickly look for answers in your own pockets. Draw
+  description: Quickly look for answers in your own pockets.
   cardBackground: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   backgroundColor: {r: 0.7294118, g: 0.7372549, b: 0.46666667, a: 1}
   cardImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
@@ -30,6 +30,7 @@ MonoBehaviour:
   debuffDuration: 0
   draw: 1
   dealDamage: 0
+  burnHeal: 0
   heal: 0
   block: 0
   recoverAp: 0

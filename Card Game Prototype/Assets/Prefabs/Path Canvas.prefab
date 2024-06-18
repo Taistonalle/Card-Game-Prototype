@@ -17410,7 +17410,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -17450,7 +17450,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Mode
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -17590,7 +17590,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_MethodName
-      value: SetActive
+      value: SetupCrafting
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -17640,7 +17640,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: CardCrafting, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -17661,6 +17661,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_IntArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -19249,7 +19254,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -19289,7 +19294,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Mode
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -19429,7 +19434,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_MethodName
-      value: SetActive
+      value: SetupCrafting
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -19479,7 +19484,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: CardCrafting, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -19500,6 +19505,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_IntArgument
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -22055,7 +22065,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -22095,7 +22105,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Mode
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -22235,7 +22245,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_MethodName
-      value: SetActive
+      value: SetupCrafting
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
@@ -22285,7 +22295,7 @@ PrefabInstance:
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: CardCrafting, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6561827773618706868, guid: 66aa37ae4e14c864bb3b74b84a2d9ab7,
         type: 3}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Breather
   m_EditorClassIdentifier: 
   cardName: Breather
-  description: Take a deep breath and gain
+  description: Take a deep breath.
   cardBackground: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   backgroundColor: {r: 0.7877358, g: 0.9565669, b: 1, a: 1}
   cardImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
@@ -30,6 +30,7 @@ MonoBehaviour:
   debuffDuration: 0
   draw: 0
   dealDamage: 0
+  burnHeal: 0
   heal: 0
   block: 0
   recoverAp: 1

@@ -23,4 +23,5 @@ public class DataEnemy : ScriptableObject {
 
     [Header("Boss enemy or not?")]
     public bool bossEnemy;
+    public bool miniBoss;
 }
