@@ -17,7 +17,9 @@ MonoBehaviour:
   health: 342
   minDamage: 12
   maxDamage: 25
+  minBlock: 10
+  maxBlock: 15
   enemyArt: {fileID: 21300000, guid: b07de92d5b73dcb4c831789498dcfd45, type: 3}
-  canStun: 0
-  canDebuff: 0
+  actionRange: 2
+  debuffType: 0
   bossEnemy: 1

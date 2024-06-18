@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour {
         if (player.Block > 0) player.ResetBlock();
         if (player.Buffs[0] != BuffEffect.None || player.Buffs[1] != BuffEffect.None) player.ResetBuffs(); // Do check better later...
         player.UpdateHealthInfo();
-        enemy.PlanNextAction();
+        enemy.PlanNextAction(enemy.EnemyData.actionRange);
         CopyDeckForUsage();
         StartCoroutine(InstantiateDeckCards());
 
@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour {
         gameState = GameState.PlayerTurn;
 
         //Show next enemy action
-        enemy.PlanNextAction();
+        enemy.PlanNextAction(enemy.EnemyData.actionRange);
     }
 
     IEnumerator EndTurn() {
@@ -236,7 +236,9 @@ public class GameManager : MonoBehaviour {
         }
 
         //Call enemy function stuff. NOTE: Use enemy planned action to determine what function enemy does. This in Enemy script ofc.
-        yield return enemy.StartCoroutine(enemy.DealDamage());
+        //Check if enemy still has block, reset it before it's new action
+        if (enemy.Block > 0) enemy.ResetBlock();
+        enemy.DoPlannedAction();
     }
 
     public IEnumerator GameOver() {

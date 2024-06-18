@@ -122,6 +122,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &177401507 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 537499090428442646, guid: 90d6a88143e8eae438630b746188f17a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6339517665391866538}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &334178452 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7586677591005281255, guid: 90d6a88143e8eae438630b746188f17a,
@@ -615,7 +627,7 @@ PrefabInstance:
     - target: {fileID: 7348110032438998629, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1686,6 +1698,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Combat Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2978725200103529779, guid: 90d6a88143e8eae438630b746188f17a,
+        type: 3}
+      propertyPath: valueTxt
+      value: 
+      objectReference: {fileID: 177401507}
     - target: {fileID: 2978725200103529779, guid: 90d6a88143e8eae438630b746188f17a,
         type: 3}
       propertyPath: pathCanvas
