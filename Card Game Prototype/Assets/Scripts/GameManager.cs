@@ -68,12 +68,12 @@ public class GameManager : MonoBehaviour {
     [SerializeField] PlayerCardPile pCP;
     [SerializeField] DiscardPile dP;
     PlayerDeck deck;
+    StatusBar statusBar;
 
 
     void Start() {
         deck = FindObjectOfType<PlayerDeck>();
-        //StartCoroutine(InstantiateCardCopy(dmgCards[0]));
-        //StartCoroutine(InstantiateDeckCards());
+        statusBar = FindObjectOfType<StatusBar>();
     }
 
     IEnumerator InstantiateCardCopy(GameObject card) { //proto start initiation
@@ -172,6 +172,7 @@ public class GameManager : MonoBehaviour {
         enemy.CombatCanvas.SetActive(false);
         enemy.RewardCanvas.SetActive(false);
         enemy.PathCanvas.SetActive(true);
+        statusBar.UpdateDeckCountTxt();
     }
 
     public void SkipRewardButton() {

@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour {
     }
 
     [Header("Preview card")]
-    [SerializeField] CardPreview cardPreview;
+    [SerializeField] CardPreview previewCard;
     PlayerDeck pDeck;
 
 
@@ -79,7 +79,8 @@ public class MainMenu : MonoBehaviour {
     }
 
     void DisplayViewedCard(int dataIndex) {
-        cardPreview.CardData = cardDatas[dataIndex];
-        cardPreview.CardSetup();
+        previewCard.CardData = cardDatas[dataIndex];
+        previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
+            previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
     }
 }

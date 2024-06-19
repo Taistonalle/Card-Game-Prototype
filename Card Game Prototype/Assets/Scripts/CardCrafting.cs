@@ -66,7 +66,8 @@ public class CardCrafting : MonoBehaviour {
         previewCard.CardData.playCost += 1;
         previewCard.CardData.drawAmount += drawAmount;
         previewCard.CardData.draw = true;
-        previewCard.CardSetup();
+        previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
+            previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
     }
 
     void DamageComponent() {
@@ -77,7 +78,8 @@ public class CardCrafting : MonoBehaviour {
         previewCard.CardData.playCost += 1;
         previewCard.CardData.damage += dmgAmount;
         previewCard.CardData.dealDamage = true;
-        previewCard.CardSetup();
+        previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
+            previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
     }
 
     void BlockComponent() {
@@ -88,8 +90,8 @@ public class CardCrafting : MonoBehaviour {
         previewCard.CardData.playCost += 1;
         previewCard.CardData.blockAmount += blockAmount;
         previewCard.CardData.block = true;
-        previewCard.CardSetup();
-
+        previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
+            previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
     }
 
     void HealComponent() {
@@ -100,7 +102,8 @@ public class CardCrafting : MonoBehaviour {
         previewCard.CardData.playCost += 1;
         previewCard.CardData.healAmount += healAmount;
         previewCard.CardData.heal = true;
-        previewCard.CardSetup();
+        previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
+            previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
     }
 
     void BuffComponent() {
@@ -111,7 +114,8 @@ public class CardCrafting : MonoBehaviour {
         previewCard.CardData.playCost += 1;
         previewCard.CardData.buffDuration += buffDuration;
         previewCard.CardData.buff = true;
-        previewCard.CardSetup();
+        previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
+             previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
     }
 
     #region Button functions
@@ -141,7 +145,8 @@ public class CardCrafting : MonoBehaviour {
         previewCard.CardData.buff = false;
 
         previewCard.CardData.playCost = 0;
-        previewCard.CardSetup();
+        previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
+            previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
     }
 
     public void AddCard() { 

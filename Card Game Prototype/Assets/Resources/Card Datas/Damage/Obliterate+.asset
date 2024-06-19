@@ -21,11 +21,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
   - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
   drawAmount: 0
-  damage: 50
+  damage: 55
   healAmount: 0
   blockAmount: 0
   aPRecoverAmount: 0
-  playCost: 4
+  playCost: 6
   buffDuration: 0
   debuffDuration: 0
   draw: 0

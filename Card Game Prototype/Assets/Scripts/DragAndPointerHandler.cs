@@ -7,7 +7,7 @@ public class DragAndPointerHandler : MonoBehaviour, IDragHandler, IEndDragHandle
     //Inherit this for other scripts that need drag
     protected GameManager gM;
 
-    private void Awake() {
+    private void Start() {
         gM = FindObjectOfType<GameManager>();
     }
 

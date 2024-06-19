@@ -67,11 +67,13 @@ public class Player : MonoBehaviour {
     }
 
     GameManager gM;
+    StatusBar statusBar;
 
     void Start() {
         UpdateHealthInfo();
         UpdateActionPointCounter();
         gM = FindObjectOfType<GameManager>();
+        statusBar = FindObjectOfType<StatusBar>();
     }
 
     public void TakeDamage(int damage) {
@@ -97,6 +99,7 @@ public class Player : MonoBehaviour {
             health -= damage;
             break;
         }
+        statusBar.UpdateHealthTxt();
         StartCoroutine(AnimateHealthBarDmg(30f));
     }
 
@@ -111,6 +114,7 @@ public class Player : MonoBehaviour {
             Debug.Log("Player object not active. Skipping health bar animation");
             break;
         }
+        statusBar.UpdateHealthTxt();
     }
 
     public void GainBlock(int amount) {

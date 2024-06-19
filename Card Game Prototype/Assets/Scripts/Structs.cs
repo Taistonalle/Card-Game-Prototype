@@ -1,45 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
-public class CardPreview : MonoBehaviour {
-    [Header("Card info")]
-    [SerializeField] CardData cardData;
-    public CardData CardData {
-        get { return cardData; }
-        set { cardData = value; }
-    }
-
-    [Header("Card parts")]
-    [SerializeField] Image background;
-    public Image Background { get { return background; } }
-    [SerializeField] Image[] borders;
-    public Image[] Borders { get { return borders; } }
-    [SerializeField] Image cardImage;
-    public Image CardImage { get { return cardImage; } }
-    [SerializeField] TextMeshProUGUI playCostTxt;
-    public TextMeshProUGUI PlayCostText {  get { return playCostTxt; } }
-    [SerializeField] TextMeshProUGUI nameTxt;
-    public TextMeshProUGUI NameText { get { return nameTxt; } }
-    [SerializeField] TextMeshProUGUI descriptionTxt;
-    public TextMeshProUGUI DescriptionText { get { return descriptionTxt; } }
-
-    [Header("Card datas")]
-    [SerializeField] List<CardData> cardDatas;
-
-    readonly CardStruct cS;
-    public CardStruct CS { get { return cS; } }
-
-    void Awake() {
-        cS.CardSetup(background, borders[0], borders[1], cardImage, playCostTxt, nameTxt, descriptionTxt, cardData);
-
-        //Load all assets in Card datas folder to get card datas
-        cardDatas = new List<CardData>(Resources.LoadAll<CardData>("Card datas"));
-    }
-
-    /*
+public struct CardStruct {
     public void CardSetup(Image bg, Image topBorder, Image botBorder, Image cardImg, TextMeshProUGUI cost, TextMeshProUGUI name, TextMeshProUGUI desc, CardData data) {
         bg.sprite = data.cardBackground;
         bg.color = data.backgroundColor;
@@ -49,9 +11,7 @@ public class CardPreview : MonoBehaviour {
         cost.text = data.playCost.ToString();
         name.text = data.cardName;
 
-        
         //Checks for bools in data, to know what to write in description
-
         //Single bools
         bool draw = data.draw;
         bool dmg = data.dealDamage;
@@ -76,16 +36,22 @@ public class CardPreview : MonoBehaviour {
             desc.text = $"{data.description} Draw {data.drawAmount},Heal {data.healAmount} & Block {data.blockAmount}";
         }
         else if (dmg && block && buff) {
-            desc.text = $"{data.description} Deal {data.damage}, Block {data.blockAmount} & Gain {data.buffType} for {data.buffDuration} turns";
+            desc.text = $"{data.description} Deal {data.damage} damage, Block {data.blockAmount} & Gain {data.buffType} for {data.buffDuration} turns";
         }
         else if (draw && block && buff) {
             desc.text = $"{data.description} Draw {data.drawAmount}, Block {data.blockAmount} & Gain {data.buffType} for {data.buffDuration} turns";
         }
+        else if (draw && dmg && block) {
+            desc.text = $"{data.description} Draw {data.drawAmount}, Deal {data.damage} damage & Block {data.blockAmount}";
+        }
         else if (dmg && heal && buff) {
-            desc.text = $"{data.description} Deal {data.damage}, Heal {data.healAmount} & Gain {data.buffType} for {data.buffDuration} turns";
+            desc.text = $"{data.description} Deal {data.damage} damage, Heal {data.healAmount} & Gain {data.buffType} for {data.buffDuration} turns";
         }
         else if (draw && dmg && buff) {
-            desc.text = $"{data.description} Draw {data.drawAmount}, Deal {data.damage} & Gain {data.buffType} for {data.buffDuration} turns";
+            desc.text = $"{data.description} Draw {data.drawAmount}, Deal {data.damage} damage & Gain {data.buffType} for {data.buffDuration} turns";
+        }
+        else if (draw && heal && buff) {
+            desc.text = $"{data.description} Draw {data.drawAmount}, Heal {data.healAmount} & Gain {data.buffType} for {data.buffDuration} turns";
         }
 
         //Double checks
@@ -111,13 +77,5 @@ public class CardPreview : MonoBehaviour {
         else if (buff) desc.text = $"{data.description} Gain {data.buffType} for {data.buffDuration} turns";
 
         else desc.text = "";
-    }
-    */
-
-    public void AssingNewData() { //random for now
-        int rand = Random.Range(0, cardDatas.Count);
-        Debug.Log($"Card data assigned to {gameObject.name}: {cardDatas[rand]}");
-        cardData = cardDatas[rand];
-        cS.CardSetup(background, borders[0], borders[1], cardImage, playCostTxt, nameTxt, descriptionTxt, cardData);
     }
 }

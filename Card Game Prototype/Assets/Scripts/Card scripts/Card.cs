@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class Card : DragAndPointerHandler {
     [Header("Card base info from scriptable object")]
@@ -21,7 +20,11 @@ public class Card : DragAndPointerHandler {
     [SerializeField] TextMeshProUGUI nameTxt;
     [SerializeField] TextMeshProUGUI descriptionTxt;
 
+    readonly CardStruct cS;
     Player player;
+    PlayerHand hand;
+    DiscardPile dP;
+
     Vector3 slotPos;
     public Vector3 SlotPos {
         get { return slotPos; }
@@ -39,85 +42,14 @@ public class Card : DragAndPointerHandler {
         set { clicked = value; }
     }
 
-    void Start() {
+    void Awake() {
         player = FindObjectOfType<Player>();
-        CardSetup();
+        hand = FindObjectOfType<PlayerHand>();
+        dP = FindObjectOfType<DiscardPile>();
+        cS.CardSetup(background, borders[0], borders[1], cardImage, playCostTxt, nameTxt, descriptionTxt, cardData);
     }
 
     #region Functions
-    void CardSetup() {
-        background.sprite = cardData.cardBackground;
-        background.color = cardData.backgroundColor;
-        borders[0].sprite = cardData.cardBorders[0];
-        borders[1].sprite = cardData.cardBorders[1];
-        cardImage.sprite = cardData.cardImage;
-        playCostTxt.text = cardData.playCost.ToString();
-        nameTxt.text = cardData.cardName;
-        //descriptionTxt.text = $"{cardData.description} {cardData.damage} damage";
-
-        //Checks for bools in data, to know what to write in description
-
-        //Single bools
-        bool draw = cardData.draw;
-        bool dmg = cardData.dealDamage;
-        bool burnHeal = cardData.burnHeal;
-        bool heal = cardData.heal;
-        bool block = cardData.block;
-        bool recAp = cardData.recoverAp;
-        bool buff = cardData.buff;
-        bool debuff = cardData.debuff;
-
-        //Triple checks
-        if (draw && dmg && heal) {
-            descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount}, Deal {cardData.damage} damage & Heal {cardData.healAmount}";
-        }
-        else if (dmg && heal && block) {
-            descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} damage, Heal {cardData.healAmount} & Block {cardData.blockAmount}";
-        }
-        else if (heal && block && buff) {
-            descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount}, Block {cardData.blockAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
-        }
-        else if (draw && heal && block) {
-            descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount},Heal {cardData.healAmount} & Block {cardData.blockAmount}";
-        }
-        else if (dmg && block && buff) {
-            descriptionTxt.text = $"{cardData.description} Deal {cardData.damage}, Block {cardData.blockAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
-        }
-        else if (draw && block && buff) {
-            descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount}, Block {cardData.blockAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
-        }
-        else if (dmg && heal && buff) {
-            descriptionTxt.text = $"{cardData.description} Deal {cardData.damage}, Heal {cardData.healAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
-        }
-        else if (draw && dmg && buff) {
-            descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount}, Deal {cardData.damage} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
-        }
-
-        //Double checks
-        else if (draw && dmg) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} & Deal {cardData.damage} damage";
-        else if (dmg && heal) descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} damage & Heal {cardData.healAmount}";
-        else if (heal && block) descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount} & Block {cardData.blockAmount}";
-        else if (block && recAp) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount} & Gain {cardData.aPRecoverAmount} action points";
-        else if (block && buff) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
-        else if (draw && heal) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} & Heal {cardData.healAmount}";
-        else if (dmg && block) descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} damage & Block {cardData.blockAmount}";
-        else if (heal && buff) descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
-        else if (draw && block) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} & Block {cardData.blockAmount}";
-        else if (dmg && buff) descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} damage & Gain {cardData.buffType} for {cardData.buffDuration} turns";
-        else if (draw && buff) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount} & Gain {cardData.buffType} for {cardData.buffDuration} turns";
-
-        //Single checks
-        else if (draw) descriptionTxt.text = $"{cardData.description} Draw {cardData.drawAmount}";
-        else if (dmg) descriptionTxt.text = $"{cardData.description} Deal {cardData.damage} damage";
-        else if (burnHeal) descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount}";
-        else if (heal) descriptionTxt.text = $"{cardData.description} Heal {cardData.healAmount}";
-        else if (block) descriptionTxt.text = $"{cardData.description} Block {cardData.blockAmount}";
-        else if (recAp) descriptionTxt.text = $"{cardData.description} Gain {cardData.aPRecoverAmount} action points";
-        else if (buff) descriptionTxt.text = $"{cardData.description} Gain {cardData.buffType} for {cardData.buffDuration} turns";
-
-        else descriptionTxt.text = "";
-    }
-
     public override void OnEndDrag(PointerEventData eventData) {
         base.OnEndDrag(eventData);
         switch (gM.GameState) {
@@ -164,70 +96,39 @@ public class Card : DragAndPointerHandler {
 
     #region Card actions
     void Draw() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            StopCoroutine(nameof(Draw));
-        }
-        else {
-            DiscardPile dP = FindObjectOfType<DiscardPile>();
-            PlayerHand hand = FindObjectOfType<PlayerHand>();
+        //Action point calculations
+        player.ReduceAP(cardData.playCost);
 
-            //Action point calculations
-            player.ReduceAP(cardData.playCost);
-
-            //Add card to discard pile and draw
-            dP.AddCardIntoDiscardPile(gameObject);
-            hand.RemoveCardFromHand(gameObject);
-            hand.RearrangeHand();
-            hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
-        }
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
     }
 
     void DealDamage(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
+        //Damage and action point calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
         }
-        else {
-            DiscardPile dP = FindObjectOfType<DiscardPile>();
-            PlayerHand hand = FindObjectOfType<PlayerHand>();
+        player.ReduceAP(cardData.playCost);
 
-            //Damage and action point calculations
-            //Does player have strenght buff?
-            switch (player.Buffs[0]) {
-                case BuffEffect.Strenght:
-                int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
-                Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
-                target.TakeDamage(totalDmg);
-                break;
-
-                default:
-                target.TakeDamage(cardData.damage);
-                break;
-            }
-            player.ReduceAP(cardData.playCost);
-
-            //Add card to discard pile
-            dP.AddCardIntoDiscardPile(gameObject);
-            hand.RemoveCardFromHand(gameObject);
-            hand.RearrangeHand();
-        }
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
     }
 
     void BurnHeal() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        //DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
         PlayerDeck deck = FindObjectOfType<PlayerDeck>();
 
         //Health and action point calculations
@@ -239,26 +140,20 @@ public class Card : DragAndPointerHandler {
         deck.RemoveCard(gameObject);
         Destroy(gameObject); //Maybe add fancier way to remove card later
         hand.RearrangeHand();
+    }
 
-        /* Before burning heal card idea came to mind
-        //Add card do discard pile
+    void Heal() {
+        //Heal and cost calculations
+        player.TakeHeal(cardData.healAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
         dP.AddCardIntoDiscardPile(gameObject);
         hand.RemoveCardFromHand(gameObject);
         hand.RearrangeHand();
-        */
     }
 
     void Block() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Block and cost calculations
         player.GainBlock(cardData.blockAmount);
         player.ReduceAP(cardData.playCost);
@@ -270,16 +165,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void RecoverAp() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Ap recovery and cost calculations
         player.RecoverAP(cardData.aPRecoverAmount);
         player.ReduceAP(cardData.playCost);
@@ -291,16 +176,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void Buff() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Buff check & cost calculations
         player.GainBuff(cardData.buffType, cardData.buffDuration);
         player.ReduceAP(cardData.playCost);
@@ -312,52 +187,31 @@ public class Card : DragAndPointerHandler {
     }
 
     void DrawAndDealDamage(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-            //StopCoroutine(nameof(DrawAndDealDamage));
+        //Damage and action point calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
         }
-        else {
-            DiscardPile dP = FindObjectOfType<DiscardPile>();
-            PlayerHand hand = FindObjectOfType<PlayerHand>();
+        player.ReduceAP(cardData.playCost);
 
-            //Damage and action point calculations
-            //Does player have strenght buff?
-            switch (player.Buffs[0]) {
-                case BuffEffect.Strenght:
-                int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
-                Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
-                target.TakeDamage(totalDmg);
-                break;
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        //yield return new WaitUntil(() => !hand.Drawing);
+        hand.RearrangeHand();
 
-                default:
-                target.TakeDamage(cardData.damage);
-                break;
-            }
-            player.ReduceAP(cardData.playCost);
-
-            //Add card to discard pile and draw
-            dP.AddCardIntoDiscardPile(gameObject);
-            hand.RemoveCardFromHand(gameObject);
-            hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
-            //yield return new WaitUntil(() => !hand.Drawing);
-            hand.RearrangeHand();
-        }
     }
 
     void BlockAndDraw() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Block and cost calculations
         player.GainBlock(cardData.blockAmount);
         player.ReduceAP(cardData.playCost);
@@ -370,16 +224,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DealDamageAndHeal(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Damage, Heal and cost calculations
         //Does player have strenght buff?
         switch (player.Buffs[0]) {
@@ -403,16 +247,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void HealAndBlock() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Heal, block and cost calculations
         player.TakeHeal(cardData.healAmount);
         player.GainBlock(cardData.blockAmount);
@@ -425,16 +259,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void BlockAndRecoverAp() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Block, Ap recovery and cost calculations
         player.RecoverAP(cardData.aPRecoverAmount);
         player.GainBlock(cardData.blockAmount);
@@ -447,16 +271,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void BlockAndBuff() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Block, buff check and cost calculations
         player.GainBlock(cardData.blockAmount);
         player.GainBuff(cardData.buffType, cardData.buffDuration);
@@ -469,16 +283,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DrawAndHeal() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Heal and cost calculations
         player.TakeHeal(cardData.healAmount);
         player.ReduceAP(cardData.playCost);
@@ -491,16 +295,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DealDamageAndBlock(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Damage, Block and cost calculations
         //Does player have strenght buff?
         switch (player.Buffs[0]) {
@@ -524,16 +318,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void HealAndBuff() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Heal, buff check and cost calculations
         player.TakeHeal(cardData.healAmount);
         player.GainBuff(cardData.buffType, cardData.buffDuration);
@@ -546,16 +330,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DealDamageAndBuff(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Damage, buff check and cost calculations
         //Does player have strenght buff?
         switch (player.Buffs[0]) {
@@ -579,16 +353,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DrawAndBuff() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Buff check and cost calculations
         player.GainBuff(cardData.buffType, cardData.blockAmount);
         player.ReduceAP(cardData.playCost);
@@ -601,16 +365,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DrawDealDamageAndHeal(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Damage, Heal and cost calculations
         //Does player have strenght buff?
         switch (player.Buffs[0]) {
@@ -635,16 +389,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DealDamageHealAndBlock(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Damage, Heal, Block and cost calculations
         //Does player have strenght buff?
         switch (player.Buffs[0]) {
@@ -669,16 +413,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void HealBlockAndBuff() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Heal, Block, buff check and cost calculations
         player.TakeHeal(cardData.healAmount);
         player.GainBlock(cardData.blockAmount);
@@ -692,16 +426,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DrawHealAndBlock() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Heal, Block and cost calculations
         player.TakeHeal(cardData.healAmount);
         player.GainBlock(cardData.blockAmount);
@@ -715,16 +439,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DealDamageBlockAndBuff(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Damage, Block, buff check and cost calculations
         //Does player have strenght buff?
         switch (player.Buffs[0]) {
@@ -749,16 +463,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DrawBlockAndBuff() {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Block, buff check and cost calculations
         player.GainBlock(cardData.blockAmount);
         player.GainBuff(cardData.buffType, cardData.buffDuration);
@@ -771,17 +475,31 @@ public class Card : DragAndPointerHandler {
         hand.RearrangeHand();
     }
 
-    void DealDamageHealAndBuff(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
+    void DrawDealDamageAndBlock(Enemy target) {
+        //Damage, Block and cost calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
         }
+        player.GainBlock(cardData.blockAmount);
+        player.ReduceAP(cardData.playCost);
 
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
 
+    void DealDamageHealAndBuff(Enemy target) {
         //Damage, Heal, buff check and cost calculations
         //Does player have strenght buff?
         switch (player.Buffs[0]) {
@@ -806,16 +524,6 @@ public class Card : DragAndPointerHandler {
     }
 
     void DrawDealDamageAndBuff(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
         //Damage, buff check and cost calculations
         //Does player have strenght buff?
         switch (player.Buffs[0]) {
@@ -839,17 +547,7 @@ public class Card : DragAndPointerHandler {
         hand.RearrangeHand();
     }
 
-    void DrawHealAndBuff(Enemy target) {
-        //Fist check if player has enouch action points to use this card. Yes -> Continue. No -> Jump out of function and give indication for error
-        if (player.AP < cardData.playCost) {
-            Debug.Log("Not enough AP to play this card");
-            StartCoroutine(MoveCardBackToHand(5f));
-            return;
-        }
-
-        DiscardPile dP = FindObjectOfType<DiscardPile>();
-        PlayerHand hand = FindObjectOfType<PlayerHand>();
-
+    void DrawHealAndBuff() {
         //Heal, buff check and cost calculations
         player.TakeHeal(cardData.healAmount);
         player.GainBuff(cardData.buffType, cardData.buffDuration);
@@ -874,6 +572,13 @@ public class Card : DragAndPointerHandler {
 
     //Function to check what the card can do
     void CheckCardDetails() {
+        //Very first check if current player action points are enough to play the card, Yes -> Continue. No -> jump out of function and give indication for error
+        if (player.AP < cardData.playCost) {
+            Debug.Log("Not enough AP to play this card");
+            StartCoroutine(MoveCardBackToHand(5f));
+            return;
+        }
+
         Enemy target = FindObjectOfType<Enemy>();
         //Checks for bools in data, to know what to do
 
@@ -894,9 +599,10 @@ public class Card : DragAndPointerHandler {
         else if (draw && heal && block) DrawHealAndBlock();
         else if (dmg && block && buff) DealDamageBlockAndBuff(target);
         else if (draw && block && buff) DrawBlockAndBuff();
+        else if (draw && dmg && block) DrawDealDamageAndBlock(target);
         else if (dmg && heal && buff) DealDamageHealAndBuff(target);
         else if (draw && dmg && buff) DrawDealDamageAndBuff(target);
-        else if (draw && heal && buff) DrawHealAndBuff(target);
+        else if (draw && heal && buff) DrawHealAndBuff();
 
         /* 
         //Triple checks old
@@ -927,6 +633,7 @@ public class Card : DragAndPointerHandler {
         else if (draw) Draw();
         else if (dmg) DealDamage(target);
         else if (burnHeal) BurnHeal();
+        else if (heal) Heal();
         else if (block) Block();
         else if (recAp) RecoverAp();
         else if (buff) Buff();
