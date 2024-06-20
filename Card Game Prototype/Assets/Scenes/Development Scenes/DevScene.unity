@@ -122,6 +122,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &65731638 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2396943738302257639, guid: 25d8aa3bf68a612459b7ebee1e35c40e,
+    type: 3}
+  m_PrefabInstance: {fileID: 9004408847241161878}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f7b6939e8291646af957baf1641d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &177401507 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 537499090428442646, guid: 90d6a88143e8eae438630b746188f17a,
@@ -489,6 +501,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[0]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: 8ffc39d5acfe5474aa2e7e97b3a51ec5,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[1]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: 65d82c64e2c027c42b03a805ddf64220,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[2]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: a40289530d0caac4a8073d085750aa4d,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[3]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: f05d063669986ba47aa594e4192aede3,
+        type: 3}
     - target: {fileID: 7348110032438998629, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: m_Name
@@ -1013,6 +1054,11 @@ PrefabInstance:
       objectReference: {fileID: 1054886975}
     - target: {fileID: 5524539039557365999, guid: cf23e6cc3bb3929439ef77c42c6fd90f,
         type: 3}
+      propertyPath: statusBar
+      value: 
+      objectReference: {fileID: 65731638}
+    - target: {fileID: 5524539039557365999, guid: cf23e6cc3bb3929439ef77c42c6fd90f,
+        type: 3}
       propertyPath: pathCanvas
       value: 
       objectReference: {fileID: 5697274211195558146}
@@ -1121,11 +1167,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Event Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 8254308687163895550, guid: cf23e6cc3bb3929439ef77c42c6fd90f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1148,11 +1189,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Card Craft Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 1508793351568234761, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7690326910339823107, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
         type: 3}

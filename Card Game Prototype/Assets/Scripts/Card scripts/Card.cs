@@ -164,6 +164,20 @@ public class Card : DragAndPointerHandler {
         hand.RearrangeHand();
     }
 
+    void BurnRecoverAp() {
+        PlayerDeck deck = FindObjectOfType<PlayerDeck>();
+
+        //Ap recovery and cost calculations
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Remove card from hand list and "burn" card from deck
+        hand.RemoveCardFromHand(gameObject);
+        deck.RemoveCard(gameObject);
+        Destroy(gameObject);
+        hand.RearrangeHand();
+    }
+
     void RecoverAp() {
         //Ap recovery and cost calculations
         player.RecoverAP(cardData.aPRecoverAmount);
@@ -588,6 +602,7 @@ public class Card : DragAndPointerHandler {
         bool burnHeal = cardData.burnHeal;
         bool heal = cardData.heal;
         bool block = cardData.block;
+        bool burnRecAp = cardData.burnRecoverAp;
         bool recAp = cardData.recoverAp;
         bool buff = cardData.buff;
         bool debuff = cardData.debuff;
@@ -635,6 +650,7 @@ public class Card : DragAndPointerHandler {
         else if (burnHeal) BurnHeal();
         else if (heal) Heal();
         else if (block) Block();
+        else if (burnRecAp) BurnRecoverAp();
         else if (recAp) RecoverAp();
         else if (buff) Buff();
         else if (debuff) Debug.Log("Implement debuff card");

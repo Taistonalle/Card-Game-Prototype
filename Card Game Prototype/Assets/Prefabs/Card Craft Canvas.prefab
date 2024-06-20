@@ -410,7 +410,7 @@ MonoBehaviour:
   drawAmount: 2
   dmgAmount: 8
   blockAmount: 8
-  healAmount: 3
+  healAmount: 2
   buffDuration: 1
   typeAdded: 0000000000
   typeAmount: 0
@@ -2453,7 +2453,7 @@ MonoBehaviour:
 
     Draw: 2 per component
 
-    Heal: 3 heal *(No
+    Heal: 2 heal *(No
     burn)
 
     Buff: Strenght for 1 turn

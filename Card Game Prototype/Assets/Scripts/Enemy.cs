@@ -37,6 +37,11 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     [SerializeField] Image iconImg;
     [SerializeField] int damage;
     [SerializeField] int plannedBlock;
+    [SerializeField] int atkCounter;
+    public int AtkCounter { 
+        get { return atkCounter; }
+        set { atkCounter = value; }
+    }
 
     [Header("Canvas related")]
     [SerializeField] GameObject combatCanvas;
@@ -61,9 +66,11 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     }
 
     GameManager gM;
+    Player player;
 
     void Start() {
         gM = FindObjectOfType<GameManager>();
+        player = FindObjectOfType<Player>();
     }
 
     public void SetNewData(DataEnemy data) {
@@ -148,17 +155,6 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             combatCanvas.SetActive(false);
         }
         else StartCoroutine(ActivateRewardView());
-        /*
-        switch (enemyData.bossEnemy) {
-            case true:
-            winRewardCanvas.SetActive(true);
-            break;
-
-            default:
-            StartCoroutine(ActivateRewardView());
-            break;
-        }
-        */
     }
 
     void UpdateIndicator() {
@@ -185,7 +181,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         }
     }
 
-    public void PlanNextAction(int aRange) {
+    public void PlanNextAction(int aRange) { // Older without enum ActionsEnemyCanDo
         int actionRange = Random.Range(0, aRange + 1);
         //int actionRange = 2;
 
@@ -214,6 +210,64 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         Debug.Log($"Planned enemy action: {enemyData.action}");
     }
 
+    public void PlanNextAction() {
+        //Check if attacks before other action zero. Yes -> Roll between the other action enemy can do
+        if (atkCounter == 0) {
+            switch (enemyData.enemyCanDo) {
+                case ActionsEnemyCanDo.Atk:
+                enemyData.action = PlannedAction.Attack;
+                damage = Random.Range(enemyData.minDamage, enemyData.maxDamage + 1);
+                break;
+
+                case ActionsEnemyCanDo.AtkAndBlock:
+                int actionRollOne = Random.Range(0, 2); //Make a roll
+                switch (actionRollOne) {
+                    case 0:
+                    enemyData.action = PlannedAction.Block;
+                    plannedBlock = Random.Range(enemyData.minBlock, enemyData.maxBlock + 1);
+                    break;
+
+                    case 1:
+                    enemyData.action = PlannedAction.AttackAndBlock;
+                    damage = (int)(Random.Range(enemyData.minDamage, enemyData.maxDamage + 1) * enemyData.atkMultiplier);
+                    plannedBlock = (int)(Random.Range(enemyData.minBlock, enemyData.maxBlock + 1) * enemyData.blockMultiplier);
+                    break;
+                }
+                break;
+
+                case ActionsEnemyCanDo.All:
+                int actionRollTwo = Random.Range(0, 3); //Make a roll
+                switch (actionRollTwo) {
+                    case 0:
+                    enemyData.action = PlannedAction.Block;
+                    plannedBlock = Random.Range(enemyData.minBlock, enemyData.maxBlock + 1);
+                    break;
+
+                    case 1:
+                    enemyData.action = PlannedAction.AttackAndBlock;
+                    damage = (int)(Random.Range(enemyData.minDamage, enemyData.maxDamage + 1) * enemyData.atkMultiplier);
+                    plannedBlock = (int)(Random.Range(enemyData.minBlock, enemyData.maxBlock + 1) * enemyData.blockMultiplier);
+                    break;
+
+                    case 2:
+                    enemyData.action = PlannedAction.Debuff;
+                    break;
+                }
+                break;
+            }
+            //Reset the atks counter
+            atkCounter = enemyData.atksBeforeOtherAction;
+        }
+        else {
+            enemyData.action = PlannedAction.Attack;
+            damage = Random.Range(enemyData.minDamage, enemyData.maxDamage + 1);
+            atkCounter -= 1;
+        }
+
+        UpdateIndicator();
+        Debug.Log($"Planned enemy action: {enemyData.action}");
+    }
+
     public void DoPlannedAction() {
         switch (enemyData.action) {
             case PlannedAction.Attack:
@@ -221,8 +275,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             break;
 
             case PlannedAction.Debuff:
-            Debug.Log("Implement debuff mechanic");
-            gM.StartCoroutine(gM.BeginNewTurn());
+            StartCoroutine(Debuff(enemyData.debuffType));
             break;
 
             case PlannedAction.Block:
@@ -253,8 +306,25 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         //Find all preview cards
         CardPreview[] cards = FindObjectsOfType<CardPreview>();
 
+        /* Old setup
         //Set random new data for the cards
         foreach (CardPreview card in cards) card.AssingNewData();
+        */
+
+        //Can do this manually since there are only three cards
+        cards[0].AssingNewData();
+        cards[1].AssingNewData();
+        //Check if 1 same as 0, Yes -> redo assigning
+        while (cards[1].CardData == cards[0].CardData) {
+            Debug.Log($"{cards[1].CardData.cardName} data was same as: {cards[0].CardData.cardName}. Re assigning new data.");
+            cards[1].AssingNewData();
+        }
+        cards[2].AssingNewData();
+        //Check if 2 has same data as 1 & 0
+        while (cards[2].CardData == cards[0].CardData || cards[2].CardData == cards[1].CardData) {
+            Debug.Log($"{cards[2].CardData.cardName} data was same as: {cards[0].CardData.cardName} or {cards[1].CardData.cardName}. Re assigning new data.");
+            cards[2].AssingNewData();
+        }
     }
 
     IEnumerator AnimateHealthBar(float animSpeed) {
@@ -279,7 +349,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     }
 
     public IEnumerator DealDamage() {
-        Player player = FindObjectOfType<Player>();
+        //Player player = FindObjectOfType<Player>();
 
         //TO DO: Add little animation for dealing damage to player
         yield return new WaitForSeconds(1f);
@@ -298,7 +368,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     }
 
     IEnumerator DealDamageAndBlock(int blockAmount) {
-        Player player = FindObjectOfType<Player>();
+        //Player player = FindObjectOfType<Player>();
 
         //TO DO: Add little animation for dealing damage to player
         yield return new WaitForSeconds(1f);
@@ -323,5 +393,19 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             gM.StartCoroutine(gM.BeginNewTurn());
             break;
         }
+    }
+
+    IEnumerator Debuff(DebuffType debuffType) {
+        //TO DO: Add little animation
+        yield return new WaitForSeconds(1f);
+        Debug.Log($"{enemyName} debuffed player with: {debuffType}");
+
+        switch (debuffType) {
+            case DebuffType.Stun:
+            player.GainDebuff(StatusEffect.Stunned);
+            break;
+        }
+
+        gM.StartCoroutine(gM.BeginNewTurn());
     }
 }

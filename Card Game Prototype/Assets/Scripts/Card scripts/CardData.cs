@@ -31,6 +31,7 @@ public class CardData : ScriptableObject {
     public bool burnHeal;
     public bool heal;
     public bool block;
+    public bool burnRecoverAp;
     public bool recoverAp;
     public bool buff;
     public BuffType buffType;

@@ -18,6 +18,7 @@ public struct CardStruct {
         bool burnHeal = data.burnHeal;
         bool heal = data.heal;
         bool block = data.block;
+        bool burnRecAp = data.burnRecoverAp;
         bool recAp = data.recoverAp;
         bool buff = data.buff;
         bool debuff = data.debuff;
@@ -73,6 +74,7 @@ public struct CardStruct {
         else if (burnHeal) desc.text = $"{data.description} Heal {data.healAmount}";
         else if (heal) desc.text = $"{data.description} Heal {data.healAmount}";
         else if (block) desc.text = $"{data.description} Block {data.blockAmount}";
+        else if (burnRecAp) desc.text = $"{data.description} Gain {data.aPRecoverAmount} action points";
         else if (recAp) desc.text = $"{data.description} Gain {data.aPRecoverAmount} action points";
         else if (buff) desc.text = $"{data.description} Gain {data.buffType} for {data.buffDuration} turns";
 

@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 7062497257173234138}
   - component: {fileID: 7506933775457493506}
   m_Layer: 0
-  m_Name: SmallHeal+
+  m_Name: MagicCookie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33aeb0b137d136141b9b1576e8efab2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 11400000, guid: 40883f568d1644a4ea3ce4626bea3f16, type: 2}
+  cardData: {fileID: 11400000, guid: d5f2031caa330ea409539a6dbb0b4e03, type: 2}
   background: {fileID: 1742700476772054059}
   borders:
   - {fileID: 2240761924561665550}
@@ -290,7 +290,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -30}
-  m_SizeDelta: {x: 75, y: 50}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7262388928847437503
 CanvasRenderer:

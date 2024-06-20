@@ -148,7 +148,8 @@ public class GameManager : MonoBehaviour {
         if (player.Block > 0) player.ResetBlock();
         if (player.Buffs[0] != BuffEffect.None || player.Buffs[1] != BuffEffect.None) player.ResetBuffs(); // Do check better later...
         player.UpdateHealthInfo();
-        enemy.PlanNextAction(enemy.EnemyData.actionRange);
+        enemy.AtkCounter = enemy.EnemyData.atksBeforeOtherAction;
+        enemy.PlanNextAction();
         CopyDeckForUsage();
         StartCoroutine(InstantiateDeckCards());
 
@@ -219,11 +220,25 @@ public class GameManager : MonoBehaviour {
         }
 
         yield return new WaitUntil(() => !hand.Drawing);
-        endTurnButtonTxt.text = "End turn";
-        gameState = GameState.PlayerTurn;
+        
+        //Is player debuffed?
+        switch (player.StatusEffect) {
+            case StatusEffect.Stunned:
+            Debug.Log($"Player is {player.StatusEffect}! Ending turn automatically");
+            player.ResetDebuff(StatusEffect.Stunned);
+            enemy.PlanNextAction();
+            StartCoroutine(EndTurn());
+            break;
 
-        //Show next enemy action
-        enemy.PlanNextAction(enemy.EnemyData.actionRange);
+            //No
+            default:
+            endTurnButtonTxt.text = "End turn";
+            gameState = GameState.PlayerTurn;
+
+            //Show next enemy action
+            enemy.PlanNextAction();
+            break;
+        }
     }
 
     IEnumerator EndTurn() {

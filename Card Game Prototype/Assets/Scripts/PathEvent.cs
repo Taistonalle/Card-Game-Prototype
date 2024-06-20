@@ -33,6 +33,7 @@ public class PathEvent : MonoBehaviour {
     [SerializeField] GameObject pathCanvas;
     [SerializeField] Player player;
     [SerializeField] PlayerDeck deck;
+    [SerializeField] StatusBar statusBar;
 
     void Awake() {
         deck = FindObjectOfType<PlayerDeck>();
@@ -130,11 +131,14 @@ public class PathEvent : MonoBehaviour {
                 eDesc.text = $"{usedEvent.choiceOneBad}\n\nYou lost 10 max health and gained a {rCard[0].GetComponent<Card>().CardData.cardName} card!";
                 deck.RewardAddCard(rCard[0]);
                 player.MaxHp -= 10;
+                statusBar.UpdateHealthTxt();
+                statusBar.UpdateDeckCountTxt();
                 ToggleButtonsVisibility();
             });
             bChoiceTwo.onClick.AddListener(delegate {
                 eDesc.text = $"{usedEvent.choiceTwoBad}\n\nYou lost 5 health";
                 player.Health -= 5;
+                statusBar.UpdateHealthTxt();
                 ToggleButtonsVisibility();
             });
             break;
@@ -144,6 +148,7 @@ public class PathEvent : MonoBehaviour {
             bChoiceOne.onClick.AddListener(delegate {
                 eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained a {rCard[1].GetComponent<Card>().CardData.cardName} card!";
                 deck.RewardAddCard(rCard[1]);
+                statusBar.UpdateDeckCountTxt();
                 ToggleButtonsVisibility();
             });
             bChoiceTwo.onClick.AddListener(delegate {
@@ -164,11 +169,13 @@ public class PathEvent : MonoBehaviour {
                 eDesc.text = $"{usedEvent.choiceOneBad}\n\nYou lost 5 max health and lost 10 health";
                 player.MaxHp -= 5;
                 player.Health -= 10;
+                statusBar.UpdateHealthTxt();
                 ToggleButtonsVisibility();
             });
             bChoiceTwo.onClick.AddListener(delegate {
                 eDesc.text = $"{usedEvent.choiceTwoBad}\n\nYou lost 3 max health";
                 player.MaxHp -= 3;
+                statusBar.UpdateHealthTxt();
                 ToggleButtonsVisibility();
             });
             break;
@@ -179,12 +186,15 @@ public class PathEvent : MonoBehaviour {
                 eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained 5 max health and healed for 10 health!";
                 player.MaxHp += 5;
                 player.Health += 10;
+                statusBar.UpdateHealthTxt();
                 ToggleButtonsVisibility();
             });
             bChoiceTwo.onClick.AddListener(delegate {
                 eDesc.text = $"{usedEvent.choiceTwoGood}\n\nYou lost 1 health and gained a {rCard[2].GetComponent<Card>().CardData.cardName} card!";
                 deck.RewardAddCard(rCard[2]);
                 player.Health -= 1;
+                statusBar.UpdateHealthTxt();
+                statusBar.UpdateDeckCountTxt();
                 ToggleButtonsVisibility();
             });
             break;
@@ -201,11 +211,13 @@ public class PathEvent : MonoBehaviour {
                 int randId = Random.Range(0, deck.CardCount);
                 eDesc.text = $"{usedEvent.choiceOneBad}\n\nYou feel like you also lost something. Removed: {deck.Cards[randId].GetComponent<Card>().CardData.cardName}";
                 deck.RemoveCard(deck.Cards[randId]);
+                statusBar.UpdateDeckCountTxt();
                 ToggleButtonsVisibility();
             });
             bChoiceTwo.onClick.AddListener(delegate {
                 eDesc.text = $"{usedEvent.choiceTwoBad}\n\nYou lost 40 health";
                 player.Health -= 40;
+                statusBar.UpdateHealthTxt();
                 ToggleButtonsVisibility();
             });
             break;
@@ -215,12 +227,14 @@ public class PathEvent : MonoBehaviour {
             bChoiceOne.onClick.AddListener(delegate {
                 eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained a {rCard[3].GetComponent<Card>().CardData.cardName} card!";
                 deck.RewardAddCard(rCard[3]);
+                statusBar.UpdateDeckCountTxt();
                 ToggleButtonsVisibility();
             });
             bChoiceTwo.onClick.AddListener(delegate {
                 eDesc.text = $"{usedEvent.choiceTwoGood}\n\nYou gained 20 max health and 1 max action point!";
                 player.MaxHp += 20;
                 player.MaxAP += 1;
+                statusBar.UpdateHealthTxt();
                 ToggleButtonsVisibility();
             });
             break;
@@ -248,12 +262,14 @@ public class PathEvent : MonoBehaviour {
             bChoiceOne.onClick.AddListener(delegate {
                 eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained a {rCard[4].GetComponent<Card>().CardData.cardName} card!";
                 deck.RewardAddCard(rCard[4]);
+                statusBar.UpdateDeckCountTxt();
                 ToggleButtonsVisibility();
             });
             bChoiceTwo.onClick.AddListener(delegate {
                 eDesc.text = $"{usedEvent.choiceTwoGood}\n\nYou gained 5 max health and 2 max action points!";
                 player.MaxHp += 5;
                 player.MaxAP += 2;
+                statusBar.UpdateHealthTxt();
                 ToggleButtonsVisibility();
             });
             break;

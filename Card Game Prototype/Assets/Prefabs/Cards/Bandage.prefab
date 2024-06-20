@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 7062497257173234138}
   - component: {fileID: 7506933775457493506}
   m_Layer: 0
-  m_Name: SmallHeal
+  m_Name: Bandage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33aeb0b137d136141b9b1576e8efab2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 11400000, guid: 953ec474f8c88994499ccaab34de33df, type: 2}
+  cardData: {fileID: 11400000, guid: 65276a2c623e99b468028d61489e20ea, type: 2}
   background: {fileID: 1742700476772054059}
   borders:
   - {fileID: 2240761924561665550}

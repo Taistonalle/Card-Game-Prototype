@@ -20,6 +20,10 @@ MonoBehaviour:
   minBlock: 5
   maxBlock: 10
   enemyArt: {fileID: 21300000, guid: b07de92d5b73dcb4c831789498dcfd45, type: 3}
-  actionRange: 2
+  enemyCanDo: 1
   debuffType: 0
+  atksBeforeOtherAction: 2
+  atkMultiplier: 0.6
+  blockMultiplier: 0.4
   bossEnemy: 0
+  miniBoss: 0

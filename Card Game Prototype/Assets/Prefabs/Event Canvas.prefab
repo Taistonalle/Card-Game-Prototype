@@ -2360,6 +2360,7 @@ MonoBehaviour:
   pathCanvas: {fileID: 0}
   player: {fileID: 0}
   deck: {fileID: 0}
+  statusBar: {fileID: 0}
 --- !u!1 &8353532686542900859
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6eb7e61914cbf4caa072094720e76f, type: 3}
   m_Name: Ghost
   m_EditorClassIdentifier: 
-  action: 0
+  action: 1
   enemyName: Ghost
   health: 200
   minDamage: 1
   maxDamage: 32
   minBlock: 10
-  maxBlock: 15
+  maxBlock: 30
   enemyArt: {fileID: 21300000, guid: dea7f711f64ace743bed0d7824e5cbfa, type: 3}
-  actionRange: 1
-  debuffType: 0
+  enemyCanDo: 2
+  debuffType: 1
+  atksBeforeOtherAction: 1
+  atkMultiplier: 0.5
+  blockMultiplier: 0.5
   bossEnemy: 0
+  miniBoss: 0

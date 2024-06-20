@@ -34,6 +34,10 @@ public class Player : MonoBehaviour {
     }
     [SerializeField] TextMeshProUGUI aPCounter;
     [SerializeField] StatusEffect statusEffect;
+    public StatusEffect StatusEffect {
+        get { return statusEffect; }
+        set { statusEffect = value; }
+    }
     [SerializeField] BuffEffect[] buffs;
     public BuffEffect[] Buffs {
         get { return buffs; }
@@ -47,6 +51,7 @@ public class Player : MonoBehaviour {
     [SerializeField] CanvasGroup blockIconGrp;
 
     [Header("Buff & debuff related")]
+    [SerializeField] CanvasGroup stunIconGgp;
     [SerializeField] CanvasGroup strIconGgp;
     [SerializeField] TextMeshProUGUI strDurTxt;
     [SerializeField] int strDuration;
@@ -182,6 +187,24 @@ public class Player : MonoBehaviour {
             buffs[0] = BuffEffect.Strenght;
             strDuration += duration;
             strDurTxt.text = strDuration.ToString();
+            break;
+        }
+    }
+
+    public void GainDebuff(StatusEffect debuff) {
+        switch (debuff) {
+            case StatusEffect.Stunned:
+            statusEffect = StatusEffect.Stunned;
+            StartCoroutine(FadeIcon(stunIconGgp, 0.3f, 0f, 1f));
+            break;
+        }
+    }
+
+    public void ResetDebuff(StatusEffect debuff) {
+        switch (debuff) {
+            case StatusEffect.Stunned:
+            statusEffect = StatusEffect.None;
+            StartCoroutine(FadeIcon(stunIconGgp, 0.3f, 1f, 0f));
             break;
         }
     }

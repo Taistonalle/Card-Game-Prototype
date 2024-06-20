@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6eb7e61914cbf4caa072094720e76f, type: 3}
   m_Name: MechaSlime
   m_EditorClassIdentifier: 
-  action: 0
+  action: 2
   enemyName: Mecha slime
   health: 180
   minDamage: 5
@@ -20,6 +20,10 @@ MonoBehaviour:
   minBlock: 5
   maxBlock: 25
   enemyArt: {fileID: 21300000, guid: dea7f711f64ace743bed0d7824e5cbfa, type: 3}
-  actionRange: 2
-  debuffType: 0
+  enemyCanDo: 2
+  debuffType: 1
+  atksBeforeOtherAction: 2
+  atkMultiplier: 0.3
+  blockMultiplier: 0.7
   bossEnemy: 0
+  miniBoss: 0
