@@ -200,6 +200,17 @@ public class Card : DragAndPointerHandler {
         hand.RearrangeHand();
     }
 
+    void Debuff(Enemy target) {
+        //Debuff check and action point calculations
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discapl pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
     void DrawAndDealDamage(Enemy target) {
         //Damage and action point calculations
         //Does player have strenght buff?
@@ -323,6 +334,29 @@ public class Card : DragAndPointerHandler {
             break;
         }
         player.GainBlock(cardData.blockAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void DealDamageAndRecoverAp(Enemy target) {
+        //Damage, action point recovery and cost calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
+        }
+        player.RecoverAP(cardData.aPRecoverAmount);
         player.ReduceAP(cardData.playCost);
 
         //Add card to discard pile
@@ -632,6 +666,7 @@ public class Card : DragAndPointerHandler {
         else if (block && buff) BlockAndBuff();
         else if (draw && heal) DrawAndHeal();
         else if (dmg && block) DealDamageAndBlock(target);
+        else if (dmg && recAp) DealDamageAndRecoverAp(target);
         else if (heal && buff) HealAndBuff();
         else if (draw && block) BlockAndDraw();
         else if (dmg && buff) DealDamageAndBuff(target);
@@ -653,7 +688,7 @@ public class Card : DragAndPointerHandler {
         else if (burnRecAp) BurnRecoverAp();
         else if (recAp) RecoverAp();
         else if (buff) Buff();
-        else if (debuff) Debug.Log("Implement debuff card");
+        else if (debuff) Debuff(target);
 
         //Not in the checks yet
         else Debug.Log("Card functions not implement yet");

@@ -1,3 +1,4 @@
+using CustomAudioManager;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,7 +19,8 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
     [Header("Other infos")]
     [SerializeField] TextMeshProUGUI nameTxt;
     [SerializeField] StatusEffect statusEffect;
-    [SerializeField] int lastActionRange;
+    public StatusEffect StatusEffect { get { return statusEffect; } }
+    //[SerializeField] int lastActionRange;
 
     [Header("Health bar & block related")]
     [SerializeField] Slider healthBar;
@@ -42,6 +44,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         get { return atkCounter; }
         set { atkCounter = value; }
     }
+    [SerializeField] CanvasGroup stunIconGrp;
 
     [Header("Canvas related")]
     [SerializeField] GameObject combatCanvas;
@@ -115,6 +118,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
 
             default:
             health -= damage;
+            AudioManager.PlayDamageSound();
             break;
         }
         StartCoroutine(AnimateHealthBar(30f));
@@ -155,6 +159,24 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             combatCanvas.SetActive(false);
         }
         else StartCoroutine(ActivateRewardView());
+    }
+
+    public void GainDebuff(DebuffType debuff) {
+        switch (debuff) {
+            case DebuffType.Stun:
+            statusEffect = StatusEffect.Stunned;
+            StartCoroutine(FadeIcon(stunIconGrp, 0.3f, 0f, 1f));
+            break;
+        }
+    }
+
+    public void ResetDebuff(StatusEffect debuff) {
+        switch (debuff) {
+            case StatusEffect.Stunned:
+            statusEffect = StatusEffect.None;
+            StartCoroutine(FadeIcon(stunIconGrp, 0.3f, 1f, 0f));
+            break;
+        }
     }
 
     void UpdateIndicator() {

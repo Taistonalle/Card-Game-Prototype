@@ -251,10 +251,23 @@ public class GameManager : MonoBehaviour {
             hand.RemoveCardFromHand(hand.Cards[0]);
         }
 
-        //Call enemy function stuff. NOTE: Use enemy planned action to determine what function enemy does. This in Enemy script ofc.
         //Check if enemy still has block, reset it before it's new action
         if (enemy.Block > 0) enemy.ResetBlock();
-        enemy.DoPlannedAction();
+
+        //Is enemy debuffed?
+        switch (enemy.StatusEffect) {
+            case StatusEffect.Stunned:
+            Debug.Log($"Enemy is {enemy.StatusEffect}! Ending enemy turn automatically");
+            enemy.ResetDebuff(StatusEffect.Stunned);
+            yield return new WaitForSeconds(1f); //Small delay before new turn
+            StartCoroutine(BeginNewTurn());
+            break;
+
+            //No
+            default:
+            enemy.DoPlannedAction();
+            break;
+        }
     }
 
     public IEnumerator GameOver() {

@@ -63,6 +63,7 @@ public struct CardStruct {
         else if (block && buff) desc.text = $"{data.description} Block {data.blockAmount} & Gain {data.buffType} for {data.buffDuration} turns";
         else if (draw && heal) desc.text = $"{data.description} Draw {data.drawAmount} & Heal {data.healAmount}";
         else if (dmg && block) desc.text = $"{data.description} Deal {data.damage} damage & Block {data.blockAmount}";
+        else if (dmg && recAp) desc.text = $"{data.description} Deal {data.damage} damage & Gain {data.aPRecoverAmount} action points";
         else if (heal && buff) desc.text = $"{data.description} Heal {data.healAmount} & Gain {data.buffType} for {data.buffDuration} turns";
         else if (draw && block) desc.text = $"{data.description} Draw {data.drawAmount} & Block {data.blockAmount}";
         else if (dmg && buff) desc.text = $"{data.description} Deal {data.damage} damage & Gain {data.buffType} for {data.buffDuration} turns";
@@ -77,6 +78,7 @@ public struct CardStruct {
         else if (burnRecAp) desc.text = $"{data.description} Gain {data.aPRecoverAmount} action points";
         else if (recAp) desc.text = $"{data.description} Gain {data.aPRecoverAmount} action points";
         else if (buff) desc.text = $"{data.description} Gain {data.buffType} for {data.buffDuration} turns";
+        else if (debuff) desc.text = $"{data.description} {data.debuffType} for {data.debuffDuration} turns";
 
         else desc.text = "";
     }

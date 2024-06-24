@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using CustomAudioManager;
 
 public enum StatusEffect { None, Stunned, Dazed }
 public enum BuffEffect { None, Strenght, Dodge }
@@ -61,10 +62,10 @@ public class Player : MonoBehaviour {
     }
 
     [Header("Deck related")]
-    [SerializeField] int deckSize; //Not used anywhere atm. Maybe even remove at some point
-    public int DeckSize {
-        get { return deckSize; }
-    }
+    //[SerializeField] int deckSize; //Not used anywhere atm. Maybe even remove at some point
+    //public int DeckSize {
+    //    get { return deckSize; }
+    //}
     [SerializeField] int drawAmount;
     public int DrawAmount {
         get { return drawAmount; }
@@ -102,6 +103,7 @@ public class Player : MonoBehaviour {
 
             default:
             health -= damage;
+            AudioManager.PlayDamageSound();
             break;
         }
         statusBar.UpdateHealthTxt();

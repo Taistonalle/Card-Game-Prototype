@@ -133,6 +133,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b46209990ed4fdc41bbe05d504b2b986, type: 2}
   - {fileID: 11400000, guid: 4ee1d9243d3128f4b81bfb4006f47174, type: 2}
   - {fileID: 11400000, guid: 7b5e8401776fd114499aedab92c7e482, type: 2}
+  - {fileID: 11400000, guid: 84c4ab15bcb5c184688541549684c376, type: 2}
   previewCard: {fileID: 7149571630061005679}
 --- !u!1001 &603836211460068395
 PrefabInstance:
