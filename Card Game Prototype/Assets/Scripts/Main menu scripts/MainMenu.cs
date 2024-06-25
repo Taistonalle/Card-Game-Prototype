@@ -1,3 +1,4 @@
+using CustomAudioManager;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,11 +22,26 @@ public class MainMenu : MonoBehaviour {
     [SerializeField] CardPreview previewCard;
     PlayerDeck pDeck;
 
+    AudioManager aManager;
+    [Header("Audio manager related")]
+    [SerializeField] Slider mSlider;
+    [SerializeField] Slider sfxSlider;
+    [SerializeField] TextMeshProUGUI mSliderValue;
+    [SerializeField] TextMeshProUGUI sfxSliderValue;
 
     void Start() {
         pDeck = FindObjectOfType<PlayerDeck>();
-        //cardPreview = GetComponentInChildren<CardPreview>();
-        //ButtonSetup();
+        aManager = FindObjectOfType<AudioManager>();
+
+        aManager.MSlider = mSlider;
+        aManager.MSliderValue = mSliderValue;
+
+        aManager.SfxSlider = sfxSlider;
+        aManager.SfxSliderValue = sfxSliderValue;
+        
+        //Delegating functions for sliders
+        mSlider.onValueChanged.AddListener(delegate { aManager.UpdateMusicVolume(); });
+        sfxSlider.onValueChanged.AddListener(delegate { aManager.UpdateSFXVolume(); });
     }
 
     #region Button functions

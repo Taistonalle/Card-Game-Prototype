@@ -1,3 +1,4 @@
+using CustomAudioManager;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -200,6 +201,7 @@ public class GameManager : MonoBehaviour {
         if (pCP.CardCount == 0) {
             for (int i = dP.CardCount - 1; i >= 0; i--) {
                 yield return new WaitForSeconds(0.2f);
+                AudioManager.PlayCardSound();
                 dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[i], 5f)); //Keep like this, not yield return. Affects speed as well.
             }
             yield return new WaitForSeconds(CardMoveRoutineMaxTime); //Wait for the cards to be moved before drawing
@@ -275,5 +277,6 @@ public class GameManager : MonoBehaviour {
 
         //Activate/make game over message box visible. Add fancier fade in effect later?
         gOBox.SetActive(true);
+        AudioManager.PlayGameOverSound();
     }
 }

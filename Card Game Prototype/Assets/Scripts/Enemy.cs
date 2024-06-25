@@ -109,11 +109,16 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
                 ResetBlock();
                 //Then use remaining damage for health removal
                 health -= remainingDmg;
+                AudioManager.PlayDamageSound();
             }
             else if (damage == block) {
                 ResetBlock();
+                AudioManager.PlayBlockDamagedSound();
             }
-            else ReduceBlock(damage);
+            else {
+                ReduceBlock(damage);
+                AudioManager.PlayBlockDamagedSound();
+            }
             break;
 
             default:
@@ -131,6 +136,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             break;
         }
         block += amount;
+        AudioManager.PlayBlockUpSound();
         UpdateBlockCounter();
         gM.StartCoroutine(gM.BeginNewTurn());
     }
@@ -166,6 +172,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             case DebuffType.Stun:
             statusEffect = StatusEffect.Stunned;
             StartCoroutine(FadeIcon(stunIconGrp, 0.3f, 0f, 1f));
+            AudioManager.PlayStunSound();
             break;
         }
     }
@@ -403,6 +410,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             break;
         }
         block += blockAmount;
+        AudioManager.PlayBlockUpSound();
         UpdateBlockCounter();
 
         yield return new WaitForSeconds(3f); //Placeholder timewise. Maybe add time lenght of animation later or something similar

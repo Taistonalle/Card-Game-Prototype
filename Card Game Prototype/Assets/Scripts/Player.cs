@@ -94,11 +94,16 @@ public class Player : MonoBehaviour {
                 ResetBlock();
                 //Then use remaining damage for health removal
                 health -= remainingDmg;
+                AudioManager.PlayDamageSound();
             }
             else if (damage == block) {
                 ResetBlock();
+                AudioManager.PlayBlockDamagedSound();
             }
-            else ReduceBlock(damage);
+            else {
+                ReduceBlock(damage);
+                AudioManager.PlayBlockDamagedSound();
+            }
             break;
 
             default:
@@ -131,6 +136,7 @@ public class Player : MonoBehaviour {
             break;
         }
         block += amount;
+        AudioManager.PlayBlockUpSound();
         UpdateBlockCounter();
     }
 
@@ -191,6 +197,7 @@ public class Player : MonoBehaviour {
             strDurTxt.text = strDuration.ToString();
             break;
         }
+        AudioManager.PlayBuffSound();
     }
 
     public void GainDebuff(StatusEffect debuff) {
@@ -198,6 +205,7 @@ public class Player : MonoBehaviour {
             case StatusEffect.Stunned:
             statusEffect = StatusEffect.Stunned;
             StartCoroutine(FadeIcon(stunIconGgp, 0.3f, 0f, 1f));
+            AudioManager.PlayStunSound();
             break;
         }
     }

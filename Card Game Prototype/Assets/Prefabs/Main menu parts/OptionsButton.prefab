@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7438935528311548873}
   - component: {fileID: 1286275538649017642}
   m_Layer: 5
-  m_Name: StartGameButtonTxt
+  m_Name: OptionsButtonTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

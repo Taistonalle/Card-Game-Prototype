@@ -1,3 +1,4 @@
+using CustomAudioManager;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -623,6 +624,7 @@ public class Card : DragAndPointerHandler {
         //Very first check if current player action points are enough to play the card, Yes -> Continue. No -> jump out of function and give indication for error
         if (player.AP < cardData.playCost) {
             Debug.Log("Not enough AP to play this card");
+            AudioManager.PlayNotEnoughApSound();
             StartCoroutine(MoveCardBackToHand(5f));
             return;
         }

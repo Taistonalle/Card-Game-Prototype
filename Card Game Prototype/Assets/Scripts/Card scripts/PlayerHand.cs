@@ -1,3 +1,4 @@
+using CustomAudioManager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -135,6 +136,7 @@ public class PlayerHand : MonoBehaviour {
                     //yield return new WaitForSeconds(0.2f); //gpt muutos poisti tämän
                     //yield return dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[j], 5f));
                     yield return new WaitForSeconds(0.2f);
+                    AudioManager.PlayCardSound();
                     dP.StartCoroutine(dP.MoveCardToPlayerCardPile(dP.Cards[j], 5f));
                 }
                 yield return new WaitUntil(() => dP.CardCount == 0); //Dont continue until coroutine(s) are done
@@ -153,6 +155,7 @@ public class PlayerHand : MonoBehaviour {
                 yield return cardPile.StartCoroutine(cardPile.MoveCardToPlayerHand(cardPile.Cards[0], slotId)); //Draw top card & move it to unused slot
                 cardPile.RemoveCard(cardPile.Cards[0]);
                 //Debug.Log($"Loop: {i}, slotId: {slotId}, slotUsed: {cardSlots.slotsInUse[slotId]}"); // Debugging tool
+                AudioManager.PlayCardSound();
                 yield return new WaitForSeconds(0.2f);
             }
             else {
