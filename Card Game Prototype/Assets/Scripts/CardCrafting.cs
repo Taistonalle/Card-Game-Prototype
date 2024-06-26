@@ -8,11 +8,15 @@ public class CardCrafting : MonoBehaviour {
     [SerializeField] CardData[] craftedScriptables;
     [SerializeField] GameObject[] craftedCardPrefabs;
     [SerializeField] int prefabIndex;
-    public int PrefabIndex {
+    public int PrefabIndex { //Modified when pressing miniboss point in path view
         get { return prefabIndex; }
         set { prefabIndex = value; }
     }
- 
+    [SerializeField] List<GameObject> storedComponents = new();
+    public List<GameObject> StoredComponents { get { return storedComponents; } }
+    [SerializeField] GameObject compParent;
+    public GameObject CompParent { get { return compParent; } }
+
     [Header("Component related")]
     [SerializeField] Button[] compButtons;
     [SerializeField] int componentAmount;
@@ -30,6 +34,11 @@ public class CardCrafting : MonoBehaviour {
     [SerializeField] GameObject craftCanvas;
 
     void Start() {
+        if (FindObjectsOfType<CardCrafting>().Length > 1) {
+            Debug.Log($"Destroying extra {gameObject.name}");
+            Destroy(gameObject);
+        }
+        else DontDestroyOnLoad(gameObject);
         DelegateCompButtons();
     }
 

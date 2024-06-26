@@ -164,7 +164,8 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             cardCraftCanvas.SetActive(true);
             combatCanvas.SetActive(false);
         }
-        else StartCoroutine(ActivateRewardView());
+        //else StartCoroutine(ActivateRewardView());
+        else StartCoroutine(ActivateCompRewardView());
     }
 
     public void GainDebuff(DebuffType debuff) {
@@ -328,7 +329,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         group.alpha = endValue;
     }
 
-    IEnumerator ActivateRewardView() {
+    IEnumerator ActivateRewardView() { //Old
         rewardCanvas.SetActive(true);
         yield return null; //Wait for next frame
 
@@ -356,7 +357,20 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         }
     }
 
-    IEnumerator AnimateHealthBar(float animSpeed) {
+    IEnumerator ActivateCompRewardView() {
+        rewardCanvas.SetActive(true);
+        yield return null; //Wait for next frame
+
+        //Find all components
+        CraftComponent[] components = FindObjectsOfType<CraftComponent>();
+
+        //Set random new data for the cards
+        foreach (CraftComponent comp in components) {
+            comp.ResetComponentValues();
+            comp.RandomizeComponent();
+        }
+    }
+        IEnumerator AnimateHealthBar(float animSpeed) {
         if (health <= 0) health = 0;
 
         while (healthBar.value > health) {

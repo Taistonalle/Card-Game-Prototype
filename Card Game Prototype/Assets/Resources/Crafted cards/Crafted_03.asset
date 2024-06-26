@@ -18,7 +18,7 @@ MonoBehaviour:
   backgroundColor: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
   cardImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   cardBorders:
-  - {fileID: 21300000, guid: 6a0b66e17e1ea43479fe27bd8f72a175, type: 3}
+  - {fileID: 21300000, guid: 6c195303dad48054da49626bbd0b215d, type: 3}
   - {fileID: 21300000, guid: 975ab79816a6d994994b26659cba6a8e, type: 3}
   drawAmount: 0
   damage: 0
@@ -33,6 +33,7 @@ MonoBehaviour:
   burnHeal: 0
   heal: 0
   block: 0
+  burnRecoverAp: 0
   recoverAp: 0
   buff: 0
   buffType: 2

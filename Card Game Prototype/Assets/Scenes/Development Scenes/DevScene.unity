@@ -134,18 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f7b6939e8291646af957baf1641d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &177401507 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 537499090428442646, guid: 90d6a88143e8eae438630b746188f17a,
-    type: 3}
-  m_PrefabInstance: {fileID: 6339517665391866538}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &334178452 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7586677591005281255, guid: 90d6a88143e8eae438630b746188f17a,
@@ -556,7 +544,7 @@ PrefabInstance:
     - target: {fileID: 7348110032438998629, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -889,6 +877,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1054886975}
+    - target: {fileID: 3039167141865207453, guid: 828a4d160d2063143a5df96614533f98,
+        type: 3}
+      propertyPath: cardCrafting
+      value: 
+      objectReference: {fileID: 4061544077931728413}
     - target: {fileID: 3039167141865207453, guid: 828a4d160d2063143a5df96614533f98,
         type: 3}
       propertyPath: cardDropArea
@@ -1693,6 +1686,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 469911744}
+    - target: {fileID: 469231992352332371, guid: 90d6a88143e8eae438630b746188f17a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 469911744}
     - target: {fileID: 716170313285533997, guid: 90d6a88143e8eae438630b746188f17a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1800,11 +1798,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2978725200103529779, guid: 90d6a88143e8eae438630b746188f17a,
         type: 3}
-      propertyPath: valueTxt
-      value: 
-      objectReference: {fileID: 177401507}
-    - target: {fileID: 2978725200103529779, guid: 90d6a88143e8eae438630b746188f17a,
-        type: 3}
       propertyPath: pathCanvas
       value: 
       objectReference: {fileID: 5697274211195558146}
@@ -1834,6 +1827,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 469911744}
     - target: {fileID: 4375727220111468524, guid: 90d6a88143e8eae438630b746188f17a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 469911744}
+    - target: {fileID: 4828729658585293831, guid: 90d6a88143e8eae438630b746188f17a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 469911744}
+    - target: {fileID: 4863075242682438666, guid: 90d6a88143e8eae438630b746188f17a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

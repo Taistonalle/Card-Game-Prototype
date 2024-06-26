@@ -33,6 +33,7 @@ MonoBehaviour:
   burnHeal: 0
   heal: 0
   block: 0
+  burnRecoverAp: 0
   recoverAp: 0
   buff: 0
   buffType: 2

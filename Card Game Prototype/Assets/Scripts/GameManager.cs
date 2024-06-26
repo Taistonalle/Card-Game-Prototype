@@ -71,6 +71,9 @@ public class GameManager : MonoBehaviour {
     PlayerDeck deck;
     StatusBar statusBar;
 
+    [Header("Crafting related")]
+    [SerializeField] CardCrafting cardCrafting;
+    public CardCrafting CardCrafting { get { return cardCrafting; } }
 
     void Start() {
         deck = FindObjectOfType<PlayerDeck>();
@@ -175,6 +178,16 @@ public class GameManager : MonoBehaviour {
         enemy.RewardCanvas.SetActive(false);
         enemy.PathCanvas.SetActive(true);
         statusBar.UpdateDeckCountTxt();
+    }
+
+    public void PickComponentButton(GameObject component) {
+        //Simply add the picked component into CardCrafting component list
+        cardCrafting.StoredComponents.Add(Instantiate(component, cardCrafting.CompParent.transform));
+
+        //And activate/deactivate needed canvases
+        enemy.CombatCanvas.SetActive(false);
+        enemy.RewardCanvas.SetActive(false);
+        enemy.PathCanvas.SetActive(true);
     }
 
     public void SkipRewardButton() {

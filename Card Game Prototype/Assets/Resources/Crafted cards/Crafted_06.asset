@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af5ac885bd5baa447876ce6ce23e4155, type: 3}
-  m_Name: Crafted_02
+  m_Name: Crafted_06
   m_EditorClassIdentifier: 
-  cardName: Crafted 2.0
+  cardName: Crafted 6.0
   description: 
   cardBackground: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   backgroundColor: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
