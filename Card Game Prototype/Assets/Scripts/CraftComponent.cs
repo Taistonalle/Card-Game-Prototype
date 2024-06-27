@@ -33,6 +33,8 @@ public class CraftComponent : MonoBehaviour {
     [SerializeField] int maxBlock;
     [SerializeField] int minApRec;
     [SerializeField] int maxApRec;
+    [SerializeField] int minPlayCost;
+    [SerializeField] int maxPlayCost;
 
     [Header("What does component add?")]
     [SerializeField] bool draw;
@@ -64,7 +66,7 @@ public class CraftComponent : MonoBehaviour {
     [SerializeField] TextMeshProUGUI componentValuesTxt;
 
     void Start() {
-
+        UpdateDetailsTxt();
     }
 
     void SetCompBoolsToBeUsed() {
@@ -102,7 +104,7 @@ public class CraftComponent : MonoBehaviour {
         int randHeal = 0;
         int randBlock = 0;
         int randApRec = 0;
-        int randPlayCost = Random.Range(0, 5 + 1);
+        int randPlayCost = Random.Range(minPlayCost, maxPlayCost + 1);
         int randBuffIndex = 0;
         int randBuffDur = 0;
         int randDebuffIndex = 0;

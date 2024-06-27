@@ -2,6 +2,7 @@ using CustomAudioManager;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour {
     [Header("Crafting related")]
     [SerializeField] CardCrafting cardCrafting;
     public CardCrafting CardCrafting { get { return cardCrafting; } }
+    [SerializeField] GameObject deckButton;
 
     void Start() {
         deck = FindObjectOfType<PlayerDeck>();
@@ -181,13 +183,29 @@ public class GameManager : MonoBehaviour {
     }
 
     public void PickComponentButton(GameObject component) {
-        //Simply add the picked component into CardCrafting component list
-        cardCrafting.StoredComponents.Add(Instantiate(component, cardCrafting.CompParent.transform));
+        //Clone the current component
+        GameObject clone = Instantiate(component, cardCrafting.CompParent.transform);
+        int lastId = 0;
+
+        //Is there already component added? Get last Id and move new component next to it. Else move the first component to left side of the scrollable view
+        if (cardCrafting.StoredComponents.Count > 0) {
+            lastId = cardCrafting.StoredComponents.IndexOf(cardCrafting.StoredComponents[^1]);
+            clone.transform.localPosition = cardCrafting.StoredComponents[lastId].transform.localPosition + new Vector3(100f, 0f);
+        }
+        else clone.transform.localPosition = new Vector3(80f, -50f, 0f); //For some odd reason, in inspector this is really 80, 0, 0. Which is wanted btw.
+
+        //Then add it to list
+        cardCrafting.StoredComponents.Add(clone);
+
+        //Delegate the function and enable button to be active for later use
+        clone.GetComponent<Button>().enabled = true;
+        clone.GetComponent<Button>().onClick.AddListener(delegate { cardCrafting.AddComponentValues(clone.GetComponent<CraftComponent>()); });
 
         //And activate/deactivate needed canvases
         enemy.CombatCanvas.SetActive(false);
         enemy.RewardCanvas.SetActive(false);
         enemy.PathCanvas.SetActive(true);
+        deckButton.SetActive(true);
     }
 
     public void SkipRewardButton() {

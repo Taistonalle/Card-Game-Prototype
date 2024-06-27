@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2627451, g: 0.6117647, b: 0.7647059, a: 1}
+  m_Color: {r: 0.74962807, g: 0.7647059, b: 0.26274514, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 7716396378261440145}
   - component: {fileID: 3312967125711332408}
   m_Layer: 5
-  m_Name: CraftComponent
+  m_Name: BaseComponentDraw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -244,8 +244,8 @@ RectTransform:
   - {fileID: 2151582661707005667}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -261,12 +261,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 610ecfd1f8d89dc49aaabec00e35b409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawAmount: 0
+  drawAmount: 1
   damage: 0
   healAmount: 0
   blockAmount: 0
   aPRecoverAmount: 0
-  playCost: 0
+  playCost: 2
   buffDuration: 0
   debuffDuration: 0
   minDrawAmount: 1
@@ -281,7 +281,7 @@ MonoBehaviour:
   maxApRec: 5
   minPlayCost: 1
   maxPlayCost: 5
-  draw: 0
+  draw: 1
   dealDamage: 0
   heal: 0
   block: 0
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5203328658040715773}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 

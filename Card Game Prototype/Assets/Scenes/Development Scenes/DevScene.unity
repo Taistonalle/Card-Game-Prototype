@@ -492,49 +492,73 @@ PrefabInstance:
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.size
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.data[0]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: 8ffc39d5acfe5474aa2e7e97b3a51ec5,
+      objectReference: {fileID: 1064329457145765964, guid: f04ac476c488945449fb004f3953a4a9,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.data[1]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: 65d82c64e2c027c42b03a805ddf64220,
+      objectReference: {fileID: 1064329457145765964, guid: 6b79eae6d303e204cbea1ed2a4e22977,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.data[2]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: a40289530d0caac4a8073d085750aa4d,
+      objectReference: {fileID: 1064329457145765964, guid: 17bf23363be589248b930909f12ad11b,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.data[3]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: f05d063669986ba47aa594e4192aede3,
+      objectReference: {fileID: 1064329457145765964, guid: 1efc5b46b2f03234b93a5bb76f62f5bc,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.data[4]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: 58c566bb24945a041bb0389432421386,
+      objectReference: {fileID: 1064329457145765964, guid: a1175dcf990a41343962ae4b04eb5715,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.data[5]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: 85c744188f8f87e42a7f16e9026d647c,
+      objectReference: {fileID: 1064329457145765964, guid: 5368a96cf4ee78e48ac9cc142050ab00,
         type: 3}
     - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: cards.Array.data[6]
       value: 
-      objectReference: {fileID: 1064329457145765964, guid: 85c744188f8f87e42a7f16e9026d647c,
+      objectReference: {fileID: 1064329457145765964, guid: f9df41ee3af4df348ae2444f189318d5,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[7]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: 0fdaf4e996fae8b44aab0bb083121a2a,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[8]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: 6b490e596b84f634b95b439ca3f50b15,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[9]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: bc2e3e3d58aae4e41ae683b9fae3ea01,
+        type: 3}
+    - target: {fileID: 6374926368834223413, guid: 806445b3bf36bad4ab64333221e2acba,
+        type: 3}
+      propertyPath: cards.Array.data[10]
+      value: 
+      objectReference: {fileID: 1064329457145765964, guid: bc2e3e3d58aae4e41ae683b9fae3ea01,
         type: 3}
     - target: {fileID: 7348110032438998629, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
@@ -575,6 +599,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8291cc95bb256d442bfffefa45032a64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1582298180 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 36583373436697337, guid: 25d8aa3bf68a612459b7ebee1e35c40e,
+    type: 3}
+  m_PrefabInstance: {fileID: 9004408847241161878}
+  m_PrefabAsset: {fileID: 0}
 --- !u!61 &1614513040 stripped
 BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 2502578007751692410, guid: 90d6a88143e8eae438630b746188f17a,
@@ -877,6 +907,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1054886975}
+    - target: {fileID: 3039167141865207453, guid: 828a4d160d2063143a5df96614533f98,
+        type: 3}
+      propertyPath: deckButton
+      value: 
+      objectReference: {fileID: 1582298180}
     - target: {fileID: 3039167141865207453, guid: 828a4d160d2063143a5df96614533f98,
         type: 3}
       propertyPath: cardCrafting
@@ -1191,21 +1226,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1112100376041208428, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 5697274211195558146}
     - target: {fileID: 1508793351568234761, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
         type: 3}
       propertyPath: m_Name
       value: Card Craft Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 7690326910339823107, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
-        type: 3}
-      propertyPath: pathCanvas
-      value: 
-      objectReference: {fileID: 5697274211195558146}
     - target: {fileID: 8916369862648729820, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1369,9 +1394,19 @@ PrefabInstance:
       objectReference: {fileID: 1054886975}
     - target: {fileID: 2662369441307769189, guid: a21f58008ecfc774abb877368f114361,
         type: 3}
+      propertyPath: deckButton
+      value: 
+      objectReference: {fileID: 1582298180}
+    - target: {fileID: 2662369441307769189, guid: a21f58008ecfc774abb877368f114361,
+        type: 3}
       propertyPath: restCanvas
       value: 
       objectReference: {fileID: 308677491532168627}
+    - target: {fileID: 2662369441307769189, guid: a21f58008ecfc774abb877368f114361,
+        type: 3}
+      propertyPath: craftCanvas
+      value: 
+      objectReference: {fileID: 4061544077931728412}
     - target: {fileID: 2662369441307769189, guid: a21f58008ecfc774abb877368f114361,
         type: 3}
       propertyPath: combatCanvas
@@ -1912,6 +1947,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Status Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7267902502688213051, guid: 25d8aa3bf68a612459b7ebee1e35c40e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7267902502688213051, guid: 25d8aa3bf68a612459b7ebee1e35c40e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4061544077931728412}
+    - target: {fileID: 7267902502688213051, guid: 25d8aa3bf68a612459b7ebee1e35c40e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 7267902502688213051, guid: 25d8aa3bf68a612459b7ebee1e35c40e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7267902502688213051, guid: 25d8aa3bf68a612459b7ebee1e35c40e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8541616776250768488, guid: 25d8aa3bf68a612459b7ebee1e35c40e,
         type: 3}

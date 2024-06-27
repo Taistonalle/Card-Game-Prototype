@@ -7,6 +7,7 @@ public class CardCrafting : MonoBehaviour {
     [SerializeField] CardPreview previewCard;
     [SerializeField] CardData[] craftedScriptables;
     [SerializeField] GameObject[] craftedCardPrefabs;
+    public GameObject[] CraftedCardPrefabs { get {  return craftedCardPrefabs; } }
     [SerializeField] int prefabIndex;
     public int PrefabIndex { //Modified when pressing miniboss point in path view
         get { return prefabIndex; }
@@ -20,6 +21,7 @@ public class CardCrafting : MonoBehaviour {
     [Header("Component related")]
     [SerializeField] Button[] compButtons;
     [SerializeField] int componentAmount;
+    [SerializeField] int maxComponentAmount;
     [SerializeField] int drawAmount;
     [SerializeField] int dmgAmount;
     [SerializeField] int blockAmount;
@@ -34,12 +36,12 @@ public class CardCrafting : MonoBehaviour {
     [SerializeField] GameObject craftCanvas;
 
     void Start() {
-        if (FindObjectsOfType<CardCrafting>().Length > 1) {
-            Debug.Log($"Destroying extra {gameObject.name}");
-            Destroy(gameObject);
-        }
-        else DontDestroyOnLoad(gameObject);
-        DelegateCompButtons();
+        //if (FindObjectsOfType<CardCrafting>().Length > 1) {
+        //    Debug.Log($"Destroying extra {gameObject.name}");
+        //    Destroy(gameObject);
+        //}
+        //else DontDestroyOnLoad(gameObject);
+        //DelegateCompButtons();
     }
 
     void DelegateCompButtons() {
@@ -129,7 +131,7 @@ public class CardCrafting : MonoBehaviour {
 
     #region Button functions
     public void ResetComponents() { 
-        componentAmount = 0;
+        craftedCardPrefabs[prefabIndex].GetComponent<Card>().ComponentAmount = 0;
         typeAmount = 0;
         for (int i = 0; i < typeAdded.Length;  i++) typeAdded[i] = false;
 
@@ -152,6 +154,16 @@ public class CardCrafting : MonoBehaviour {
         //Buff
         previewCard.CardData.buffDuration = 0;
         previewCard.CardData.buff = false;
+        previewCard.CardData.buffType = BuffType.None;
+
+        //Debuff
+        previewCard.CardData.debuffDuration = 0;
+        previewCard.CardData.debuff = false;
+        previewCard.CardData.debuffType = DebuffType.None;
+
+        //Recover
+        previewCard.CardData.aPRecoverAmount = 0;
+        previewCard.CardData.recoverAp = false;
 
         previewCard.CardData.playCost = 0;
         previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
@@ -178,6 +190,53 @@ public class CardCrafting : MonoBehaviour {
         prefabIndex = index;
         previewCard.CardData = craftedScriptables[index];
         ResetComponents();
+    }
+
+    public void AddComponentValues(CraftComponent compData) { //This gets delegated into the component button from GameManager
+        if (craftedCardPrefabs[prefabIndex].GetComponent<Card>().ComponentAmount == maxComponentAmount) return;
+        craftedCardPrefabs[prefabIndex].GetComponent<Card>().ComponentAmount += 1;
+
+        //Bools
+        if (compData.Draw) previewCard.CardData.draw = compData.Draw;
+        if (compData.DealDamage) previewCard.CardData.dealDamage = compData.DealDamage;
+        if (compData.Heal) previewCard.CardData.heal = compData.Heal;
+        if (compData.Block) previewCard.CardData.block = compData.Block;
+        if (compData.RecoverAp) previewCard.CardData.recoverAp = compData.RecoverAp;
+        if (compData.Buff) previewCard.CardData.buff = compData.Buff;
+        if (compData.Debuff) previewCard.CardData.debuff = compData.Debuff;
+
+        //Values
+        previewCard.CardData.drawAmount += compData.DrawAmount;
+        previewCard.CardData.damage += compData.Damage;
+        previewCard.CardData.healAmount += compData.HealAmount;
+        previewCard.CardData.blockAmount += compData.BlockAmount;
+        previewCard.CardData.aPRecoverAmount += compData.APRecoverAmount;
+        previewCard.CardData.playCost += compData.PlayCost;
+        previewCard.CardData.buffDuration += compData.BuffDuration;
+        previewCard.CardData.buffType = compData.BuffType;
+        previewCard.CardData.debuffDuration += compData.DebuffDuration;
+        previewCard.CardData.debuffType = compData.DebuffType;
+
+        previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
+             previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
+    }
+
+    public void PreviousCard() {
+        if (prefabIndex == 0) return;
+        prefabIndex--;
+
+        previewCard.CardData = craftedCardPrefabs[prefabIndex].GetComponent<Card>().CardData;
+        previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
+            previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
+    }
+
+    public void NextCard() {
+        if (prefabIndex == craftedCardPrefabs.Length - 1) return;
+        prefabIndex++;
+
+        previewCard.CardData = craftedCardPrefabs[prefabIndex].GetComponent<Card>().CardData;
+        previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
+            previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
     }
     #endregion
 }

@@ -21,6 +21,13 @@ public class Card : DragAndPointerHandler {
     [SerializeField] TextMeshProUGUI nameTxt;
     [SerializeField] TextMeshProUGUI descriptionTxt;
 
+    [Header("Other info")]
+    [SerializeField] int componentAmount;
+    public int ComponentAmount {
+        get { return componentAmount; }
+        set { componentAmount = value; }
+    }
+
     readonly CardStruct cS;
     Player player;
     PlayerHand hand;

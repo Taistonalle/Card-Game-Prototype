@@ -18,6 +18,7 @@ public class PathProgression : MonoBehaviour {
     [Header("Canvas references")]
     [SerializeField] GameObject combatCanvas;
     [SerializeField] GameObject restCanvas;
+    [SerializeField] GameObject craftCanvas;
 
     [Header("Other values")]
     [SerializeField][Tooltip("Time it takes at start for view to scroll from top to bottom")] float viewScrollTime;
@@ -31,7 +32,7 @@ public class PathProgression : MonoBehaviour {
     [Header("FindObjectOfType workaround")] //For objects that are not active at start
     [SerializeField] Player player;
     [SerializeField] PathEvent pEvent;
-
+    [SerializeField] GameObject deckButton;
     //FadeCanvas fadeCanvas;
     GameManager gM;
 
@@ -39,6 +40,7 @@ public class PathProgression : MonoBehaviour {
         FindPathButtons();
         gM = FindObjectOfType<GameManager>();
         //fadeCanvas = FindObjectOfType<FadeCanvas>();
+        ResetScriptables();
         StartCoroutine(MoveContentView());
     }
 
@@ -67,6 +69,7 @@ public class PathProgression : MonoBehaviour {
         foreach (Button button in enemyPathButtons) button.onClick.AddListener(delegate {
             combatCanvas.SetActive(true);
             gameObject.SetActive(false);
+            deckButton.SetActive(false);
             gM.StartCombat();
             //fadeCanvas.StartCoroutine(fadeCanvas.Fade());
         });
@@ -215,6 +218,35 @@ public class PathProgression : MonoBehaviour {
         restCanvas.SetActive(true);
     }
 
+    void ResetScriptables() {
+        List<CardData> craftedDatas = new List<CardData>(Resources.LoadAll<CardData>("Crafted cards"));
+        foreach (CardData data in craftedDatas) {
+            //Bools
+            data.draw = false;
+            data.dealDamage = false;
+            data.heal = false;
+            data.block = false;
+            data.recoverAp = false;
+            data.buff = false;
+            data.debuff = false;
+
+            //Values
+            data.drawAmount = 0;
+            data.damage = 0;
+            data.healAmount = 0;
+            data.blockAmount = 0;
+            data.aPRecoverAmount = 0;
+            data.playCost = 0;
+            data.buffDuration = 0;
+            data.buffType = BuffType.None;
+            data.debuffDuration = 0;
+            data.debuffType = DebuffType.None;
+        }
+
+        GameObject[] prefabs = craftCanvas.GetComponent<CardCrafting>().CraftedCardPrefabs;
+        foreach (GameObject prefab in prefabs) prefab.GetComponent<Card>().ComponentAmount = 0;
+    }
+
     //Automatic scrolling for the start, seeing the whole path and realize you can scroll it (hopefully).
     IEnumerator MoveContentView() {
         ScrollRect scrollRect = FindObjectOfType<ScrollRect>();
@@ -231,5 +263,8 @@ public class PathProgression : MonoBehaviour {
         }
 
         scrollRect.verticalNormalizedPosition = endValue;
+
+        //Finally activate crafting view canvas
+        craftCanvas.SetActive(true);
     }
 }

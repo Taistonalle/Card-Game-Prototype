@@ -36,6 +36,6 @@ MonoBehaviour:
   burnRecoverAp: 0
   recoverAp: 0
   buff: 0
-  buffType: 2
+  buffType: 0
   debuff: 0
   debuffType: 0
