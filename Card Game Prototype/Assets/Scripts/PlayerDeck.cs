@@ -21,6 +21,11 @@ public class PlayerDeck : MonoBehaviour {
         set { originalDeck = value; }
     }
 
+    [Header("Lists that get copied to Cards when selecting card amount")]
+    [SerializeField] List<GameObject> tenDeck = new();
+    [SerializeField] List<GameObject> fifteenDeck = new();
+    [SerializeField] List<GameObject> twentyDeck = new();
+
     [Header("All of the card prefabs")] //Used to pass prefab copies for cards list
     [SerializeField] GameObject[] mainMenuCardPrefabs;
     public GameObject[] MainMenuCardPrefabs {
@@ -88,4 +93,21 @@ public class PlayerDeck : MonoBehaviour {
     void UpdateCounter() {
         cardCount = cards.Count;
     }
+
+    #region Functions for main menu
+    public void TenCardsSelected() {
+        cards = tenDeck;
+        UpdateCounter();
+    }
+
+    public void FifteenCardsSelected() {
+        cards = fifteenDeck;
+        UpdateCounter();
+    }
+
+    public void TwentyCardsSelected() {
+        cards = twentyDeck;
+        UpdateCounter();
+    }
+    #endregion
 }

@@ -26,14 +26,16 @@ public class PathEvent : MonoBehaviour {
     [SerializeField] Button bChoiceThree;
     [SerializeField] Button continueBtn;
 
-    [Header("Reward cards")]
+    [Header("Event Rewards")]
     [SerializeField] GameObject[] rCard;
+    [SerializeField] GameObject[] rComponent;
 
     [Header("References")]
     [SerializeField] GameObject pathCanvas;
     [SerializeField] Player player;
     [SerializeField] PlayerDeck deck;
     [SerializeField] StatusBar statusBar;
+    [SerializeField] CardCrafting cardCrafting;
 
     void Awake() {
         deck = FindObjectOfType<PlayerDeck>();
@@ -120,6 +122,26 @@ public class PathEvent : MonoBehaviour {
         bChoiceTwo.onClick.RemoveAllListeners();
     }
 
+    void AddRewardComponent(GameObject component) { //Copied and slightly modified version from GameManager PickComponentButton function 
+        //Clone the component
+        GameObject clone = Instantiate(component, cardCrafting.CompParent.transform);
+        int lastId = 0;
+
+        //Is there already component added? Get last Id and move new component next to it. Else move the first component to left side of the scrollable view
+        if (cardCrafting.StoredComponents.Count > 0) {
+            lastId = cardCrafting.StoredComponents.IndexOf(cardCrafting.StoredComponents[^1]);
+            clone.transform.localPosition = cardCrafting.StoredComponents[lastId].transform.localPosition + new Vector3(100f, 0f);
+        }
+        else clone.transform.localPosition = new Vector3(80f, -50f, 0f); //For some odd reason, in inspector this is really 80, 0, 0. Which is wanted btw.
+
+        //Then add it to list & incrase slider range/size
+        cardCrafting.StoredComponents.Add(clone);
+        cardCrafting.IncreaseSliderSize();
+
+        //Delegate the function
+        clone.GetComponent<Button>().onClick.AddListener(delegate { cardCrafting.AddComponentValues(clone.GetComponent<CraftComponent>()); });
+    }
+
     #region Event button assignments
     void GraveYardButtons() {
         int goodOrBad = Random.Range(0, 101);
@@ -128,8 +150,8 @@ public class PathEvent : MonoBehaviour {
         switch (goodOrBad) { //In this case, choice one = statue, choice two = dig/shovel
             case <= 49:
             bChoiceOne.onClick.AddListener(delegate {
-                eDesc.text = $"{usedEvent.choiceOneBad}\n\nYou lost 10 max health and gained a {rCard[0].GetComponent<Card>().CardData.cardName} card!";
-                deck.RewardAddCard(rCard[0]);
+                eDesc.text = $"{usedEvent.choiceOneBad}\n\nYou lost 10 max health and gained a craft component!";
+                AddRewardComponent(rComponent[0]);
                 player.MaxHp -= 10;
                 statusBar.UpdateHealthTxt();
                 statusBar.UpdateDeckCountTxt();
@@ -146,8 +168,8 @@ public class PathEvent : MonoBehaviour {
             //Good results
             case >= 50:
             bChoiceOne.onClick.AddListener(delegate {
-                eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained a {rCard[1].GetComponent<Card>().CardData.cardName} card!";
-                deck.RewardAddCard(rCard[1]);
+                eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained a craft component!";
+                AddRewardComponent(rComponent[1]);
                 statusBar.UpdateDeckCountTxt();
                 ToggleButtonsVisibility();
             });
@@ -190,8 +212,8 @@ public class PathEvent : MonoBehaviour {
                 ToggleButtonsVisibility();
             });
             bChoiceTwo.onClick.AddListener(delegate {
-                eDesc.text = $"{usedEvent.choiceTwoGood}\n\nYou lost 1 health and gained a {rCard[2].GetComponent<Card>().CardData.cardName} card!";
-                deck.RewardAddCard(rCard[2]);
+                eDesc.text = $"{usedEvent.choiceTwoGood}\n\nYou lost 1 health and gained a craft component!";
+                AddRewardComponent(rComponent[2]);
                 player.Health -= 1;
                 statusBar.UpdateHealthTxt();
                 statusBar.UpdateDeckCountTxt();
@@ -208,9 +230,9 @@ public class PathEvent : MonoBehaviour {
         switch (goodOrBad) { //In this case, choice one = join, choice two = kill
             case <= 49:
             bChoiceOne.onClick.AddListener(delegate {
-                int randId = Random.Range(0, deck.CardCount);
-                eDesc.text = $"{usedEvent.choiceOneBad}\n\nYou feel like you also lost something. Removed: {deck.Cards[randId].GetComponent<Card>().CardData.cardName}";
-                deck.RemoveCard(deck.Cards[randId]);
+                //int randId = Random.Range(0, deck.CardCount);
+                eDesc.text = $"{usedEvent.choiceOneBad}\n\nYou feel like you also lost something. Removed: {deck.Cards[^1].GetComponent<Card>().CardData.cardName}";
+                deck.RemoveCard(deck.Cards[^1]);
                 statusBar.UpdateDeckCountTxt();
                 ToggleButtonsVisibility();
             });
@@ -225,8 +247,8 @@ public class PathEvent : MonoBehaviour {
             //Good results
             case >= 50:
             bChoiceOne.onClick.AddListener(delegate {
-                eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained a {rCard[3].GetComponent<Card>().CardData.cardName} card!";
-                deck.RewardAddCard(rCard[3]);
+                eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained a crafting component!";
+                AddRewardComponent(rComponent[3]);
                 statusBar.UpdateDeckCountTxt();
                 ToggleButtonsVisibility();
             });
@@ -260,8 +282,8 @@ public class PathEvent : MonoBehaviour {
             //Good results
             case >= 50:
             bChoiceOne.onClick.AddListener(delegate {
-                eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained a {rCard[4].GetComponent<Card>().CardData.cardName} card!";
-                deck.RewardAddCard(rCard[4]);
+                eDesc.text = $"{usedEvent.choiceOneGood}\n\nYou gained a crafting component!";
+                AddRewardComponent(rComponent[4]);
                 statusBar.UpdateDeckCountTxt();
                 ToggleButtonsVisibility();
             });

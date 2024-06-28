@@ -24,7 +24,8 @@ MonoBehaviour:
   choiceTwoDescriptionTxt: Hide and wait to see who or what it polishing the statue
   choiceThreeHeaderTxt: 'Leave:'
   choiceThreeDescriptionTxt: Just a statue, nothing to see here
-  choiceOneGood: You notice a hidden compartment behind the statue. You found a potion!
+  choiceOneGood: You notice a hidden compartment behind the statue. You found a interesting
+    contraption!
   choiceOneBad: You find nothing..
   choiceTwoGood: 'Your curiosity got the best of you. You hide behind fallen rubble
     and wait...

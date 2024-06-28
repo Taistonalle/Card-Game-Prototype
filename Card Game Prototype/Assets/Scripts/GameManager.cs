@@ -2,7 +2,6 @@ using CustomAudioManager;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -194,8 +193,9 @@ public class GameManager : MonoBehaviour {
         }
         else clone.transform.localPosition = new Vector3(80f, -50f, 0f); //For some odd reason, in inspector this is really 80, 0, 0. Which is wanted btw.
 
-        //Then add it to list
+        //Then add it to list & incrase slider range/size
         cardCrafting.StoredComponents.Add(clone);
+        cardCrafting.IncreaseSliderSize();
 
         //Delegate the function and enable button to be active for later use
         clone.GetComponent<Button>().enabled = true;
@@ -212,6 +212,7 @@ public class GameManager : MonoBehaviour {
         enemy.CombatCanvas.SetActive(false);
         enemy.RewardCanvas.SetActive(false);
         enemy.PathCanvas.SetActive(true);
+        deckButton.SetActive(true);
     }
     #endregion
 

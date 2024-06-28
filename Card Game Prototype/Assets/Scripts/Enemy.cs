@@ -158,12 +158,17 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
 
     void Die() {
         Debug.Log($"{enemyName} died! Activating reward view");
+        //Make sure the next enemy encounter does not have debuffs like stun
+        ResetDebuff(statusEffect);
 
         if (enemyData.bossEnemy) winRewardCanvas.SetActive(true);
+        //Old, before only crafted cards variation
+        /*
         else if (enemyData.miniBoss) {
             cardCraftCanvas.SetActive(true);
             combatCanvas.SetActive(false);
         }
+        */
         //else StartCoroutine(ActivateRewardView());
         else StartCoroutine(ActivateCompRewardView());
     }

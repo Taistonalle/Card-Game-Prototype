@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2627451, g: 0.6117647, b: 0.7647059, a: 1}
+  m_Color: {r: 0.36164126, g: 0.22516909, b: 0.41509432, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 7716396378261440145}
   - component: {fileID: 3312967125711332408}
   m_Layer: 5
-  m_Name: CraftComponent
+  m_Name: EventCraftComponent_PolishedStatueStudy_Good
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -244,8 +244,8 @@ RectTransform:
   - {fileID: 2151582661707005667}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -262,27 +262,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawAmount: 0
-  damage: 0
+  damage: 24
   healAmount: 0
   blockAmount: 0
   aPRecoverAmount: 0
-  playCost: 0
+  playCost: 3
   buffDuration: 0
   debuffDuration: 0
   minDrawAmount: 1
   maxDrawAmount: 3
   minDmg: 8
-  maxDmg: 16
+  maxDmg: 20
   minHeal: 5
   maxHeal: 12
   minBlock: 8
-  maxBlock: 16
+  maxBlock: 20
   minApRec: 2
   maxApRec: 5
   minPlayCost: 1
   maxPlayCost: 5
   draw: 0
-  dealDamage: 0
+  dealDamage: 1
   heal: 0
   block: 0
   recoverAp: 0
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5203328658040715773}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 

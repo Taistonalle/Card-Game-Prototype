@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class CardCrafting : MonoBehaviour {
     [SerializeField] CardPreview previewCard;
-    [SerializeField] CardData[] craftedScriptables;
+    //[SerializeField] CardData[] craftedScriptables;
     [SerializeField] GameObject[] craftedCardPrefabs;
     public GameObject[] CraftedCardPrefabs { get {  return craftedCardPrefabs; } }
     [SerializeField] int prefabIndex;
-    public int PrefabIndex { //Modified when pressing miniboss point in path view
+    public int PrefabIndex { //Modified when pressing miniboss point in path view. Should be fixed now :)
         get { return prefabIndex; }
         set { prefabIndex = value; }
     }
@@ -35,7 +35,10 @@ public class CardCrafting : MonoBehaviour {
     //[SerializeField] GameObject combatCanvas;
     [SerializeField] GameObject craftCanvas;
 
+    PlayerDeck deck;
+
     void Start() {
+        deck = FindObjectOfType<PlayerDeck>();
         //if (FindObjectsOfType<CardCrafting>().Length > 1) {
         //    Debug.Log($"Destroying extra {gameObject.name}");
         //    Destroy(gameObject);
@@ -129,6 +132,11 @@ public class CardCrafting : MonoBehaviour {
              previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
     }
 
+    public void IncreaseSliderSize() { 
+        RectTransform rectTransform = compParent.GetComponent<RectTransform>();
+        rectTransform.sizeDelta += new Vector2(100f, 0f);
+    }
+
     #region Button functions
     public void ResetComponents() { 
         craftedCardPrefabs[prefabIndex].GetComponent<Card>().ComponentAmount = 0;
@@ -186,11 +194,13 @@ public class CardCrafting : MonoBehaviour {
         }
     }
 
+    /*
     public void SetupCrafting(int index) {
         prefabIndex = index;
         previewCard.CardData = craftedScriptables[index];
         ResetComponents();
     }
+    */
 
     public void AddComponentValues(CraftComponent compData) { //This gets delegated into the component button from GameManager
         if (craftedCardPrefabs[prefabIndex].GetComponent<Card>().ComponentAmount == maxComponentAmount) return;
@@ -213,9 +223,9 @@ public class CardCrafting : MonoBehaviour {
         previewCard.CardData.aPRecoverAmount += compData.APRecoverAmount;
         previewCard.CardData.playCost += compData.PlayCost;
         previewCard.CardData.buffDuration += compData.BuffDuration;
-        previewCard.CardData.buffType = compData.BuffType;
+        if (previewCard.CardData.buffType == BuffType.None) previewCard.CardData.buffType = compData.BuffType;
         previewCard.CardData.debuffDuration += compData.DebuffDuration;
-        previewCard.CardData.debuffType = compData.DebuffType;
+        if (previewCard.CardData.debuffType == DebuffType.None) previewCard.CardData.debuffType = compData.DebuffType;
 
         previewCard.CS.CardSetup(previewCard.Background, previewCard.Borders[0], previewCard.Borders[1],
              previewCard.CardImage, previewCard.PlayCostText, previewCard.NameText, previewCard.DescriptionText, previewCard.CardData);
@@ -231,7 +241,7 @@ public class CardCrafting : MonoBehaviour {
     }
 
     public void NextCard() {
-        if (prefabIndex == craftedCardPrefabs.Length - 1) return;
+        if (prefabIndex == deck.CardCount - 1) return;
         prefabIndex++;
 
         previewCard.CardData = craftedCardPrefabs[prefabIndex].GetComponent<Card>().CardData;

@@ -568,7 +568,7 @@ PrefabInstance:
     - target: {fileID: 7348110032438998629, guid: 806445b3bf36bad4ab64333221e2acba,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1108,6 +1108,11 @@ PrefabInstance:
       propertyPath: pathCanvas
       value: 
       objectReference: {fileID: 5697274211195558146}
+    - target: {fileID: 5524539039557365999, guid: cf23e6cc3bb3929439ef77c42c6fd90f,
+        type: 3}
+      propertyPath: cardCrafting
+      value: 
+      objectReference: {fileID: 4061544077931728413}
     - target: {fileID: 7506513256497933313, guid: cf23e6cc3bb3929439ef77c42c6fd90f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1364,6 +1369,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 79436897611080315, guid: a21f58008ecfc774abb877368f114361,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 79436897611080315, guid: a21f58008ecfc774abb877368f114361,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Target
       value: 
       objectReference: {fileID: 4061544077931728413}
@@ -1377,6 +1387,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
       objectReference: {fileID: 469911744}
+    - target: {fileID: 1279023464650123779, guid: a21f58008ecfc774abb877368f114361,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1279023464650123779, guid: a21f58008ecfc774abb877368f114361,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Target
@@ -1602,6 +1617,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
       objectReference: {fileID: 469911744}
+    - target: {fileID: 7330321273420279593, guid: a21f58008ecfc774abb877368f114361,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7330321273420279593, guid: a21f58008ecfc774abb877368f114361,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_Target

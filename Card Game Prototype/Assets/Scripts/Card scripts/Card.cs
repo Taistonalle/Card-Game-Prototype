@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class Card : DragAndPointerHandler {
     [Header("Card base info from scriptable object")]
@@ -256,6 +257,18 @@ public class Card : DragAndPointerHandler {
         hand.RearrangeHand();
     }
 
+    void DrawAndRecoverAp() {
+        //Recover and cost calculations
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
     void DealDamageAndHeal(Enemy target) {
         //Damage, Heal and cost calculations
         //Does player have strenght buff?
@@ -385,6 +398,18 @@ public class Card : DragAndPointerHandler {
         hand.RearrangeHand();
     }
 
+    void HealAndRecoverAp() {
+        //Heal, recover and cost calculations
+        player.TakeHeal(cardData.healAmount);
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
     void DealDamageAndBuff(Enemy target) {
         //Damage, buff check and cost calculations
         //Does player have strenght buff?
@@ -417,6 +442,101 @@ public class Card : DragAndPointerHandler {
         dP.AddCardIntoDiscardPile(gameObject);
         hand.RemoveCardFromHand(gameObject);
         hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
+    void DealDamageAndDebuff(Enemy target) {
+        //Damage, debuff check and cost calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
+        }
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void BlockAndDebuff(Enemy target) {
+        //Block, debuff check and cost calculations
+        player.GainBlock(cardData.blockAmount);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void HealAndDebuff(Enemy target) {
+        //Heal, debuff check and cost calculations
+        player.TakeHeal(cardData.healAmount);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void DrawAndDebuff(Enemy target) {
+        //Debuff check and cost calculations
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
+    void BuffAndDebuff(Enemy target) {
+        //Buff, Debuff check and cost calculations
+        player.GainBuff(cardData.buffType, cardData.buffDuration);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void BuffAndRecoverAp() {
+        //Buff check, recover and cost calculations
+        player.GainBuff(cardData.buffType, cardData.buffDuration);
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void DebuffAndRecoverAp(Enemy target) {
+        //Debuff check, recover and cost calculations
+        target.GainDebuff(cardData.debuffType);
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
         hand.RearrangeHand();
     }
 
@@ -473,6 +593,19 @@ public class Card : DragAndPointerHandler {
         player.TakeHeal(cardData.healAmount);
         player.GainBlock(cardData.blockAmount);
         player.GainBuff(cardData.buffType, cardData.buffDuration);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void HealBlockAndRecoverAp() {
+        //Heal, Block, recover and cost calculations
+        player.TakeHeal(cardData.healAmount);
+        player.GainBlock(cardData.blockAmount);
+        player.RecoverAP(cardData.aPRecoverAmount);
         player.ReduceAP(cardData.playCost);
 
         //Add card to discard pile
@@ -579,6 +712,80 @@ public class Card : DragAndPointerHandler {
         hand.RearrangeHand();
     }
 
+    void DealDamageBlockAndRecoverAp(Enemy target) {
+        //Damage, Block, recover and cost calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
+        }
+        player.GainBlock(cardData.blockAmount);
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void DrawDealDamageAndRecoverAp(Enemy target) {
+        //Damage, recover and cost calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
+        }
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
+    void DrawHealAndRecoverAp() {
+        //Heal, recover and cost calculations
+        player.TakeHeal(cardData.healAmount);
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
+    void DrawBlockAndRecoverAp() {
+        //Block, recover and cost calculations
+        player.GainBlock(cardData.blockAmount);
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
     void DrawDealDamageAndBuff(Enemy target) {
         //Damage, buff check and cost calculations
         //Does player have strenght buff?
@@ -613,6 +820,218 @@ public class Card : DragAndPointerHandler {
         dP.AddCardIntoDiscardPile(gameObject);
         hand.RemoveCardFromHand(gameObject);
         hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
+    void DrawDealDamageAndDebuff(Enemy target) {
+        //Damage, Debuff check and cost calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
+        }
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
+    void DrawHealAndDebuff(Enemy target) {
+        //Heal, Debuff check and cost calculations
+        player.TakeHeal(cardData.healAmount);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
+    void DrawBlockAndDebuff(Enemy target) {
+        //Block, Debuff check and cost calculations
+        player.GainBlock(cardData.blockAmount);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
+    void DrawRecoverApAndDebuff(Enemy target) {
+        //Recover, Debuff check and cost calculations
+        player.RecoverAP(cardData.aPRecoverAmount);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
+    void DrawBuffAndDebuff(Enemy target) {
+        //Buff, Debuff check and cost calculations
+        player.GainBuff(cardData.buffType, cardData.buffDuration);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile and draw
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.StartCoroutine(hand.DrawCards(cardData.drawAmount));
+        hand.RearrangeHand();
+    }
+
+    void DealDamageHealAndDebuff(Enemy target) {
+        //Damage, Heal, Debuff check and cost calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
+        }
+        player.TakeHeal(cardData.healAmount);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void DealDamageBlockAndDebuff(Enemy target) {
+        //Damage, Block, Debuff check and cost calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
+        }
+        player.GainBlock(cardData.blockAmount);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void DealDamageBuffAndDebuff(Enemy target) {
+        //Damage, Buff, Debuff check and cost calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
+        }
+        player.GainBuff(cardData.buffType, cardData.buffDuration);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void BlockBuffAndDebuff(Enemy target) {
+        //Block, Buff, Debuff check and cost calculations
+        player.GainBlock(cardData.blockAmount);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void HealBlockAndDebuff(Enemy target) {
+        //Heal, Block, Debuff check and cost calculations
+        player.TakeHeal(cardData.healAmount);
+        player.GainBlock(cardData.blockAmount);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void HealRecoverApAndDebuff(Enemy target) {
+        //Heal, recover, Debuff check and cost calculations
+        player.TakeHeal(cardData.healAmount);
+        player.RecoverAP(cardData.aPRecoverAmount);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void HealBuffAndDebuff(Enemy target) {
+        //Heal, Buff, Debuff check and cost calculations
+        player.TakeHeal(cardData.healAmount);
+        player.GainBuff(cardData.buffType, cardData.buffDuration);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
+    void RecoverApBuffAndDebuff(Enemy target) {
+        //Recover, Buff, Debuff check and cost calculations
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.GainBuff(cardData.buffType, cardData.buffDuration);
+        target.GainDebuff(cardData.debuffType);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
         hand.RearrangeHand();
     }
     #endregion
@@ -654,18 +1073,31 @@ public class Card : DragAndPointerHandler {
         if (draw && dmg && heal) DrawDealDamageAndHeal(target);
         else if (dmg && heal && block) DealDamageHealAndBlock(target);
         else if (heal && block && buff) HealBlockAndBuff();
+        else if (heal && block && recAp) HealBlockAndRecoverAp();
         else if (draw && heal && block) DrawHealAndBlock();
         else if (dmg && block && buff) DealDamageBlockAndBuff(target);
         else if (draw && block && buff) DrawBlockAndBuff();
         else if (draw && dmg && block) DrawDealDamageAndBlock(target);
         else if (dmg && heal && buff) DealDamageHealAndBuff(target);
+        else if (dmg && block && recAp) DealDamageBlockAndRecoverAp(target);
+        else if (draw && dmg && recAp) DrawDealDamageAndRecoverAp(target);
+        else if (draw && heal && recAp) DrawHealAndRecoverAp();
+        else if (draw && block && recAp) DrawBlockAndRecoverAp();
         else if (draw && dmg && buff) DrawDealDamageAndBuff(target);
         else if (draw && heal && buff) DrawHealAndBuff();
-
-        /* 
-        //Triple checks old
-        if (heal && block && buff) HealBlockAndBuff();
-        */
+        else if (draw && dmg && debuff) DrawDealDamageAndDebuff(target);
+        else if (draw && heal && debuff) DrawHealAndDebuff(target);
+        else if (draw && block && debuff) DrawBlockAndDebuff(target);
+        else if (draw && recAp && debuff) DrawRecoverApAndDebuff(target);
+        else if (draw && buff && debuff) DrawBuffAndDebuff(target);
+        else if (dmg && heal && debuff) DealDamageHealAndDebuff(target);
+        else if (dmg && block && debuff) DealDamageBlockAndDebuff(target);
+        else if (dmg && buff && debuff) DealDamageBuffAndDebuff(target);
+        else if (block && buff && debuff) BlockBuffAndDebuff(target);
+        else if (heal && block && debuff) HealBlockAndDebuff(target);
+        else if (heal && recAp && debuff) HealRecoverApAndDebuff(target);
+        else if (heal && buff && debuff) HealBuffAndDebuff(target);
+        else if (recAp && buff && debuff) RecoverApBuffAndDebuff(target);
 
         //Double checks
         else if (draw && dmg) DrawAndDealDamage(target);
@@ -677,16 +1109,18 @@ public class Card : DragAndPointerHandler {
         else if (dmg && block) DealDamageAndBlock(target);
         else if (dmg && recAp) DealDamageAndRecoverAp(target);
         else if (heal && buff) HealAndBuff();
+        else if (heal && recAp) HealAndRecoverAp();
         else if (draw && block) BlockAndDraw();
+        else if (draw && recAp) DrawAndRecoverAp();
         else if (dmg && buff) DealDamageAndBuff(target);
         else if (draw && buff) DrawAndBuff();
-        /*
-        //Double checks old
-        else if (draw && dmg) DrawAndDealDamage(target);
-        else if (draw && block) BlockAndDraw();
-        else if (dmg && heal) DealDamageAndHeal(target);
-        else if (block && recAp) BlockAndRecoverAp();
-        */
+        else if (dmg && debuff) DealDamageAndDebuff(target);
+        else if (block && debuff) BlockAndDebuff(target);
+        else if (heal && debuff) HealAndDebuff(target);
+        else if (draw && debuff) DrawAndDebuff(target);
+        else if (buff && debuff) BuffAndDebuff(target);
+        else if (buff && recAp) BuffAndRecoverAp();
+        else if (debuff && recAp) DebuffAndRecoverAp(target);
 
         //Single checks
         else if (draw) Draw();

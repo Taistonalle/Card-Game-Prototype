@@ -2357,10 +2357,17 @@ MonoBehaviour:
   - {fileID: 1064329457145765964, guid: 626e5321cc032c44fbb9a0020907e654, type: 3}
   - {fileID: 1064329457145765964, guid: b2f05185cef55d145b34910c41d1959f, type: 3}
   - {fileID: 1064329457145765964, guid: 9d117be1258dab64d8ed9b0f9a1a273a, type: 3}
+  rComponent:
+  - {fileID: 5203328658040715773, guid: 37ef54ba0cb61724ebc0c93664b46289, type: 3}
+  - {fileID: 5203328658040715773, guid: 2d67dee9288c42e43ac08e31e5b9031a, type: 3}
+  - {fileID: 5203328658040715773, guid: 70f511f9858b7e142a248ea0f1d386fa, type: 3}
+  - {fileID: 5203328658040715773, guid: d112b8ab12454394d9ce14c699216ee6, type: 3}
+  - {fileID: 5203328658040715773, guid: ff8112df05196d44ab5fdbcedef5110d, type: 3}
   pathCanvas: {fileID: 0}
   player: {fileID: 0}
   deck: {fileID: 0}
   statusBar: {fileID: 0}
+  cardCrafting: {fileID: 0}
 --- !u!1 &8353532686542900859
 GameObject:
   m_ObjectHideFlags: 0
