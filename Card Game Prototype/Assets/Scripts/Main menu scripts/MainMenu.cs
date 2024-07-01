@@ -42,6 +42,11 @@ public class MainMenu : MonoBehaviour {
         //Delegating functions for sliders
         mSlider.onValueChanged.AddListener(delegate { aManager.UpdateMusicVolume(); });
         sfxSlider.onValueChanged.AddListener(delegate { aManager.UpdateSFXVolume(); });
+
+        //Delegating functions for deck size buttons
+        buttons[5].GetComponent<Button>().onClick.AddListener(delegate { pDeck.TenCardsSelected(); });
+        buttons[6].GetComponent<Button>().onClick.AddListener(delegate { pDeck.FifteenCardsSelected(); });
+        buttons[7].GetComponent<Button>().onClick.AddListener(delegate { pDeck.TwentyCardsSelected(); });
     }
 
     #region Button functions

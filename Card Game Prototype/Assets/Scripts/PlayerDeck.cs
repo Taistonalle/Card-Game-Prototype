@@ -11,6 +11,8 @@ public class PlayerDeck : MonoBehaviour {
     public int CardCount {
         get { return cardCount; }
     }
+    [SerializeField] int craftCardCount;
+    public int CraftCardCount { get { return craftCardCount; } }
     [SerializeField] int maxStartCardAmount;
     public int MaxStartCardAmount {
         get { return maxStartCardAmount; }
@@ -96,16 +98,19 @@ public class PlayerDeck : MonoBehaviour {
 
     #region Functions for main menu
     public void TenCardsSelected() {
+        craftCardCount = 5;
         cards = tenDeck;
         UpdateCounter();
     }
 
     public void FifteenCardsSelected() {
+        craftCardCount = 10;
         cards = fifteenDeck;
         UpdateCounter();
     }
 
     public void TwentyCardsSelected() {
+        craftCardCount = 15;
         cards = twentyDeck;
         UpdateCounter();
     }

@@ -168,6 +168,7 @@ public class Player : MonoBehaviour {
     }
 
     public void RecoverAP(int amount) {
+        AudioManager.PlayApRecoverySound();
         aP += amount;
         UpdateActionPointCounter();
     }

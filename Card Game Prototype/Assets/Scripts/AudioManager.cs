@@ -136,6 +136,17 @@ namespace CustomAudioManager {
             Instance.aS_Sfx.PlayOneShot(Instance.audioFiles[7]);
         }
 
+        public static void PlayApRecoverySound() {
+            if (Instance == null) {
+                Debug.Log("No instance of AudioManager found!");
+                return;
+            }
+
+            float randomPitch = Random.Range(Instance.minPitchRange, Instance.maxPitchRange);
+            Instance.aS_Sfx.pitch = randomPitch;
+            Instance.aS_Sfx.PlayOneShot(Instance.audioFiles[8]);
+        }
+
         #region Volume slider values
         public void UpdateMusicVolume() {
             if (Instance == null) {

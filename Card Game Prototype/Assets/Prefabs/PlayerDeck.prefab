@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cards: []
   cardCount: 0
+  craftCardCount: 0
   maxStartCardAmount: 10
   originalDeck: []
   tenDeck:
@@ -54,11 +55,11 @@ MonoBehaviour:
   - {fileID: 1064329457145765964, guid: 17bf23363be589248b930909f12ad11b, type: 3}
   - {fileID: 1064329457145765964, guid: 1efc5b46b2f03234b93a5bb76f62f5bc, type: 3}
   - {fileID: 1064329457145765964, guid: a1175dcf990a41343962ae4b04eb5715, type: 3}
-  - {fileID: 1064329457145765964, guid: 5368a96cf4ee78e48ac9cc142050ab00, type: 3}
-  - {fileID: 1064329457145765964, guid: f9df41ee3af4df348ae2444f189318d5, type: 3}
-  - {fileID: 1064329457145765964, guid: 0fdaf4e996fae8b44aab0bb083121a2a, type: 3}
-  - {fileID: 1064329457145765964, guid: 6b490e596b84f634b95b439ca3f50b15, type: 3}
-  - {fileID: 1064329457145765964, guid: bc2e3e3d58aae4e41ae683b9fae3ea01, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
   fifteenDeck:
   - {fileID: 1064329457145765964, guid: f04ac476c488945449fb004f3953a4a9, type: 3}
   - {fileID: 1064329457145765964, guid: 6b79eae6d303e204cbea1ed2a4e22977, type: 3}
@@ -70,11 +71,11 @@ MonoBehaviour:
   - {fileID: 1064329457145765964, guid: 0fdaf4e996fae8b44aab0bb083121a2a, type: 3}
   - {fileID: 1064329457145765964, guid: 6b490e596b84f634b95b439ca3f50b15, type: 3}
   - {fileID: 1064329457145765964, guid: bc2e3e3d58aae4e41ae683b9fae3ea01, type: 3}
-  - {fileID: 1064329457145765964, guid: 4ec8d69bfe537714daa55c0998dae4d0, type: 3}
-  - {fileID: 1064329457145765964, guid: 0b6dca91f2f7ddc42beb3b0120748323, type: 3}
-  - {fileID: 1064329457145765964, guid: bf93febcae330cd49b7af62ef5a8b34c, type: 3}
-  - {fileID: 1064329457145765964, guid: d43741f51bf0f1d46804919e9dd66aec, type: 3}
-  - {fileID: 1064329457145765964, guid: 1c7143efa378cbd4282364150b462178, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
   twentyDeck:
   - {fileID: 1064329457145765964, guid: f04ac476c488945449fb004f3953a4a9, type: 3}
   - {fileID: 1064329457145765964, guid: 6b79eae6d303e204cbea1ed2a4e22977, type: 3}
@@ -91,11 +92,11 @@ MonoBehaviour:
   - {fileID: 1064329457145765964, guid: bf93febcae330cd49b7af62ef5a8b34c, type: 3}
   - {fileID: 1064329457145765964, guid: d43741f51bf0f1d46804919e9dd66aec, type: 3}
   - {fileID: 1064329457145765964, guid: 1c7143efa378cbd4282364150b462178, type: 3}
-  - {fileID: 1064329457145765964, guid: ad1b4ce9b5b3c1644b6c9502cc07ad67, type: 3}
-  - {fileID: 1064329457145765964, guid: ea88d64092d3a7246b2e95aa62231744, type: 3}
-  - {fileID: 1064329457145765964, guid: 63b9aa513b5e7cf4ea466dded8ca8d62, type: 3}
-  - {fileID: 1064329457145765964, guid: 8b3ff4c2e2aa01f499938b4edc1fa96c, type: 3}
-  - {fileID: 1064329457145765964, guid: 0536314a5ebaf5548a9804ec57e2c8bb, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
+  - {fileID: 1064329457145765964, guid: 4f4b665a3d2a85040b73ddd85db29a86, type: 3}
   mainMenuCardPrefabs:
   - {fileID: 1064329457145765964, guid: d9de0d34e83622a4685cb9b3929b79d2, type: 3}
   - {fileID: 1064329457145765964, guid: c85dba2ab5a13ba49b8265459925f1e5, type: 3}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6eb7e61914cbf4caa072094720e76f, type: 3}
   m_Name: Ogre
   m_EditorClassIdentifier: 
-  action: 2
+  action: 1
   enemyName: Ogre
   health: 168
-  minDamage: 0
+  minDamage: 5
   maxDamage: 20
   minBlock: 1
   maxBlock: 20

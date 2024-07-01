@@ -262,10 +262,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawAmount: 0
-  damage: 4
+  damage: 6
   healAmount: 0
   blockAmount: 0
-  aPRecoverAmount: 0
   playCost: 1
   buffDuration: 0
   debuffDuration: 0
@@ -277,15 +276,12 @@ MonoBehaviour:
   maxHeal: 15
   minBlock: 5
   maxBlock: 20
-  minApRec: 2
-  maxApRec: 5
   minPlayCost: 1
   maxPlayCost: 5
   draw: 0
   dealDamage: 1
   heal: 0
   block: 0
-  recoverAp: 0
   buff: 0
   buffType: 0
   debuff: 0

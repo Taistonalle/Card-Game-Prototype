@@ -971,6 +971,30 @@ public class Card : DragAndPointerHandler {
         hand.RearrangeHand();
     }
 
+    void DealDamageRecoverApAndBuff(Enemy target) {
+        //Damage, Recover, Buff check and cost calculations
+        //Does player have strenght buff?
+        switch (player.Buffs[0]) {
+            case BuffEffect.Strenght:
+            int totalDmg = Mathf.RoundToInt(player.StrDmgMultiplier * cardData.damage);
+            Debug.Log($"Toltal dmg after multiplier: {totalDmg}");
+            target.TakeDamage(totalDmg);
+            break;
+
+            default:
+            target.TakeDamage(cardData.damage);
+            break;
+        }
+        player.RecoverAP(cardData.aPRecoverAmount);
+        player.GainBuff(cardData.buffType, cardData.buffDuration);
+        player.ReduceAP(cardData.playCost);
+
+        //Add card to discard pile
+        dP.AddCardIntoDiscardPile(gameObject);
+        hand.RemoveCardFromHand(gameObject);
+        hand.RearrangeHand();
+    }
+
     void BlockBuffAndDebuff(Enemy target) {
         //Block, Buff, Debuff check and cost calculations
         player.GainBlock(cardData.blockAmount);
@@ -1093,6 +1117,7 @@ public class Card : DragAndPointerHandler {
         else if (dmg && heal && debuff) DealDamageHealAndDebuff(target);
         else if (dmg && block && debuff) DealDamageBlockAndDebuff(target);
         else if (dmg && buff && debuff) DealDamageBuffAndDebuff(target);
+        else if (dmg && recAp && buff) DealDamageRecoverApAndBuff(target);
         else if (block && buff && debuff) BlockBuffAndDebuff(target);
         else if (heal && block && debuff) HealBlockAndDebuff(target);
         else if (heal && recAp && debuff) HealRecoverApAndDebuff(target);

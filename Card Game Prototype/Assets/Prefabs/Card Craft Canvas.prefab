@@ -1181,7 +1181,7 @@ MonoBehaviour:
   m_Content: {fileID: 4960512784621567553}
   m_Horizontal: 1
   m_Vertical: 0
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 0
   m_DecelerationRate: 0.135
@@ -1785,12 +1785,25 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "In this game you create your custom cards from components. At start you
-    have base components to start with. \n\nYou gain new random component drops from
-    defeated enemies. Or you can choose not to pick a new component\n\nCards can
-    be modified after combat or event. (Button top right corner)\n\nStart by adding
-    components to your cards, otherwise you don't have anything to defend yourself
-    with and are doomed to die!\n\nGood luck & enjoy :)"
+  m_text: 'In this game you create your custom cards from components. At start you
+    have base components to start with and always have five (5) action point recovery
+    cards, these cards cannot be found or edited
+
+
+    You gain new random component
+    drops from defeated enemies. Or you can choose not to pick a new component
+
+
+    Cards
+    can be modified after combat or event. (Button top right corner)
+
+
+    Start
+    by adding components to your cards, otherwise you don''t have anything to defend
+    yourself with and are doomed to die!
+
+
+    Good luck & enjoy :)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2953,8 +2966,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7574625367969782532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.0019400716, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.000000050862624, y: 0}
+  m_AnchorMax: {x: 0.8333333, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3202,7 +3215,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -260}
-  m_SizeDelta: {x: 700, y: 420}
+  m_SizeDelta: {x: 750, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3888492753453523317
 CanvasRenderer:
@@ -3352,8 +3365,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 230, y: 35}
-  m_SizeDelta: {x: 400, y: 15}
+  m_AnchoredPosition: {x: 280, y: 35}
+  m_SizeDelta: {x: 500, y: 18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2966812276495174588
 CanvasRenderer:
@@ -3410,8 +3423,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4018,7 +4031,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250.46017, y: 41.5}
+  m_AnchoredPosition: {x: -250.00002, y: 41.5}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7991499536432466063
@@ -4141,8 +4154,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5282439950791312130}
   m_HandleRect: {fileID: 3326134443846859549}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.9980599
+  m_Value: 0.0000003051756
+  m_Size: 0.83333325
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

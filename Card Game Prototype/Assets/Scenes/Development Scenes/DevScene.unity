@@ -1236,6 +1236,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card Craft Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3326134443846859549, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326134443846859549, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326134443846859549, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960512784621567553, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -250.00002
+      objectReference: {fileID: 0}
     - target: {fileID: 8916369862648729820, guid: 5e4c68f62730b9c4eadd4169ec74e8a5,
         type: 3}
       propertyPath: m_Pivot.x

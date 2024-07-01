@@ -211,7 +211,7 @@ public class CardCrafting : MonoBehaviour {
         if (compData.DealDamage) previewCard.CardData.dealDamage = compData.DealDamage;
         if (compData.Heal) previewCard.CardData.heal = compData.Heal;
         if (compData.Block) previewCard.CardData.block = compData.Block;
-        if (compData.RecoverAp) previewCard.CardData.recoverAp = compData.RecoverAp;
+        //if (compData.RecoverAp) previewCard.CardData.recoverAp = compData.RecoverAp;
         if (compData.Buff) previewCard.CardData.buff = compData.Buff;
         if (compData.Debuff) previewCard.CardData.debuff = compData.Debuff;
 
@@ -220,7 +220,7 @@ public class CardCrafting : MonoBehaviour {
         previewCard.CardData.damage += compData.Damage;
         previewCard.CardData.healAmount += compData.HealAmount;
         previewCard.CardData.blockAmount += compData.BlockAmount;
-        previewCard.CardData.aPRecoverAmount += compData.APRecoverAmount;
+        //previewCard.CardData.aPRecoverAmount += compData.APRecoverAmount;
         previewCard.CardData.playCost += compData.PlayCost;
         previewCard.CardData.buffDuration += compData.BuffDuration;
         if (previewCard.CardData.buffType == BuffType.None) previewCard.CardData.buffType = compData.BuffType;
@@ -241,7 +241,7 @@ public class CardCrafting : MonoBehaviour {
     }
 
     public void NextCard() {
-        if (prefabIndex == deck.CardCount - 1) return;
+        if (prefabIndex == deck.CraftCardCount - 1) return;
         prefabIndex++;
 
         previewCard.CardData = craftedCardPrefabs[prefabIndex].GetComponent<Card>().CardData;

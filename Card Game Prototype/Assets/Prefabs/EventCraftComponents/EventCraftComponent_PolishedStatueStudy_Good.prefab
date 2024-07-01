@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawAmount: 0
-  damage: 24
+  damage: 22
   healAmount: 0
   blockAmount: 0
   aPRecoverAmount: 0

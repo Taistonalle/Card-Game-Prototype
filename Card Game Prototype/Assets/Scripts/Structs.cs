@@ -93,6 +93,9 @@ public struct CardStruct {
         else if (dmg && buff && debuff) {
             desc.text = $"{data.description} Deal {data.damage} damage, Gain {data.buffType} for {data.buffDuration} turns & {data.debuffType} for {data.debuffDuration} turns";
         }
+        else if (dmg && recAp && buff) {
+            desc.text = $"{data.description} Deal {data.damage} damage, Gain {data.aPRecoverAmount} action points & Gain {data.buffType} for {data.buffDuration} turns";
+        }
         else if (block && buff && debuff) {
             desc.text = $"{data.description} Block {data.blockAmount}, Gain {data.buffType} for {data.buffDuration} turns & {data.debuffType} for {data.debuffDuration} turns";
         }
@@ -124,7 +127,7 @@ public struct CardStruct {
         else if (draw && buff) desc.text = $"{data.description} Draw {data.drawAmount} & Gain {data.buffType} for {data.buffDuration} turns";
         else if (heal && recAp) desc.text = $"{data.description} Heal {data.healAmount} & Gain {data.aPRecoverAmount} action points";
         else if (draw && recAp) desc.text = $"{data.description} Draw {data.drawAmount} & Gain {data.aPRecoverAmount} action points";
-        else if (dmg && debuff) desc.text = $"{data.description} Deal {data.damage} & {data.debuffType} for {data.debuffDuration}";
+        else if (dmg && debuff) desc.text = $"{data.description} Deal {data.damage} damage & {data.debuffType} for {data.debuffDuration}";
         else if (block && debuff) desc.text = $"{data.description} Block {data.blockAmount} & {data.debuffType} for {data.debuffDuration}";
         else if (heal && debuff) desc.text = $"{data.description} Heal {data.healAmount} & {data.debuffType} for {data.debuffDuration}";
         else if (draw && debuff) desc.text = $"{data.description} Draw {data.drawAmount} & {data.debuffType} for {data.debuffDuration}";

@@ -265,27 +265,23 @@ MonoBehaviour:
   damage: 0
   healAmount: 0
   blockAmount: 0
-  aPRecoverAmount: 0
   playCost: 0
   buffDuration: 0
   debuffDuration: 0
-  minDrawAmount: 1
-  maxDrawAmount: 3
+  minDrawAmount: 2
+  maxDrawAmount: 2
   minDmg: 8
-  maxDmg: 16
-  minHeal: 5
-  maxHeal: 12
+  maxDmg: 18
+  minHeal: 3
+  maxHeal: 6
   minBlock: 8
-  maxBlock: 16
-  minApRec: 2
-  maxApRec: 5
+  maxBlock: 18
   minPlayCost: 1
   maxPlayCost: 5
   draw: 0
   dealDamage: 0
   heal: 0
   block: 0
-  recoverAp: 0
   buff: 0
   buffType: 0
   debuff: 0
