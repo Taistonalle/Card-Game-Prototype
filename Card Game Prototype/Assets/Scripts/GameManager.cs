@@ -76,7 +76,42 @@ public class GameManager : MonoBehaviour {
     public CardCrafting CardCrafting { get { return cardCrafting; } }
     [SerializeField] GameObject deckButton;
 
+    [Header("Values for winscreen")]
+    [SerializeField] float winTime;
+    [SerializeField] int totalDmgDealt;
+    public int TotalDmgDealt {
+        get { return totalDmgDealt; }
+        set { totalDmgDealt = value; }
+    }
+    [SerializeField] int totalDmgTaken;
+    public int TotalDmgTaken {
+        get { return totalDmgTaken; }
+        set { totalDmgTaken = value; }
+    }
+    [SerializeField] int totalHealAmount;
+    public int TotalHealAmount {
+        get { return totalHealAmount; }
+        set { totalHealAmount = value; }
+    }
+    [SerializeField] int totalDmgBlocked;
+    public int TotalDmgBlocked {
+        get { return totalDmgBlocked; }
+        set { totalDmgBlocked = value; }
+    }
+    [SerializeField] int totalApRecovered;
+    public int TotalApRecovered {
+        get { return totalApRecovered; }
+        set { totalApRecovered = value; }
+    }
+    [SerializeField] List<DataEnemy> enemiesDefeated;
+    public List<DataEnemy> EnemiesDefeated {
+        get { return enemiesDefeated; }
+        set { enemiesDefeated = value; }
+    }
+    [SerializeField] TextMeshProUGUI resultTxt;
+
     void Start() {
+        StartCoroutine(GameTimer());
         deck = FindObjectOfType<PlayerDeck>();
         statusBar = FindObjectOfType<StatusBar>();
     }
@@ -216,13 +251,26 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
-    //void FindEverything() {
-    //    player = FindObjectOfType<Player>();
-    //    hand = FindObjectOfType<PlayerHand>();
-    //    deck = FindObjectOfType<PlayerDeck>();
-    //    pCP = FindObjectOfType<PlayerCardPile>();
-    //    dP = FindObjectOfType<DiscardPile>();
-    //}
+    public void GetResultValues() {
+        StopCoroutine(GameTimer());
+        //Calculate from win time the minutes & seconds
+        int minutes = 0;
+        int seconds = 0;
+
+        minutes = (int)winTime / 60;
+        seconds = (int)(winTime - minutes * 60);
+
+        resultTxt.text = $"Total time taken: {minutes} min {seconds} seconds" +
+                         $"\nTotal damage dealt: {totalDmgDealt}" +
+                         $"\nTotal damage taken: {totalDmgTaken}" +
+                         $"\nTotal heal amount: {totalHealAmount}" +
+                         $"\nTotal damage blocked: {totalDmgBlocked}" +
+                         $"\nTotal action points recovered: {totalApRecovered}" +
+                         $"\n\nEnemies defeated in order: ";
+        foreach (DataEnemy enemy in enemiesDefeated) {
+            resultTxt.text += $"{enemy.enemyName}, ";
+        }
+    }
 
     void CopyDeckForUsage() {
         deckCopy = deck.Cards;
@@ -310,5 +358,11 @@ public class GameManager : MonoBehaviour {
         //Activate/make game over message box visible. Add fancier fade in effect later?
         gOBox.SetActive(true);
         AudioManager.PlayGameOverSound();
+    }
+
+    IEnumerator GameTimer() {
+        while (true) {
+            yield return winTime += Time.deltaTime;
+        }
     }
 }

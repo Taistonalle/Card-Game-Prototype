@@ -90,25 +90,30 @@ public class Player : MonoBehaviour {
             case > 0:
             //Further check if damage is more than current block, calculate remaining damage.
             if (damage > block) {
+                gM.TotalDmgBlocked += block;
                 remainingDmg = damage - block;
                 ResetBlock();
                 //Then use remaining damage for health removal
                 health -= remainingDmg;
                 AudioManager.PlayDamageSound();
+                gM.TotalDmgBlocked += remainingDmg;
             }
             else if (damage == block) {
                 ResetBlock();
                 AudioManager.PlayBlockDamagedSound();
+                gM.TotalDmgBlocked += damage;
             }
             else {
                 ReduceBlock(damage);
                 AudioManager.PlayBlockDamagedSound();
+                gM.TotalDmgBlocked += damage;
             }
             break;
 
             default:
             health -= damage;
             AudioManager.PlayDamageSound();
+            gM.TotalDmgTaken += damage;
             break;
         }
         statusBar.UpdateHealthTxt();
@@ -127,6 +132,7 @@ public class Player : MonoBehaviour {
             break;
         }
         statusBar.UpdateHealthTxt();
+        gM.TotalHealAmount += amount;
     }
 
     public void GainBlock(int amount) {
@@ -171,6 +177,7 @@ public class Player : MonoBehaviour {
         AudioManager.PlayApRecoverySound();
         aP += amount;
         UpdateActionPointCounter();
+        gM.TotalApRecovered += amount;
     }
 
     public void ResetAP() {

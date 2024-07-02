@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +38,7 @@ public class PathProgression : MonoBehaviour {
     GameManager gM;
 
     void Start() {
+        //StartCoroutine(GameTimer());
         FindPathButtons();
         gM = FindObjectOfType<GameManager>();
         //fadeCanvas = FindObjectOfType<FadeCanvas>();
@@ -171,19 +173,6 @@ public class PathProgression : MonoBehaviour {
             gM.Enemy.AssignDataValues(gM.BossEnemyDatas[rand]);
             break;
         }
-
-        ////Second "same" switch to check data sheet to use at different points
-        //switch (pathPoint) {
-        //    case 20:
-        //    Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.BossEnemyDatas[rand].enemyName}");
-        //    gM.Enemy.AssignDataValues(gM.BossEnemyDatas[rand]);
-        //    break;
-
-        //    default:
-        //    Debug.Log($"Rand index  roll: {rand} for {button.name}. Enemy: {gM.TierOneEnemyDatas[rand].enemyName}");
-        //    gM.Enemy.AssignDataValues(gM.TierOneEnemyDatas[rand]);
-        //    break;
-        //}
     }
 
     //----Used in Rest canvas buttons----

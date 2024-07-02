@@ -126,6 +126,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             AudioManager.PlayDamageSound();
             break;
         }
+        gM.TotalDmgDealt += damage;
         StartCoroutine(AnimateHealthBar(30f));
     }
 
@@ -160,16 +161,12 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         Debug.Log($"{enemyName} died! Activating reward view");
         //Make sure the next enemy encounter does not have debuffs like stun
         ResetDebuff(statusEffect);
+        gM.EnemiesDefeated.Add(enemyData);
 
-        if (enemyData.bossEnemy) winRewardCanvas.SetActive(true);
-        //Old, before only crafted cards variation
-        /*
-        else if (enemyData.miniBoss) {
-            cardCraftCanvas.SetActive(true);
-            combatCanvas.SetActive(false);
+        if (enemyData.bossEnemy) {
+            winRewardCanvas.SetActive(true);
+            gM.GetResultValues();
         }
-        */
-        //else StartCoroutine(ActivateRewardView());
         else StartCoroutine(ActivateCompRewardView());
     }
 
