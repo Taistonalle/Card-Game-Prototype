@@ -85,7 +85,7 @@ public class Card : DragAndPointerHandler {
         switch (clicked) {
             case false:
             base.OnPointerExit(eventData);
-            transform.position = slotPos;
+            transform.localPosition = slotPos;
             break;
         }
     }
@@ -100,7 +100,7 @@ public class Card : DragAndPointerHandler {
     }
 
     void MouseHovered(float posAmount) {
-        transform.position = new Vector2(transform.position.x, transform.position.y + posAmount);
+        transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + posAmount);
     }
 
     #region Card actions

@@ -187,8 +187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.2352941, g: 0.6311191, b: 0.67058825, a: 1}
+  m_Material: {fileID: 2100000, guid: 7da798c1abf36dc48b32d152b492db92, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -235,8 +235,10 @@ MonoBehaviour:
   strDurTxt: {fileID: 6072076545506326212}
   strDuration: 0
   strDmgMultiplier: 1.5
-  deckSize: 0
-  drawAmount: 1
+  playerImg: {fileID: 7360664968148976522}
+  flashColor: {r: 2.1185474, g: 0, b: 0, a: 1}
+  flashLenght: 0.3
+  drawAmount: 5
 --- !u!1 &3383222361284853423
 GameObject:
   m_ObjectHideFlags: 0

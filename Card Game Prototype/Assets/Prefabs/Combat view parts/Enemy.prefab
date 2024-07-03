@@ -731,7 +731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 3c6ce8513e7432e4f8444409fd6fa64f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -767,13 +767,14 @@ MonoBehaviour:
   cardImage: {fileID: 2512040418998292978}
   nameTxt: {fileID: 3591799064208540234}
   statusEffect: 0
-  lastActionRange: 0
   healthBar: {fileID: 1377877130644561309}
   healtBarNumber: {fileID: 6910592302575249084}
   blockImg: {fileID: 1376960891305381135}
   blockTxt: {fileID: 7695151315609195326}
   blockIconGrp: {fileID: 1408639484828705995}
   block: 0
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashLenght: 0.2
   valueTxt: {fileID: 1916040882958686931}
   iconSprites:
   - {fileID: 21300000, guid: c979e6c9bf5c01d4aac6dfb7fef96ec7, type: 3}

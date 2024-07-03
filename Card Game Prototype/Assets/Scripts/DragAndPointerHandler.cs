@@ -12,10 +12,16 @@ public class DragAndPointerHandler : MonoBehaviour, IDragHandler, IEndDragHandle
     }
 
     public virtual void OnDrag(PointerEventData eventData) {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //event data did not work anymore after changing canvas to Screen Space camera. (In Combat Canvas)
+        float surface = transform.position.z;
+        float distance = surface - ray.origin.z / ray.direction.z;
+        Vector3 point = ray.origin + ray.direction * distance;
+        point.z = surface;
+
         switch (gM.GameState) {
             case GameState.PlayerTurn:
             Cursor.visible = false;
-            transform.position = eventData.position;
+            transform.position = point;
             break;
         }
     }

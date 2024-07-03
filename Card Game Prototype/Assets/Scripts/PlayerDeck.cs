@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerDeck : MonoBehaviour {
@@ -99,20 +100,26 @@ public class PlayerDeck : MonoBehaviour {
     #region Functions for main menu
     public void TenCardsSelected() {
         craftCardCount = 5;
-        cards = tenDeck;
+        cards = DeckCopy(tenDeck);
         UpdateCounter();
     }
 
     public void FifteenCardsSelected() {
         craftCardCount = 10;
-        cards = fifteenDeck;
+        cards = DeckCopy(fifteenDeck);
         UpdateCounter();
     }
 
     public void TwentyCardsSelected() {
         craftCardCount = 15;
-        cards = twentyDeck;
+        cards = DeckCopy(twentyDeck);
         UpdateCounter();
     }
+
+    List<GameObject> DeckCopy(List<GameObject> listToCopy) {
+        GameObject[] copy = new GameObject[listToCopy.Count];
+        System.Array.Copy(listToCopy.ToArray(), copy, listToCopy.Count);
+        return copy.ToList();
+    } 
     #endregion
 }

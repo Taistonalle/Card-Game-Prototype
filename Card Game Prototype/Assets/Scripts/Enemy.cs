@@ -33,6 +33,13 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         get { return block; }
     }
 
+    [Header("Damage flash related")]
+    [ColorUsage(true, true)]
+    [SerializeField] Color flashColor = Color.white;
+    [SerializeField] float flashLenght = 0.2f;
+    Coroutine dmgFlashRoutine;
+    Coroutine dmgShake;
+ 
     [Header("Indicator related")]
     [SerializeField] TextMeshProUGUI valueTxt;
     [SerializeField] Sprite[] iconSprites;
@@ -95,6 +102,8 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
 
         //Name
         nameTxt.text = enemyName;
+
+        SetMainTex();
     }
 
     public void TakeDamage(int damage) {
@@ -127,6 +136,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
             break;
         }
         gM.TotalDmgDealt += damage;
+        CallDamageFlash();
         StartCoroutine(AnimateHealthBar(30f));
     }
 
@@ -454,4 +464,86 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
 
         gM.StartCoroutine(gM.BeginNewTurn());
     }
+
+    #region Flash functions
+    void CallDamageFlash() {
+        dmgFlashRoutine = StartCoroutine(DamageFlasher());
+        dmgShake = StartCoroutine(ShakeEnemy(0.05f, 0.15f));
+    }
+
+    IEnumerator ShakeEnemy(float shakeLenght, float shakeStr) {
+        Vector2 startPos = transform.position;
+
+        float currentMoveAmount = 0f;
+        float elapsedTime = 0f;
+
+        //First shake to right
+        while (elapsedTime < shakeLenght) {
+            elapsedTime += Time.deltaTime;
+
+            currentMoveAmount = Mathf.Lerp(startPos.x, startPos.x + shakeStr, elapsedTime / (shakeLenght / 3));
+            SetMoveAmount(currentMoveAmount);
+
+            yield return null;
+        }
+
+        //Second shake to left
+        elapsedTime = 0f;
+        while (elapsedTime < shakeLenght) {
+            elapsedTime += Time.deltaTime;
+
+            currentMoveAmount = Mathf.Lerp(startPos.x + shakeStr, startPos.x - shakeStr, elapsedTime / (shakeLenght / 3));
+            SetMoveAmount(currentMoveAmount);
+
+            yield return null;
+        }
+
+        //Third shake back starting pos
+        elapsedTime = 0f;
+        while (elapsedTime < shakeLenght) {
+            elapsedTime += Time.deltaTime;
+
+            currentMoveAmount = Mathf.Lerp(startPos.x - shakeStr, startPos.x, elapsedTime / (shakeLenght / 3));
+            SetMoveAmount(currentMoveAmount);
+
+            yield return null;
+        }
+    }
+
+    IEnumerator DamageFlasher() {
+        //Set color
+        SetFlashColor();
+
+        //Lerp flash amount
+        float currentFlashAmount = 0f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < flashLenght) {
+            //Iterate elapsed time
+            elapsedTime += Time.deltaTime;
+
+            //Lerp the flash amount
+            currentFlashAmount = Mathf.Lerp(1f, 0f, elapsedTime / flashLenght);
+            SetFlashAmount(currentFlashAmount);
+
+            yield return null;
+        }
+    }
+
+    void SetFlashColor() {
+        cardImage.material.SetColor("_FlashColor", flashColor);
+    }
+
+    private void SetFlashAmount(float amount) {
+        cardImage.material.SetFloat("_FlashAmount", amount);
+    }
+
+    void SetMoveAmount(float amount) {
+        transform.position = new Vector2(amount, transform.position.y);
+    }
+
+    void SetMainTex() {
+        cardImage.material.SetTexture("_MainTex", enemyData.enemyArt.texture);
+    }
+    #endregion
 }

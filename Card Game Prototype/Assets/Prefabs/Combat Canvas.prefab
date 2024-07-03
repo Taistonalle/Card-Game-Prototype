@@ -360,7 +360,7 @@ Canvas:
   m_GameObject: {fileID: 1042297851115467440}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -3694,9 +3694,29 @@ PrefabInstance:
       objectReference: {fileID: 4557149041651413815}
     - target: {fileID: 3797730009890242550, guid: c884b839728b597428e44f50f446c958,
         type: 3}
+      propertyPath: flashLenght
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3797730009890242550, guid: c884b839728b597428e44f50f446c958,
+        type: 3}
       propertyPath: combatCanvas
       value: 
       objectReference: {fileID: 1042297851115467440}
+    - target: {fileID: 3797730009890242550, guid: c884b839728b597428e44f50f446c958,
+        type: 3}
+      propertyPath: flashColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3797730009890242550, guid: c884b839728b597428e44f50f446c958,
+        type: 3}
+      propertyPath: flashColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3797730009890242550, guid: c884b839728b597428e44f50f446c958,
+        type: 3}
+      propertyPath: flashColor.r
+      value: 4.2370944
+      objectReference: {fileID: 0}
     - target: {fileID: 3797730009890242550, guid: c884b839728b597428e44f50f446c958,
         type: 3}
       propertyPath: rewardCanvas
@@ -3710,12 +3730,12 @@ PrefabInstance:
     - target: {fileID: 5683648761173308542, guid: c884b839728b597428e44f50f446c958,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5683648761173308542, guid: c884b839728b597428e44f50f446c958,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6052956520734672846, guid: c884b839728b597428e44f50f446c958,
         type: 3}
@@ -4458,25 +4478,10 @@ PrefabInstance:
       propertyPath: aPCounter
       value: 
       objectReference: {fileID: 1552703305462219013}
-    - target: {fileID: 562019466857435470, guid: 28a4bd744ffab5e4295256957eeb4945,
-        type: 3}
-      propertyPath: drawAmount
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 2175031335583939311, guid: 28a4bd744ffab5e4295256957eeb4945,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3670364451023067602, guid: 28a4bd744ffab5e4295256957eeb4945,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3670364451023067602, guid: 28a4bd744ffab5e4295256957eeb4945,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4223217348938591713, guid: 28a4bd744ffab5e4295256957eeb4945,
         type: 3}
