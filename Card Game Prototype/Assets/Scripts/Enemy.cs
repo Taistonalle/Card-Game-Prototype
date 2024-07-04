@@ -172,6 +172,7 @@ public class Enemy : MonoBehaviour/*, IPointerDownHandler*/ {
         //Make sure the next enemy encounter does not have debuffs like stun
         ResetDebuff(statusEffect);
         gM.EnemiesDefeated.Add(enemyData);
+        AudioManager.PlayMusicLow();
 
         if (enemyData.bossEnemy) {
             winRewardCanvas.SetActive(true);

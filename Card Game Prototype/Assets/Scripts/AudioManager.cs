@@ -7,6 +7,7 @@ using UnityEngine.UI;
 namespace CustomAudioManager {
     public class AudioManager : MonoBehaviour {
         [Header("Music")]
+        [SerializeField] AudioClip[] musicFiles;
         [SerializeField] AudioSource mS;
         [SerializeField] Slider mSlider;
         public Slider MSlider {
@@ -145,6 +146,28 @@ namespace CustomAudioManager {
             float randomPitch = Random.Range(Instance.minPitchRange, Instance.maxPitchRange);
             Instance.aS_Sfx.pitch = randomPitch;
             Instance.aS_Sfx.PlayOneShot(Instance.audioFiles[8]);
+        }
+
+        public static void PlayMusicLow() {
+            if (Instance == null) {
+                Debug.Log("No instance of AudioManager found!");
+                return;
+            }
+
+            Instance.mS.Stop();
+            Instance.mS.clip = Instance.musicFiles[0];
+            Instance.mS.Play();
+        }
+
+        public static void PlayMusicMid() {
+            if (Instance == null) {
+                Debug.Log("No instance of AudioManager found!");
+                return;
+            }
+
+            Instance.mS.Stop();
+            Instance.mS.clip = Instance.musicFiles[1];
+            Instance.mS.Play();
         }
 
         #region Volume slider values

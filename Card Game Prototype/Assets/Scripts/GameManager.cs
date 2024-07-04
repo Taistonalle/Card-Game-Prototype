@@ -110,8 +110,10 @@ public class GameManager : MonoBehaviour {
     }
     [SerializeField] TextMeshProUGUI resultTxt;
 
+    Coroutine gameTimer;
+
     void Start() {
-        StartCoroutine(GameTimer());
+        StartGameTimer();
         deck = FindObjectOfType<PlayerDeck>();
         statusBar = FindObjectOfType<StatusBar>();
     }
@@ -179,6 +181,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void StartCombat() {
+        AudioManager.PlayMusicMid();
         gameState = GameState.PlayerTurn;
 
         hand.ClearHand();
@@ -252,7 +255,7 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     public void GetResultValues() {
-        StopCoroutine(GameTimer());
+        StopCoroutine(gameTimer);
         //Calculate from win time the minutes & seconds
         int minutes = 0;
         int seconds = 0;
@@ -358,6 +361,10 @@ public class GameManager : MonoBehaviour {
         //Activate/make game over message box visible. Add fancier fade in effect later?
         gOBox.SetActive(true);
         AudioManager.PlayGameOverSound();
+    }
+
+    void StartGameTimer() {
+        gameTimer = StartCoroutine(GameTimer());
     }
 
     IEnumerator GameTimer() {
